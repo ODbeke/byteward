@@ -68,6 +68,28 @@ flowchart TD
 
 ---
 
+## 💰 Cryptoeconomics, Incentive Alignment & Roadmap
+
+DracoGuard bridges automated AI validator consensus with robust economic game theory:
+
+### 1. Proposal Anti-Spam Security Bond
+- Proposing an upgrade requires maintainers to stake a refundable deposit in native tokens (`GEN`).
+- **Slashing Condition:** If validator consensus or a dispute re-audit detects intentional backdoor drains or malicious storage corruption, the maintainer bond is forfeited and sent to the protocol insurance treasury.
+- **Refund Condition:** Upon successful proposal execution or clean withdrawal, the bond is 100% refunded.
+
+### 2. Stake-to-Challenge (Dispute Bonding)
+- Filing a dispute during the challenge window requires the challenger to deposit a dispute bond.
+- **Why it matters:** Eliminates frivolous griefing attacks where malicious actors repeatedly pause legitimate upgrades for free.
+- **Whitehat Bug Bounty:** If the challenger’s evidence is upheld by validator consensus, the challenger receives their bond back plus a percentage of the slashed maintainer deposit as an automated on-chain bug bounty.
+
+### 3. Protocol Evolution Roadmap
+- **Phase 1 (Current Live Build):** Pure validator-enforced AI diff audit, 5-tier dragon firewalls, HTTPS dispute snapshotting, and cross-contract bytecode slot mutation on StudioNet.
+- **Phase 2 (Economic Guardrails):** Native `GEN` escrow deposits, stake-to-challenge bonding, slashing pools, and automated whitehat bug bounty disbursements.
+- **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling DracoGuard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
+- **Phase 4 (Zero-Knowledge AST Proofs):** Pairing GenLayer natural language semantic audits with formal ZK bytecode verification.
+
+---
+
 ## 📜 Interface Methods Reference
 
 ### `DracoGuard` Upgrade Controller Contract
@@ -115,7 +137,7 @@ Ensure dependencies are installed, then execute the pytest test suite:
 ```bash
 python3 -m pytest tests/direct -v
 ```
-All **45 unit test cases** covering constructor limits, input validation bounds, authority checks, and storage layout compatibility will execute and pass.
+All **54 unit test cases** covering constructor limits, input validation bounds, authority checks, and storage layout compatibility will execute and pass.
 
 ### 2. Run End-to-End Integration Tests (StudioNet Flow)
 To execute the complete deployment, enrollment, preflight digest validation, consensus audit, dispute window, bytecode slot dispatch, and version verification cycle on StudioNet:
@@ -137,7 +159,7 @@ npm run start
 ```
 The interface includes:
 - **PayPer-Style Single-Scroll Landing Cover** with prominent CTA navigation.
-- **Interactive 6-Slide Architecture Pitch Deck** with keyboard and control navigation.
+- **Interactive 8-Slide Architecture Pitch Deck** covering executive summary, the upgradability trilemma, 5-tier firewalls, equivalence principle, dispute timelocks, execution, cryptoeconomics, and development roadmap.
 - **Full Governance Workbench** with Target Registries, Safety Matrices, and real-time transaction dispatch triggers.
 
 ---
