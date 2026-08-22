@@ -23,3 +23,8 @@ While the natural language audit rationale is persisted in storage for human rev
 
 ### Invariant 4: On-Chain HTTPS Dispute Snapshots
 To prevent dynamic evidence tampering (e.g. an attacker modifying a dispute document after submission), DracoGuard fetches the full HTTP body and stores both the raw bytes and the SHA-256 digest in contract storage before transitioning the proposal to `DISPUTED`.
+
+## Cryptoeconomic Game Theory & Incentive Alignment
+
+1. **Proposal Anti-Spam Bond:** Prevents Denial-of-Service (DoS) attacks on the GenLayer validator network by requiring maintainers to lock collateral that is slashed upon malicious proposal detection.
+2. **Dispute Stake-to-Challenge:** Enforces economic skin-in-the-game for community challengers, preventing griefing delays on valid upgrades while rewarding whitehat catches with on-chain bug bounty distributions.
