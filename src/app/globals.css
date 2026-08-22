@@ -52,7 +52,6 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   overflow-x: hidden;
-  position: relative;
 }
 
 /* Locked Single-Screen Landing View */
@@ -73,57 +72,53 @@ body.landing-locked .app-footer-auto {
   display: none !important;
 }
 
-/* Full-Bleed 100vw Edge-to-Edge Dynamic Background */
+/* PayPer Exact Global Full-Bleed Background */
 .global-bg-image {
   position: fixed;
-  inset: 0;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   width: 100vw;
   height: 100vh;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
+  transition: all 0.8s var(--ease-out);
 }
 
 .global-bg-image img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: center right;
+  object-position: center center;
   transition: all 0.8s var(--ease-out);
 }
 
 .global-bg-overlay {
   position: absolute;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: 
-    linear-gradient(to right, rgba(3, 4, 7, 0.95) 0%, rgba(3, 4, 7, 0.82) 42%, rgba(3, 4, 7, 0.35) 75%, rgba(3, 4, 7, 0.15) 100%),
-    linear-gradient(to bottom, rgba(3, 4, 7, 0.1) 40%, rgba(3, 4, 7, 0.92) 100%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   transition: background 0.8s var(--ease-out);
 }
 
-/* Landing view: sharp, vibrant cover */
+/* Landing view: sharp, seamless cover */
 .global-bg-image.landing-view img {
-  filter: blur(0px) brightness(1.05);
+  filter: blur(0px) brightness(1.0);
+}
+.global-bg-image.landing-view .global-bg-overlay {
+  background: linear-gradient(to bottom, rgba(3, 4, 7, 0) 40%, rgba(3, 4, 7, 0.95) 100%);
 }
 
-/* App view: heavily blurred ambient background */
+/* App view: heavily blurred, deep dark ambient color bleed background */
 .global-bg-image.app-view img {
   filter: blur(80px) brightness(0.22) saturate(1.3);
 }
 .global-bg-image.app-view .global-bg-overlay {
-  background: rgba(3, 4, 7, 0.82);
+  background: rgba(3, 4, 7, 0.78);
 }
 
-/* App Shell (Content Layer over Full-Bleed Background) */
+/* App Shell */
 .app-shell {
   position: relative;
   z-index: 10;
@@ -246,7 +241,7 @@ body.landing-locked .app-footer-auto {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75));
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.85));
 }
 
 .synthora-badge {
@@ -255,8 +250,8 @@ body.landing-locked .app-footer-auto {
   gap: 8px;
   padding: 5px 14px;
   border-radius: 999px;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   color: var(--accent-cyan);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -284,7 +279,7 @@ body.landing-locked .app-footer-auto {
 
 .hero-lede {
   font-size: 18px;
-  color: var(--ink-secondary);
+  color: #94a3b8;
   line-height: 1.55;
   margin-bottom: 32px;
   max-width: 620px;

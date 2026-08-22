@@ -20,7 +20,7 @@ export default function RootLayout({
         <WalletProvider>
           {/* Full-Bleed 100vw Edge-to-Edge Background */}
           <div className="global-bg-image landing-view">
-            <img src="/usdc_activation_gate_spaced.jpg" alt="ByteWard Cyber Gate Background" />
+            <img src="/usdc_activation_gate.jpg" alt="ByteWard Cyber Gate Background" />
             <div className="global-bg-overlay"></div>
           </div>
 
