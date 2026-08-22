@@ -1,5 +1,10 @@
-rpc_url: https://studio.genlayer.com/api
-selected_network: studionet
-contracts_dir: contracts
-artifacts_dir: artifacts
+networks:
+  default: studionet
+  studionet: {}
+  localnet: {}
+
+paths:
+  contracts: contracts
+  artifacts: artifacts
+
 environment: .env
