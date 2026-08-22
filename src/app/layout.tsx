@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { WalletProvider } from "@/components/wallet-provider";
 import { AppHeader } from "@/components/app-header";
+import { AppFooter } from "@/components/app-footer";
 
 export const metadata: Metadata = {
   title: "DracoGuard — Consensus Smart Contract Upgrade Governance",
@@ -20,6 +21,7 @@ export default function RootLayout({
           <div className="app-shell animate-fade-in">
             <AppHeader />
             {children}
+            <AppFooter />
           </div>
         </WalletProvider>
       </body>
