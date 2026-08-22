@@ -171,3 +171,12 @@ The interface includes:
 - **Chain ID:** `0xF22F` (61999)
 - **Explorer:** `https://explorer-studio.genlayer.com`
 - **Native Token:** `GEN` (18 decimals)
+
+---
+
+## 🚀 Live StudioNet Deployment
+
+- **Deployed Controller Contract:** [`0x7b924FC388EFB82e4BD856395f146dbAF78559B5`](https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5)
+- **Verified Public Methods:** 17/17 methods active
+- **Dispute Timelock Window:** 300 seconds (5 minutes)
+- **Network:** GenLayer StudioNet (`0xF22F`)

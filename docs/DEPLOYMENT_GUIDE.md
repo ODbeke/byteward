@@ -1,24 +1,17 @@
 # ByteWard StudioNet Deployment & Operation Guide
 
-## 1. Prerequisites
-- Python 3.10+
-- GenLayer Studio Account & StudioNet test tokens (`GEN`)
-- Node.js 18+ & npm
+## 1. Live Deployment Details
+- **Contract Address:** [`0x7b924FC388EFB82e4BD856395f146dbAF78559B5`](https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5)
+- **Explorer URL:** [https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5](https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5)
+- **Configured Dispute Window:** `300` seconds (5 minutes)
 
-## 2. Deploying ByteWard via GenLayer Studio
-1. Open [studio.genlayer.com](https://studio.genlayer.com)
-2. Create a new Intelligent Contract project and import `contracts/ByteWard.py`.
-3. In Constructor Arguments, specify the default challenge/dispute window in seconds (e.g. `300` for testnet or `86400` for 24h).
-4. Click **Deploy**. Copy the resulting contract address (e.g. `0x...`).
-5. Update `NEXT_PUBLIC_BYTEWARD_CONTRACT` in `.env`.
-
-## 3. Deploying Target Contracts & Delegating Authority
-1. Deploy `contracts/WardedTargetV1.py` passing the ByteWard controller address to the constructor.
+## 2. Deploying Target Contracts & Delegating Authority
+1. Deploy `contracts/WardedTargetV1.py` passing `0x7b924FC388EFB82e4BD856395f146dbAF78559B5` to the constructor.
 2. Call `enroll_with_byteward(target_id, name, charter, source_url)` on the target contract.
 3. Verify that the target is registered by calling `fetch_target(target_id)` on ByteWard.
 
-## 4. Running Upgrade Proposals
+## 3. Running Upgrade Proposals
 1. Submit an upgrade proposal via `propose_upgrade(proposal_id, target_id, candidate_url, version, changelog)`.
 2. Trigger the AI validator audit with `audit_proposal(proposal_id)`.
-3. Wait out the dispute window, then invoke `dispatch_upgrade(proposal_id)`.
+3. Wait out the 300s dispute window, then invoke `dispatch_upgrade(proposal_id)`.
 4. Confirm target bytecode installation via `verify_and_finalize(proposal_id)`.
