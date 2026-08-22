@@ -2,7 +2,7 @@ from conftest import CHARTER, SOURCE_URL
 
 
 def test_v1_records_guard_controller(target_v1, direct_bob):
-    # Verify the target v1 stores the correct DracoGuard controller address
+    # Verify the target v1 stores the correct ByteWard controller address
     assert target_v1.get_guard_controller().lower() == "0x" + direct_bob.hex()
 
 
@@ -38,21 +38,21 @@ def test_v1_allows_concurrent_increments(target_v1, direct_vm, direct_alice, dir
 
 
 def test_v1_has_sole_guard_authority(target_v1):
-    # Verify target v1 declares DracoGuard as its sole authority
+    # Verify target v1 declares ByteWard as its sole authority
     assert target_v1.is_sole_guard_authorized() is True
 
 
 def test_v1_restricts_enrollment_to_owner(target_v1, direct_vm, direct_alice):
-    # Verify non-admin account cannot initiate DracoGuard enrollment
+    # Verify non-admin account cannot initiate ByteWard enrollment
     direct_vm.sender = direct_alice
     with direct_vm.expect_revert("Only the target administrator may request enrollment"):
-        target_v1.enroll_with_dracoguard("warded-core", "Warded Target", CHARTER, SOURCE_URL)
+        target_v1.enroll_with_byteward("warded-core", "Warded Target", CHARTER, SOURCE_URL)
 
 
 def test_v1_restricts_upgrades_to_controller(target_v1, direct_vm, direct_alice):
     # Verify non-controller accounts cannot trigger direct bytecode upgrades
     direct_vm.sender = direct_alice
-    with direct_vm.expect_revert("Only the DracoGuard controller can execute upgrades"):
+    with direct_vm.expect_revert("Only the ByteWard controller can execute upgrades"):
         target_v1.upgrade(b"unauthorized-bytecode")
 
 
@@ -92,24 +92,24 @@ def test_v2_composes_increment_and_add(target_v2, direct_vm, direct_alice):
 
 
 def test_v2_has_sole_guard_authority(target_v2):
-    # Verify target v2 retains DracoGuard as sole authority
+    # Verify target v2 retains ByteWard as sole authority
     assert target_v2.is_sole_guard_authorized() is True
 
 
 def test_v2_exposes_draco_v2_tag_confirmation(target_v2):
     # Verify target v2 exposes its release marker confirmation string
-    assert target_v2.get_draco_v2_tag() == "DRACOGUARD_V2_CONFIRMED"
+    assert target_v2.get_draco_v2_tag() == "BYTEWARD_V2_CONFIRMED"
 
 
 def test_v2_restricts_enrollment_to_owner(target_v2, direct_vm, direct_alice):
-    # Verify non-admin account cannot initiate DracoGuard enrollment on v2
+    # Verify non-admin account cannot initiate ByteWard enrollment on v2
     direct_vm.sender = direct_alice
     with direct_vm.expect_revert("Only the target administrator may request enrollment"):
-        target_v2.enroll_with_dracoguard("warded-core", "Warded Target", CHARTER, SOURCE_URL)
+        target_v2.enroll_with_byteward("warded-core", "Warded Target", CHARTER, SOURCE_URL)
 
 
 def test_v2_restricts_upgrades_to_controller(target_v2, direct_vm, direct_alice):
     # Verify non-controller accounts cannot upgrade target v2
     direct_vm.sender = direct_alice
-    with direct_vm.expect_revert("Only the DracoGuard controller can execute upgrades"):
+    with direct_vm.expect_revert("Only the ByteWard controller can execute upgrades"):
         target_v2.upgrade(b"unauthorized-bytecode")

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useWallet } from "./wallet-provider";
-import { executeDracoWrite, waitForDracoFinalization } from "@/lib/dracoguard";
+import { executeByteWardWrite, waitForByteWardFinalization } from "@/lib/byteward";
 import { Shield, AlertCircle, CheckCircle2, Loader2, X } from "lucide-react";
 
 export function TargetEnrollDialog({
@@ -18,7 +18,7 @@ export function TargetEnrollDialog({
   const [targetId, setTargetId] = useState("");
   const [name, setName] = useState("");
   const [charter, setCharter] = useState(
-    "Only approve upgrades that preserve the declared storage layout, keep DracoGuard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully."
+    "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully."
   );
   const [sourceUrl, setSourceUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -40,14 +40,14 @@ export function TargetEnrollDialog({
 
     try {
       // NOTE: enroll_target is called internally by target contracts. Direct caller submits if interacting as target owner.
-      const hash = await executeDracoWrite(account, "enroll_target", [
+      const hash = await executeByteWardWrite(account, "enroll_target", [
         targetId,
         name,
         charter,
         sourceUrl,
       ]);
       setTxHash(hash);
-      await waitForDracoFinalization(account, hash);
+      await waitForByteWardFinalization(account, hash);
       onSuccess();
       onClose();
     } catch (err: unknown) {
@@ -107,7 +107,7 @@ export function TargetEnrollDialog({
         </div>
 
         <p style={{ fontSize: "14px", color: "var(--ink-secondary)", marginBottom: "24px" }}>
-          Register a smart contract under DracoGuard governance. The target contract must delegate its upgrade authority exclusively to DracoGuard.
+          Register a smart contract under ByteWard governance. The target contract must delegate its upgrade authority exclusively to ByteWard.
         </p>
 
         {error && (

@@ -1,10 +1,10 @@
-# DracoGuard Threat Model & Attack Surface Analysis
+# ByteWard Threat Model & Attack Surface Analysis
 
 ## Threat Vectors & Mitigations
 
 ### 1. Compromised Maintainer Key
 - **Threat:** An attacker steals the private key of a target maintainer and attempts to submit a malicious candidate containing a backdoor drain.
-- **Mitigation:** The proposal cannot be executed immediately. It is subjected to the 5-tier Dragon Engine validator audit. The AI consensus detects the unauthorized drain, authority hijacking, or charter violation, returning a `REJECT` or `ABSTAIN` verdict. Furthermore, the mandatory dispute window allows whitehat observers to flag anomalies.
+- **Mitigation:** The proposal cannot be executed immediately. It is subjected to the 5-tier ByteWard Sentinel Engine validator audit. The AI consensus detects the unauthorized drain, authority hijacking, or charter violation, returning a `REJECT` or `ABSTAIN` verdict. Furthermore, the mandatory dispute window allows whitehat observers to flag anomalies.
 
 ### 2. Collusive or Biased LLM Output
 - **Threat:** A single validator model hallucinates or is prompted adversarially via prompt injection in code comments.
@@ -16,4 +16,4 @@
 
 ### 4. Malicious GitHub URL Modification
 - **Threat:** Maintainers point to a branch URL and alter the code post-submission.
-- **Mitigation:** Commit-pinned 40-character hexadecimal SHAs are strictly required. DracoGuard preflights and re-verifies the SHA-256 digest at proposal submission, consensus audit, and execution dispatch.
+- **Mitigation:** Commit-pinned 40-character hexadecimal SHAs are strictly required. ByteWard preflights and re-verifies the SHA-256 digest at proposal submission, consensus audit, and execution dispatch.

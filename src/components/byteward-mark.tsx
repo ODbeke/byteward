@@ -1,6 +1,6 @@
 import React from "react";
 
-export function DracoMark({ className = "w-8 h-8" }: { className?: string }) {
+export function ByteWardMark({ className = "w-8 h-8" }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -11,7 +11,7 @@ export function DracoMark({ className = "w-8 h-8" }: { className?: string }) {
     >
       <path
         d="M18 2L5 8V18C5 26.5 10.5 31.8 18 34C25.5 31.8 31 26.5 31 18V8L18 2Z"
-        fill="url(#draco-grad)"
+        fill="url(#byteward-grad)"
         stroke="#f59e0b"
         strokeWidth="2"
         strokeLinejoin="round"
@@ -27,7 +27,7 @@ export function DracoMark({ className = "w-8 h-8" }: { className?: string }) {
         strokeLinecap="round"
       />
       <defs>
-        <linearGradient id="draco-grad" x1="5" y1="2" x2="31" y2="34" gradientUnits="userSpaceOnUse">
+        <linearGradient id="byteward-grad" x1="5" y1="2" x2="31" y2="34" gradientUnits="userSpaceOnUse">
           <stop stopColor="#ef4444" />
           <stop offset="0.5" stopColor="#b45309" />
           <stop offset="1" stopColor="#0f172a" />

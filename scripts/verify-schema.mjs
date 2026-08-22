@@ -10,7 +10,7 @@ for (const file of [".env.local", ".env"]) {
   }
 }
 
-const address = process.env.NEXT_PUBLIC_DRACOGUARD_CONTRACT;
+const address = process.env.NEXT_PUBLIC_BYTEWARD_CONTRACT || process.env.NEXT_PUBLIC_DRACOGUARD_CONTRACT;
 const endpoint = process.env.NEXT_PUBLIC_GENLAYER_ENDPOINT ?? "https://studio.genlayer.com/api";
 const required = [
   "enroll_target", "grant_maintainer", "propose_upgrade", "audit_proposal", "file_dispute",
@@ -20,7 +20,7 @@ const required = [
 ];
 
 if (!address || /^0x0{40}$/i.test(address)) {
-  console.log("DracoGuard contract address is not yet deployed or configured in .env. Skipping remote schema query.");
+  console.log("ByteWard contract address is not yet deployed or configured in .env. Skipping remote schema query.");
   process.exit(0);
 }
 
@@ -28,7 +28,7 @@ const client = createClient({ chain: studionet, endpoint });
 const schema = await client.getContractSchema(address);
 const missing = required.filter((method) => !schema.methods[method]);
 if (missing.length) {
-  console.error(`DracoGuard schema is missing methods: ${missing.join(", ")}`);
+  console.error(`ByteWard schema is missing methods: ${missing.join(", ")}`);
   process.exit(1);
 }
-console.log(`DracoGuard schema verified: all ${required.length} methods present.`);
+console.log(`ByteWard schema verified: all ${required.length} methods present.`);

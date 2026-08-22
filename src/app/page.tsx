@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { DracoMark } from "@/components/draco-mark";
+import { ByteWardMark } from "@/components/byteward-mark";
 import { TargetEnrollDialog } from "@/components/target-enroll-dialog";
 import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
 import { ProposalActions } from "@/components/proposal-actions";
 import { NetworkStatusBadge } from "@/components/network-status-badge";
 import { FirewallInspectModal } from "@/components/firewall-inspect-modal";
-import { fetchGovernanceState, GovernanceState } from "@/lib/dracoguard";
+import { fetchGovernanceState, GovernanceState } from "@/lib/byteward";
 import {
   Shield,
   Flame,
@@ -31,12 +31,12 @@ const SLIDES = [
   {
     number: "01",
     tag: "EXECUTIVE SUMMARY",
-    title: "DracoGuard: Consensus Upgrade Governance on GenLayer",
+    title: "ByteWard: Consensus Upgrade Governance on GenLayer",
     subtitle: "Eliminating the multi-billion dollar smart contract admin key attack vector",
     points: [
       "Traditional smart contracts rely on centralized admin keys, single developer wallets, or vulnerable multisigs for proxy upgrades.",
       "A compromised key or malicious multisig vote results in instant, irreversible protocol drain.",
-      "DracoGuard replaces human admin keys with an autonomous, validator-enforced upgrade safety pipeline.",
+      "ByteWard replaces human admin keys with an autonomous, validator-enforced upgrade safety pipeline.",
       "Bytecode slot mutations are dispatched only after passing commit-pinned diff audits and timed dispute windows on GenLayer.",
     ],
   },
@@ -53,11 +53,11 @@ const SLIDES = [
   },
   {
     number: "03",
-    tag: "THE DRACOGUARD SOLUTION",
+    tag: "THE BYTEWARD SOLUTION",
     title: "The Dragon Engine Autonomous Firewall",
     subtitle: "AI validator consensus directly governs on-chain bytecode replacement",
     points: [
-      "Target contracts delegate their root upgraders slot exclusively to the DracoGuard controller.",
+      "Target contracts delegate their root upgraders slot exclusively to the ByteWard controller.",
       "When maintainers propose an upgrade, validators fetch commit-pinned GitHub raw sources via strict non-deterministic HTTP get.",
       "Validators execute 5-tier safety firewalls: Storage Layout Ordering, Authority Preservation, Treasury Movement Safety, Bounded External Calls, and Charter Compliance.",
     ],
@@ -81,7 +81,7 @@ const SLIDES = [
     points: [
       "Approved proposals enter a timed dispute window (configurable from 300s to 7 days).",
       "Any security researcher or community member can file a dispute with an HTTPS evidence link.",
-      "DracoGuard downloads and snapshots the dispute evidence bytes directly on-chain before triggering consensus re-audit.",
+      "ByteWard downloads and snapshots the dispute evidence bytes directly on-chain before triggering consensus re-audit.",
     ],
   },
   {
@@ -90,9 +90,9 @@ const SLIDES = [
     title: "Bytecode Slot Mutation & Version Verification",
     subtitle: "Asynchronous finalized execution and truthful state confirmation",
     points: [
-      "Upon dispute window expiry, DracoGuard re-checks candidate SHA-256 digests and emits finalized cross-contract calls.",
+      "Upon dispute window expiry, ByteWard re-checks candidate SHA-256 digests and emits finalized cross-contract calls.",
       "The target contract overwrites its bytecode slot via gl.storage.Root.get().code.truncate() and .extend().",
-      "DracoGuard reads the target's get_version() view method to verify installation before marking the proposal as EXECUTED.",
+      "ByteWard reads the target's get_version() view method to verify installation before marking the proposal as EXECUTED.",
     ],
   },
   {
@@ -110,12 +110,12 @@ const SLIDES = [
   {
     number: "08",
     tag: "DEVELOPMENT ROADMAP",
-    title: "DracoGuard Evolutionary Roadmap",
+    title: "ByteWard Evolutionary Roadmap",
     subtitle: "From consensus firewall to institutional upgrade standard",
     points: [
       "Phase 1 (Current Live Build): Pure validator-enforced AI diff audit, 5-tier dragon firewalls, HTTPS dispute snapshotting, and cross-contract bytecode slot mutation on StudioNet.",
       "Phase 2 (Economic Guardrails): GEN deposit escrows, stake-to-challenge bonding, slashing mechanics, and automated whitehat bug bounty disbursements.",
-      "Phase 3 (Multi-Chain Rollup Standard): L2/L1 cross-chain messaging bridges enabling DracoGuard to ward Arbitrum, Optimism, Base, and EVM mainnet contracts.",
+      "Phase 3 (Multi-Chain Rollup Standard): L2/L1 cross-chain messaging bridges enabling ByteWard to ward Arbitrum, Optimism, Base, and EVM mainnet contracts.",
       "Phase 4 (Zero-Knowledge AST Proofs): Combining GenLayer natural language semantic audits with formal ZK verification for mathematically proven bytecode upgrades.",
     ],
   },
@@ -151,8 +151,8 @@ export default function HomePage() {
             name: "Treasury Vault Core",
             target_address: "0x892aF01b2298c8D8494b291c6e61C4C2485E938f",
             admin_address: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
-            security_charter: "Only approve upgrades that preserve the declared storage layout, keep DracoGuard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
-            baseline_code_url: "https://raw.githubusercontent.com/ODbeke/dracoguard/main/contracts/WardedTargetV1.py",
+            security_charter: "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
+            baseline_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/main/contracts/WardedTargetV1.py",
             baseline_digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             active_release: "v1",
             registered_at: new Date().toISOString(),
@@ -227,7 +227,7 @@ export default function HomePage() {
               <span>Upgrade Governance</span>
             </h1>
             <p className="hero-lede">
-              DracoGuard eliminates centralized admin keys and rogue multisigs on GenLayer. 
+              ByteWard eliminates centralized admin keys and rogue multisigs on GenLayer. 
               Smart contract bytecode upgrades are verified across storage layouts, authority 
               preservation, and governing charters via decentralized multi-validator AI consensus.
             </p>
@@ -353,7 +353,7 @@ export default function HomePage() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0", flexWrap: "wrap", gap: "16px" }}>
             <div>
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800" }}>
-                DracoGuard Control Plane
+                ByteWard Control Plane
               </h2>
               <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
                 Manage enrolled targets, inspect consensus audit firewalls, and govern upgrade lifecycles.
@@ -406,7 +406,7 @@ export default function HomePage() {
                 2. Authority Check
               </h4>
               <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-                Confirms DracoGuard remains sole upgrader with zero backdoor escapes.
+                Confirms ByteWard remains sole upgrader with zero backdoor escapes.
               </p>
             </div>
 

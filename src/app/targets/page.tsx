@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchGovernanceState, TargetRecord } from "@/lib/dracoguard";
+import { fetchGovernanceState, TargetRecord } from "@/lib/byteward";
 import { TargetEnrollDialog } from "@/components/target-enroll-dialog";
 import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
 import { Shield, PlusCircle, ExternalLink, RefreshCw, FileCode2, Lock, CheckCircle2 } from "lucide-react";
@@ -25,8 +25,8 @@ export function TargetsPage() {
           name: "Treasury Vault Core",
           target_address: "0x892aF01b2298c8D8494b291c6e61C4C2485E938f",
           admin_address: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
-          security_charter: "Only approve upgrades that preserve the declared storage layout, keep DracoGuard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
-          baseline_code_url: "https://raw.githubusercontent.com/ODbeke/dracoguard/main/contracts/WardedTargetV1.py",
+          security_charter: "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
+          baseline_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/main/contracts/WardedTargetV1.py",
           baseline_digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           active_release: "v1",
           registered_at: new Date().toISOString(),
@@ -60,7 +60,7 @@ export function TargetsPage() {
             Protected Target Registry
           </h1>
           <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
-            Smart contracts enrolled under DracoGuard validator-enforced upgrade authority.
+            Smart contracts enrolled under ByteWard validator-enforced upgrade authority.
           </p>
         </div>
 

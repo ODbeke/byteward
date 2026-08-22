@@ -14,12 +14,12 @@
   --ink-tertiary: #64748b;
   --ink-dim: #334155;
 
-  --draco-crimson: #ef4444;
-  --draco-amber: #f59e0b;
-  --draco-gold: #fbbf24;
-  --draco-emerald: #10b981;
-  --draco-cyan: #06b6d4;
-  --draco-purple: #a855f7;
+  --ward-crimson: #ef4444;
+  --ward-amber: #f59e0b;
+  --ward-gold: #fbbf24;
+  --ward-emerald: #10b981;
+  --ward-cyan: #06b6d4;
+  --ward-purple: #a855f7;
 
   --accent-border: rgba(245, 158, 11, 0.35);
 
@@ -102,7 +102,7 @@ body {
   font-size: 24px;
   font-weight: 800;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #ffffff 40%, var(--draco-gold) 100%);
+  background: linear-gradient(135deg, #ffffff 40%, var(--ward-gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -114,7 +114,7 @@ body {
   padding: 3px 8px;
   border-radius: 6px;
   background: rgba(245, 158, 11, 0.15);
-  color: var(--draco-gold);
+  color: var(--ward-gold);
   border: 1px solid rgba(245, 158, 11, 0.3);
   letter-spacing: 0.08em;
 }
@@ -149,7 +149,7 @@ body {
 
 .nav-link.active {
   background: rgba(245, 158, 11, 0.15);
-  color: var(--draco-gold);
+  color: var(--ward-gold);
   box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
 }
 
@@ -176,7 +176,7 @@ body {
   border-radius: 999px;
   background: rgba(245, 158, 11, 0.12);
   border: 1px solid rgba(245, 158, 11, 0.3);
-  color: var(--draco-gold);
+  color: var(--ward-gold);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
@@ -195,7 +195,7 @@ body {
 }
 
 .hero-display-title span {
-  background: linear-gradient(135deg, var(--draco-amber) 0%, var(--draco-crimson) 100%);
+  background: linear-gradient(135deg, var(--ward-amber) 0%, var(--ward-crimson) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -216,7 +216,7 @@ body {
   gap: 10px;
   padding: 16px 32px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--draco-amber) 0%, #d97706 100%);
+  background: linear-gradient(135deg, var(--ward-amber) 0%, #d97706 100%);
   color: #000000;
   font-family: var(--font-display);
   font-size: 15px;
@@ -277,12 +277,12 @@ body {
 
 .btn-terminal:hover {
   background: rgba(245, 158, 11, 0.1);
-  color: var(--draco-gold);
+  color: var(--ward-gold);
   border-color: rgba(245, 158, 11, 0.3);
 }
 
 .btn-terminal.active {
-  background: linear-gradient(135deg, var(--draco-amber) 0%, #d97706 100%);
+  background: linear-gradient(135deg, var(--ward-amber) 0%, #d97706 100%);
   color: #000000;
   border: none;
 }
@@ -332,25 +332,25 @@ body {
 
 .status-pill.approved {
   background: rgba(16, 185, 129, 0.15);
-  color: var(--draco-emerald);
+  color: var(--ward-emerald);
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .status-pill.review {
   background: rgba(245, 158, 11, 0.15);
-  color: var(--draco-gold);
+  color: var(--ward-gold);
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .status-pill.disputed {
   background: rgba(239, 68, 68, 0.15);
-  color: var(--draco-crimson);
+  color: var(--ward-crimson);
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .status-pill.executed {
   background: rgba(168, 85, 247, 0.15);
-  color: var(--draco-purple);
+  color: var(--ward-purple);
   border: 1px solid rgba(168, 85, 247, 0.3);
 }
 
@@ -358,14 +358,14 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--draco-emerald);
-  box-shadow: 0 0 10px var(--draco-emerald);
+  background: var(--ward-emerald);
+  box-shadow: 0 0 10px var(--ward-emerald);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 14px var(--draco-emerald); }
+  50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 14px var(--ward-emerald); }
   100% { transform: scale(0.95); opacity: 0.8; }
 }
 

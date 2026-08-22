@@ -1,14 +1,14 @@
-# 🐉 DracoGuard — Consensus-Enforced Smart Contract Upgrade Governance
+# 🐉 ByteWard — Consensus-Enforced Smart Contract Upgrade Governance
 
-**DracoGuard** is a GenLayer-native autonomous upgrade governance control plane that permanently eliminates the single-point-of-failure in smart contract administration: **centralized admin keys, compromised multisigs, and rogue upgrade proposals**.
+**ByteWard** is a GenLayer-native autonomous upgrade governance control plane that permanently eliminates the single-point-of-failure in smart contract administration: **centralized admin keys, compromised multisigs, and rogue upgrade proposals**.
 
 In traditional Web3 protocols, smart contract upgrades rely on developer private keys or human multisig signers. If a key is compromised, phished, or socially engineered, malicious bytecode can be installed to drain billions in protocol reserves. 
 
-DracoGuard replaces human admin keys with an **on-chain, validator-enforced AI safety engine**. Target dApps delegate their upgrade slot authority exclusively to DracoGuard. When maintainers submit an upgrade proposal, GenLayer validators non-deterministically fetch the commit-pinned GitHub raw source code diffs, run a multi-tier dragon firewall audit under consensus, enforce a timed dispute window with on-chain evidence snapshots, and execute cross-contract bytecode slot updates only after mathematical and charter safety invariants are proven.
+ByteWard replaces human admin keys with an **on-chain, validator-enforced AI safety engine**. Target dApps delegate their upgrade slot authority exclusively to ByteWard. When maintainers submit an upgrade proposal, GenLayer validators non-deterministically fetch the commit-pinned GitHub raw source code diffs, run a multi-tier dragon firewall audit under consensus, enforce a timed dispute window with on-chain evidence snapshots, and execute cross-contract bytecode slot updates only after mathematical and charter safety invariants are proven.
 
 ---
 
-## 🐲 The Draco Dragon Security Engine
+## 🐲 The ByteWard Sentinel Security Engine
 
 ```mermaid
 flowchart TD
@@ -17,10 +17,10 @@ flowchart TD
         B -->|Preflight SHA-256 Digest Matching| C[Lock Source Code Digest on Ledger]
     end
 
-    subgraph FIREWALLS["2. THE 5-TIER DRACO DRAGON FIREWALLS"]
-        C --> D{Draco Dragon Validation Engine}
+    subgraph FIREWALLS["2. THE 5-TIER BYTEWARD DRAGON FIREWALLS"]
+        C --> D{ByteWard Sentinel Validation Engine}
         D -->|Firewall 1: Wyrm Storage Audit| E[Verify State Variable Layout Ordering]
-        D -->|Firewall 2: Drake Authority Check| F[Verify DracoGuard Retained as Sole Upgrader]
+        D -->|Firewall 2: Drake Authority Check| F[Verify ByteWard Retained as Sole Upgrader]
         D -->|Firewall 3: Leviathan Treasury Guard| G[Audit Value Transfer & Drain Vectors]
         D -->|Firewall 4: Wyvern External Bounds| H[Verify Bounded External Interactions]
         D -->|Firewall 5: Dragon Charter Compliance| I[Audit Semantic Alignment with Governing Charter]
@@ -46,7 +46,7 @@ flowchart TD
     subgraph EXECUTION["5. BYTECODE SLOT MUTATION"]
         R --> S[Dispatch Asynchronous Call: WardedTarget.upgrade]
         S --> T[Target Overwrites Bytecode Slot via gl.storage.Root.code]
-        T --> U[DracoGuard Reads get_version View Call]
+        T --> U[ByteWard Reads get_version View Call]
         U -->|Version Matches Candidate Release| V[Stage: EXECUTED & SEALED]
     end
 
@@ -60,17 +60,17 @@ flowchart TD
 
 ## 🛡 Architectural Guarantees & Security Invariants
 
-1. **Exclusive Authority Delegation:** Target contracts enroll into DracoGuard via internal cross-contract message calls (`enroll_with_dracoguard`). DracoGuard checks `is_sole_guard_authorized()` in the target's system root to guarantee no alternative admin keys retain backdoor upgrade permissions.
+1. **Exclusive Authority Delegation:** Target contracts enroll into ByteWard via internal cross-contract message calls (`enroll_with_byteward`). ByteWard checks `is_sole_guard_authorized()` in the target's system root to guarantee no alternative admin keys retain backdoor upgrade permissions.
 2. **Commit-Pinned Code Immutability:** Both baseline and candidate codes must be hosted on commit-pinned raw GitHub URLs (`raw.githubusercontent.com/<org>/<repo>/<40-char-sha>/...`). Mutable branch references (such as `main` or `dev`) revert immediately during input validation.
-3. **Resilient Equivalence Principle Normalization:** To prevent consensus splits caused by subtle phrasing differences in LLM prose, DracoGuard normalizes validation results into a strict tuple of boolean flags: `(storage_layout_safe, controller_authority_intact, treasury_movement_safe, external_calls_bounded, charter_aligned, zero_critical_vulnerabilities)`. The qualitative rationale is stored on-chain for human review but excluded from validator equivalence checks.
-4. **On-Chain Dispute Evidence Snapshotting:** Community observers can file disputes by submitting HTTPS evidence links. DracoGuard downloads and permanently binds the raw evidence bytes into contract storage, preventing malicious or moving target URLs from altering review context.
-5. **Truthful Post-Upgrade Release Confirmation:** A proposal is only sealed as `EXECUTED` after DracoGuard performs an on-chain view query to the target contract verifying that `get_version()` matches the proposed release string.
+3. **Resilient Equivalence Principle Normalization:** To prevent consensus splits caused by subtle phrasing differences in LLM prose, ByteWard normalizes validation results into a strict tuple of boolean flags: `(storage_layout_safe, controller_authority_intact, treasury_movement_safe, external_calls_bounded, charter_aligned, zero_critical_vulnerabilities)`. The qualitative rationale is stored on-chain for human review but excluded from validator equivalence checks.
+4. **On-Chain Dispute Evidence Snapshotting:** Community observers can file disputes by submitting HTTPS evidence links. ByteWard downloads and permanently binds the raw evidence bytes into contract storage, preventing malicious or moving target URLs from altering review context.
+5. **Truthful Post-Upgrade Release Confirmation:** A proposal is only sealed as `EXECUTED` after ByteWard performs an on-chain view query to the target contract verifying that `get_version()` matches the proposed release string.
 
 ---
 
 ## 💰 Cryptoeconomics, Incentive Alignment & Roadmap
 
-DracoGuard bridges automated AI validator consensus with robust economic game theory:
+ByteWard bridges automated AI validator consensus with robust economic game theory:
 
 ### 1. Proposal Anti-Spam Security Bond
 - Proposing an upgrade requires maintainers to stake a refundable deposit in native tokens (`GEN`).
@@ -85,14 +85,14 @@ DracoGuard bridges automated AI validator consensus with robust economic game th
 ### 3. Protocol Evolution Roadmap
 - **Phase 1 (Current Live Build):** Pure validator-enforced AI diff audit, 5-tier dragon firewalls, HTTPS dispute snapshotting, and cross-contract bytecode slot mutation on StudioNet.
 - **Phase 2 (Economic Guardrails):** Native `GEN` escrow deposits, stake-to-challenge bonding, slashing pools, and automated whitehat bug bounty disbursements.
-- **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling DracoGuard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
+- **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling ByteWard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
 - **Phase 4 (Zero-Knowledge AST Proofs):** Pairing GenLayer natural language semantic audits with formal ZK bytecode verification.
 
 ---
 
 ## 📜 Interface Methods Reference
 
-### `DracoGuard` Upgrade Controller Contract
+### `ByteWard` Upgrade Controller Contract
 
 | Method Name | Mutability | Inputs | Purpose |
 | :--- | :--- | :--- | :--- |
@@ -118,15 +118,15 @@ DracoGuard bridges automated AI validator consensus with robust economic game th
 
 | Method Name | Mutability | Inputs | Purpose |
 | :--- | :--- | :--- | :--- |
-| `enroll_with_dracoguard` | Write | `target_id: str, name: str, charter: str, source_url: str` | Triggers cross-contract call to enroll with DracoGuard controller. |
+| `enroll_with_byteward` | Write | `target_id: str, name: str, charter: str, source_url: str` | Triggers cross-contract call to enroll with ByteWard controller. |
 | `increment_counter` | Write | None | Public method incrementing state counter. |
 | `add_value` | Write | `amount: u256` | V2 upgrade method demonstrating layout-compatible state additions. |
-| `upgrade` | Write | `new_code: bytes` | Replaces contract bytecode slot (restricted strictly to DracoGuard). |
+| `upgrade` | Write | `new_code: bytes` | Replaces contract bytecode slot (restricted strictly to ByteWard). |
 | `get_counter_value` | View | None | Reads active counter state. |
 | `get_version` | View | None | Returns active release string (`v1`, `v2`, etc.). |
-| `get_guard_controller` | View | None | Returns linked DracoGuard controller address. |
+| `get_guard_controller` | View | None | Returns linked ByteWard controller address. |
 | `get_administrator` | View | None | Returns target administrator address. |
-| `is_sole_guard_authorized` | View | None | Verifies DracoGuard is the exclusive upgrader in GenLayer system root. |
+| `is_sole_guard_authorized` | View | None | Verifies ByteWard is the exclusive upgrader in GenLayer system root. |
 
 ---
 
@@ -142,11 +142,11 @@ All **54 unit test cases** covering constructor limits, input validation bounds,
 ### 2. Run End-to-End Integration Tests (StudioNet Flow)
 To execute the complete deployment, enrollment, preflight digest validation, consensus audit, dispute window, bytecode slot dispatch, and version verification cycle on StudioNet:
 ```bash
-python3 -m pytest tests/integration/test_dracoguard_flow.py -v -s
+python3 -m pytest tests/integration/test_byteward_flow.py -v -s
 ```
 
 ### 3. Verify Deployed Schema
-Ensure your environment variable `NEXT_PUBLIC_DRACOGUARD_CONTRACT` is set in `.env`, then check method schema:
+Ensure your environment variable `NEXT_PUBLIC_BYTEWARD_CONTRACT` is set in `.env`, then check method schema:
 ```bash
 npm run verify:schema
 ```

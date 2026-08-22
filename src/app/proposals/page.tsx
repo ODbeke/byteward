@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchGovernanceState, ProposalRecord } from "@/lib/dracoguard";
+import { fetchGovernanceState, ProposalRecord } from "@/lib/byteward";
 import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
 import { ProposalActions } from "@/components/proposal-actions";
 import { FileCode2, PlusCircle, RefreshCw, CheckCircle2, XCircle, AlertCircle, Clock, ShieldCheck } from "lucide-react";
@@ -25,9 +25,9 @@ export function ProposalsPage() {
           proposer: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
           base_release: "v1",
           base_code_digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          candidate_code_url: "https://raw.githubusercontent.com/ODbeke/dracoguard/main/contracts/WardedTargetV2.py",
+          candidate_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/main/contracts/WardedTargetV2.py",
           proposed_release: "v2",
-          change_narrative: "Add a public addition method while retaining the existing storage layout, DracoGuard controller authority, public read methods, and exposing a truthful version response.",
+          change_narrative: "Add a public addition method while retaining the existing storage layout, ByteWard controller authority, public read methods, and exposing a truthful version response.",
           stage: "APPROVED_DISPUTE_WINDOW",
           verdict: "APPROVE",
           confidence: "HIGH",
@@ -37,7 +37,7 @@ export function ProposalsPage() {
           external_calls_bounded: true,
           charter_aligned: true,
           zero_critical_vulnerabilities: true,
-          audit_notes: "Dragon Engine verified storage variable layout compatibility. DracoGuard remains sole rootguard without backdoors. Treasury safe. Charter compliant.",
+          audit_notes: "Dragon Engine verified storage variable layout compatibility. ByteWard remains sole rootguard without backdoors. Treasury safe. Charter compliant.",
           flagged_anomalies: "[]",
           submitted_candidate_digest: "163152a5ec65dc45f94943fcfd43d1a81ee0a719114757cff9327ee9827b5e40",
           candidate_digest: "163152a5ec65dc45f94943fcfd43d1a81ee0a719114757cff9327ee9827b5e40",

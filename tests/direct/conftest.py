@@ -13,14 +13,14 @@ def _safe_unlink(path, *args, **kwargs):
 os.unlink = _safe_unlink
 
 COMMIT_HASH = "a" * 40
-SOURCE_URL = f"https://raw.githubusercontent.com/ODbeke/dracoguard/{COMMIT_HASH}/contracts/WardedTargetV1.py"
-CANDIDATE_URL = f"https://raw.githubusercontent.com/ODbeke/dracoguard/{COMMIT_HASH}/contracts/WardedTargetV2.py"
+SOURCE_URL = f"https://raw.githubusercontent.com/ODbeke/byteward/{COMMIT_HASH}/contracts/WardedTargetV1.py"
+CANDIDATE_URL = f"https://raw.githubusercontent.com/ODbeke/byteward/{COMMIT_HASH}/contracts/WardedTargetV2.py"
 CHARTER = (
-    "Only approve upgrades that preserve the declared storage layout, keep DracoGuard as the sole upgrade "
+    "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade "
     "authority, retain public reads, avoid value movement, and expose the stated version truthfully."
 )
 SUMMARY = (
-    "Add a public addition method while retaining the existing storage layout, DracoGuard controller authority, "
+    "Add a public addition method while retaining the existing storage layout, ByteWard controller authority, "
     "public read methods, and exposing a truthful version response."
 )
 
@@ -34,8 +34,8 @@ def warp_time_to(direct_vm, iso_timestamp: str) -> None:
         raw["datetime"] = iso_timestamp
 
 @pytest.fixture
-def dracoguard(direct_deploy):
-    return direct_deploy("contracts/DracoGuard.py", 300)
+def byteward(direct_deploy):
+    return direct_deploy("contracts/ByteWard.py", 300)
 
 @pytest.fixture
 def target_v1(direct_deploy, direct_bob):

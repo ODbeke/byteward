@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useWallet } from "./wallet-provider";
-import { executeDracoWrite, waitForDracoFinalization, ProposalRecord } from "@/lib/dracoguard";
+import { executeByteWardWrite, waitForByteWardFinalization, ProposalRecord } from "@/lib/byteward";
 import { Play, Flame, ShieldAlert, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 export function ProposalActions({
@@ -30,9 +30,9 @@ export function ProposalActions({
     setError(null);
     setSuccessMsg(null);
     try {
-      const hash = await executeDracoWrite(account, "audit_proposal", [proposal.proposal_id]);
+      const hash = await executeByteWardWrite(account, "audit_proposal", [proposal.proposal_id]);
       setSuccessMsg("Consensus audit triggered. Validators are analyzing code diff...");
-      await waitForDracoFinalization(account, hash);
+      await waitForByteWardFinalization(account, hash);
       setSuccessMsg("Consensus audit finalized on StudioNet!");
       onActionComplete();
     } catch (err: unknown) {
@@ -51,13 +51,13 @@ export function ProposalActions({
     setError(null);
     setSuccessMsg(null);
     try {
-      const hash = await executeDracoWrite(account, "file_dispute", [
+      const hash = await executeByteWardWrite(account, "file_dispute", [
         proposal.proposal_id,
         disputeUrl,
         disputeRationale,
       ]);
       setSuccessMsg("Dispute filed! Evidence snapshotted on-chain.");
-      await waitForDracoFinalization(account, hash);
+      await waitForByteWardFinalization(account, hash);
       setShowDisputeInput(false);
       onActionComplete();
     } catch (err: unknown) {
@@ -75,9 +75,9 @@ export function ProposalActions({
     setError(null);
     setSuccessMsg(null);
     try {
-      const hash = await executeDracoWrite(account, "dispatch_upgrade", [proposal.proposal_id]);
+      const hash = await executeByteWardWrite(account, "dispatch_upgrade", [proposal.proposal_id]);
       setSuccessMsg("Bytecode update dispatched to target contract slot...");
-      await waitForDracoFinalization(account, hash);
+      await waitForByteWardFinalization(account, hash);
       setSuccessMsg("Bytecode update confirmed in target slot!");
       onActionComplete();
     } catch (err: unknown) {
@@ -95,9 +95,9 @@ export function ProposalActions({
     setError(null);
     setSuccessMsg(null);
     try {
-      const hash = await executeDracoWrite(account, "verify_and_finalize", [proposal.proposal_id]);
+      const hash = await executeByteWardWrite(account, "verify_and_finalize", [proposal.proposal_id]);
       setSuccessMsg("Verifying target release version on-chain...");
-      await waitForDracoFinalization(account, hash);
+      await waitForByteWardFinalization(account, hash);
       setSuccessMsg("Upgrade confirmed and marked as EXECUTED!");
       onActionComplete();
     } catch (err: unknown) {

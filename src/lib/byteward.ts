@@ -5,7 +5,7 @@ import { studionet } from "genlayer-js/chains";
 import { TransactionStatus } from "genlayer-js/types";
 import type { CalldataEncodable, TransactionHash } from "genlayer-js/types";
 
-export const DRACOGUARD_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_DRACOGUARD_CONTRACT as `0x${string}` | undefined;
+export const BYTEWARD_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_BYTEWARD_CONTRACT as `0x${string}` | undefined;
 const rpcEndpoint = process.env.NEXT_PUBLIC_GENLAYER_ENDPOINT ?? "https://studio.genlayer.com/api";
 const explorerBase = "https://explorer-studio.genlayer.com";
 
@@ -78,7 +78,7 @@ export type GovernanceState = {
 export const getTxExplorerUrl = (txHash: string) => `${explorerBase}/tx/${txHash}`;
 export const getAddressExplorerUrl = (address: string) => `${explorerBase}/address/${address}`;
 
-function getDracoClient(accountAddress?: `0x${string}`) {
+function getByteWardClient(accountAddress?: `0x${string}`) {
   return createClient({
     chain: studionet,
     endpoint: rpcEndpoint,
@@ -88,19 +88,19 @@ function getDracoClient(accountAddress?: `0x${string}`) {
 }
 
 function resolveConfiguredController(): `0x${string}` {
-  if (!DRACOGUARD_CONTRACT_ADDRESS || /^0x0{40}$/i.test(DRACOGUARD_CONTRACT_ADDRESS)) {
-    throw new Error("DracoGuard contract address is not configured. Deploy the contract and set NEXT_PUBLIC_DRACOGUARD_CONTRACT in .env.");
+  if (!BYTEWARD_CONTRACT_ADDRESS || /^0x0{40}$/i.test(BYTEWARD_CONTRACT_ADDRESS)) {
+    throw new Error("ByteWard contract address is not configured. Deploy the contract and set NEXT_PUBLIC_BYTEWARD_CONTRACT in .env.");
   }
-  return DRACOGUARD_CONTRACT_ADDRESS;
+  return BYTEWARD_CONTRACT_ADDRESS;
 }
 
 export async function readGuardState<T>(functionName: string, args: CalldataEncodable[] = []): Promise<T> {
   try {
-    const client = getDracoClient();
+    const client = getByteWardClient();
     const address = resolveConfiguredController();
     return (await client.readContract({ address, functionName, args })) as T;
   } catch (error) {
-    throw new Error(`State read failed on DracoGuard: ${error instanceof Error ? error.message : "RPC transport error"}`);
+    throw new Error(`State read failed on ByteWard: ${error instanceof Error ? error.message : "RPC transport error"}`);
   }
 }
 
@@ -113,12 +113,12 @@ export async function fetchGovernanceState(): Promise<GovernanceState> {
   return { overview, targets, proposals };
 }
 
-export async function executeDracoWrite(
+export async function executeByteWardWrite(
   accountAddress: `0x${string}`,
   functionName: string,
   args: CalldataEncodable[]
 ): Promise<TransactionHash> {
-  const client = getDracoClient(accountAddress);
+  const client = getByteWardClient(accountAddress);
   await client.connect("studionet");
   return (await client.writeContract({
     address: resolveConfiguredController(),
@@ -129,8 +129,8 @@ export async function executeDracoWrite(
   })) as TransactionHash;
 }
 
-export async function waitForDracoFinalization(accountAddress: `0x${string}`, hash: TransactionHash) {
-  const client = getDracoClient(accountAddress);
+export async function waitForByteWardFinalization(accountAddress: `0x${string}`, hash: TransactionHash) {
+  const client = getByteWardClient(accountAddress);
   await client.connect("studionet");
   await client.waitForTransactionReceipt({
     hash,

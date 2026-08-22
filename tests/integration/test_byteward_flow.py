@@ -10,14 +10,14 @@ from gltest.utils import extract_contract_address
 
 CONTRACTS_DIR = Path(__file__).parents[2] / "contracts"
 COMMIT_HASH = "a" * 40
-V1_SOURCE_URL = f"https://raw.githubusercontent.com/ODbeke/dracoguard/{COMMIT_HASH}/contracts/WardedTargetV1.py"
-V2_SOURCE_URL = f"https://raw.githubusercontent.com/ODbeke/dracoguard/{COMMIT_HASH}/contracts/WardedTargetV2.py"
+V1_SOURCE_URL = f"https://raw.githubusercontent.com/ODbeke/byteward/{COMMIT_HASH}/contracts/WardedTargetV1.py"
+V2_SOURCE_URL = f"https://raw.githubusercontent.com/ODbeke/byteward/{COMMIT_HASH}/contracts/WardedTargetV2.py"
 CHARTER_TEXT = (
-    "Only approve upgrades that preserve the declared storage layout, keep DracoGuard as the sole upgrade "
+    "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade "
     "authority, retain public reads, avoid value movement, and expose the stated version truthfully."
 )
 UPGRADE_SUMMARY = (
-    "Add a public addition method while retaining the existing storage layout, DracoGuard controller authority, "
+    "Add a public addition method while retaining the existing storage layout, ByteWard controller authority, "
     "public read methods, and exposing a truthful version response."
 )
 
@@ -27,9 +27,9 @@ def _tx_hash(receipt):
 
 
 def _log_receipt(label, receipt):
-    print(f"DRACO_EVIDENCE {label}={_tx_hash(receipt)}")
+    print(f"BYTEWARD_EVIDENCE {label}={_tx_hash(receipt)}")
     print(
-        "DRACO_RECEIPT "
+        "BYTEWARD_RECEIPT "
         + json.dumps(
             {
                 "label": label,
@@ -54,21 +54,21 @@ def _deploy_contract(factory, args):
     return factory.build_contract(contract_address=extract_contract_address(receipt)), receipt
 
 
-def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
-    guard_factory = get_contract_factory(contract_file_path=CONTRACTS_DIR / "DracoGuard.py")
+def test_byteward_complete_finalized_upgrade_lifecycle_on_studionet():
+    guard_factory = get_contract_factory(contract_file_path=CONTRACTS_DIR / "ByteWard.py")
     v1_factory = get_contract_factory(contract_file_path=CONTRACTS_DIR / "WardedTargetV1.py")
     v2_factory = get_contract_factory(contract_file_path=CONTRACTS_DIR / "WardedTargetV2.py")
 
-    # 1. Deploy DracoGuard controller with 300 second dispute window
-    dracoguard, controller_deploy = _deploy_contract(guard_factory, [300])
+    # 1. Deploy ByteWard controller with 300 second dispute window
+    byteward, controller_deploy = _deploy_contract(guard_factory, [300])
     _log_receipt("CONTROLLER_DEPLOY", controller_deploy)
 
-    # 2. Deploy target WardedTargetV1 pointing to DracoGuard
-    target_v1, target_deploy = _deploy_contract(v1_factory, [dracoguard.address])
+    # 2. Deploy target WardedTargetV1 pointing to ByteWard
+    target_v1, target_deploy = _deploy_contract(v1_factory, [byteward.address])
     _log_receipt("TARGET_DEPLOY", target_deploy)
 
-    print(f"DRACO_EVIDENCE CONTROLLER_ADDRESS={dracoguard.address}")
-    print(f"DRACO_EVIDENCE TARGET_ADDRESS={target_v1.address}")
+    print(f"BYTEWARD_EVIDENCE CONTROLLER_ADDRESS={byteward.address}")
+    print(f"BYTEWARD_EVIDENCE TARGET_ADDRESS={target_v1.address}")
 
     # 3. Check v1 initial functions
     increment_tx = target_v1.increment_counter(args=[]).transact(
@@ -80,8 +80,8 @@ def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
     assert target_v1.get_version(args=[]).call() == "v1"
     assert target_v1.is_sole_guard_authorized(args=[]).call() is True
 
-    # 4. Enroll target with DracoGuard upgrade controller
-    enroll_tx = target_v1.enroll_with_dracoguard(args=["warded-core", "Draco Warded Core", CHARTER_TEXT, V1_SOURCE_URL]).transact(
+    # 4. Enroll target with ByteWard upgrade controller
+    enroll_tx = target_v1.enroll_with_byteward(args=["warded-core", "Draco Warded Core", CHARTER_TEXT, V1_SOURCE_URL]).transact(
         wait_transaction_status=TransactionStatus.FINALIZED,
         wait_triggered_transactions=True,
         wait_triggered_transactions_status=TransactionStatus.FINALIZED,
@@ -92,8 +92,8 @@ def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
     assert enroll_tx.get("triggered_transactions"), enroll_tx
     _log_receipt("ENROLLMENT_PARENT", enroll_tx)
 
-    # 5. Verify registered target state in DracoGuard
-    target = dracoguard.fetch_target(args=["warded-core"]).call()
+    # 5. Verify registered target state in ByteWard
+    target = byteward.fetch_target(args=["warded-core"]).call()
     assert target["target_address"].lower() == target_v1.address.lower()
     assert target["active_release"] == "v1"
     assert target["baseline_code_url"] == V1_SOURCE_URL
@@ -101,20 +101,20 @@ def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
     assert target["is_sole_guard_authorized"] is True
 
     # 6. Submit proposal for v2 upgrade
-    proposal_tx = dracoguard.propose_upgrade(args=["draco-v2", "warded-core", V2_SOURCE_URL, "v2", UPGRADE_SUMMARY]).transact(
+    proposal_tx = byteward.propose_upgrade(args=["draco-v2", "warded-core", V2_SOURCE_URL, "v2", UPGRADE_SUMMARY]).transact(
         wait_transaction_status=TransactionStatus.FINALIZED, wait_interval=5000, wait_retries=180
     )
     assert tx_execution_succeeded(proposal_tx), proposal_tx
     _log_receipt("PROPOSAL_SUBMISSION", proposal_tx)
 
     # 7. Audit proposal under multi-validator consensus
-    audit_tx = dracoguard.audit_proposal(args=["draco-v2"]).transact(
+    audit_tx = byteward.audit_proposal(args=["draco-v2"]).transact(
         wait_transaction_status=TransactionStatus.FINALIZED, wait_interval=5000, wait_retries=240
     )
     assert tx_execution_succeeded(audit_tx), audit_tx
     _log_receipt("CONSENSUS_AUDIT", audit_tx)
 
-    reviewed = dracoguard.fetch_proposal(args=["draco-v2"]).call()
+    reviewed = byteward.fetch_proposal(args=["draco-v2"]).call()
     assert reviewed["stage"] == "APPROVED_DISPUTE_WINDOW", reviewed
     assert reviewed["storage_layout_safe"] is True
     assert reviewed["controller_authority_intact"] is True
@@ -132,7 +132,7 @@ def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
         time.sleep(min(15, deadline + 2 - now))
 
     # 9. Dispatch bytecode upgrade to target
-    dispatch_tx = dracoguard.dispatch_upgrade(args=["draco-v2"]).transact(
+    dispatch_tx = byteward.dispatch_upgrade(args=["draco-v2"]).transact(
         wait_transaction_status=TransactionStatus.FINALIZED,
         wait_triggered_transactions=True,
         wait_triggered_transactions_status=TransactionStatus.FINALIZED,
@@ -146,7 +146,7 @@ def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
     target_v2 = v2_factory.build_contract(contract_address=target_v1.address)
     assert target_v2.get_counter_value(args=[]).call() == "1"
     assert target_v2.get_version(args=[]).call() == "v2"
-    assert target_v2.get_draco_v2_tag(args=[]).call() == "DRACOGUARD_V2_CONFIRMED"
+    assert target_v2.get_draco_v2_tag(args=[]).call() == "BYTEWARD_V2_CONFIRMED"
 
     add_tx = target_v2.add_value(args=[9]).transact(
         wait_transaction_status=TransactionStatus.FINALIZED, wait_interval=5000, wait_retries=180
@@ -155,15 +155,15 @@ def test_dracoguard_complete_finalized_upgrade_lifecycle_on_studionet():
     _log_receipt("V2_ADDITION", add_tx)
     assert target_v2.get_counter_value(args=[]).call() == "10"
 
-    # 11. Finalize on DracoGuard controller
-    confirm_tx = dracoguard.verify_and_finalize(args=["draco-v2"]).transact(
+    # 11. Finalize on ByteWard controller
+    confirm_tx = byteward.verify_and_finalize(args=["draco-v2"]).transact(
         wait_transaction_status=TransactionStatus.FINALIZED, wait_interval=5000, wait_retries=180
     )
     assert tx_execution_succeeded(confirm_tx), confirm_tx
     _log_receipt("FINALIZATION", confirm_tx)
 
-    final_proposal = dracoguard.fetch_proposal(args=["draco-v2"]).call()
-    final_target = dracoguard.fetch_target(args=["warded-core"]).call()
+    final_proposal = byteward.fetch_proposal(args=["draco-v2"]).call()
+    final_target = byteward.fetch_target(args=["warded-core"]).call()
     assert final_proposal["stage"] == "EXECUTED"
     assert final_target["active_release"] == "v2"
-    assert dracoguard.fetch_overview(args=[]).call()["total_upgrades_executed"] == "1"
+    assert byteward.fetch_overview(args=[]).call()["total_upgrades_executed"] == "1"

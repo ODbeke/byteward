@@ -1,14 +1,14 @@
 import React from "react";
-import { DracoMark } from "./draco-mark";
+import { ByteWardMark } from "./byteward-mark";
 import { ExternalLink, ShieldCheck, Flame } from "lucide-react";
 
 export function AppFooter() {
   return (
     <footer style={{ marginTop: "80px", paddingTop: "40px", borderTop: "1px solid var(--void-05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "20px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <DracoMark className="w-6 h-6" />
+        <ByteWardMark className="w-6 h-6" />
         <span style={{ fontFamily: "var(--font-display)", fontWeight: "800", fontSize: "16px", color: "#ffffff" }}>
-          DRACOGUARD
+          BYTEWARD
         </span>
         <span style={{ fontSize: "12px", color: "var(--ink-tertiary)" }}>
           • Consensus Upgrade Governance Control Plane
@@ -35,7 +35,7 @@ export function AppFooter() {
           <ExternalLink className="w-3 h-3" />
         </a>
         <a
-          href="https://github.com/ODbeke/dracoguard"
+          href="https://github.com/ODbeke/byteward"
           target="_blank"
           rel="noreferrer"
           style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "var(--draco-gold)", textDecoration: "none" }}

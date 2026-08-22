@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useWallet } from "./wallet-provider";
-import { executeDracoWrite, waitForDracoFinalization } from "@/lib/dracoguard";
+import { executeByteWardWrite, waitForByteWardFinalization } from "@/lib/byteward";
 import { FileCode2, AlertCircle, CheckCircle2, Loader2, X } from "lucide-react";
 
 export function ProposalSubmitDialog({
@@ -22,7 +22,7 @@ export function ProposalSubmitDialog({
   const [candidateUrl, setCandidateUrl] = useState("");
   const [proposedVersion, setProposedVersion] = useState("v2");
   const [changelog, setChangelog] = useState(
-    "Add a public addition method while retaining the existing storage layout, DracoGuard controller authority, public read methods, and exposing a truthful version response."
+    "Add a public addition method while retaining the existing storage layout, ByteWard controller authority, public read methods, and exposing a truthful version response."
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +42,7 @@ export function ProposalSubmitDialog({
     setTxHash(null);
 
     try {
-      const hash = await executeDracoWrite(account, "propose_upgrade", [
+      const hash = await executeByteWardWrite(account, "propose_upgrade", [
         proposalId,
         targetId,
         candidateUrl,
@@ -50,7 +50,7 @@ export function ProposalSubmitDialog({
         changelog,
       ]);
       setTxHash(hash);
-      await waitForDracoFinalization(account, hash);
+      await waitForByteWardFinalization(account, hash);
       onSuccess();
       onClose();
     } catch (err: unknown) {

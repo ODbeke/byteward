@@ -57,7 +57,7 @@ export function FirewallInspectModal({
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
           <Flame className="w-6 h-6" style={{ color: "var(--draco-gold)" }} />
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "700" }}>
-            The 5-Tier Draco Dragon Firewalls
+            The 5-Tier ByteWard Dragon Firewalls
           </h3>
         </div>
 
@@ -78,7 +78,7 @@ export function FirewallInspectModal({
               <span>2. Drake Upgrade Authority Check</span>
             </div>
             <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-              Inspects root upgrader permissions and constructor logic to ensure DracoGuard remains the sole upgrade authority and no owner backdoors or bypasses are introduced.
+              Inspects root upgrader permissions and constructor logic to ensure ByteWard remains the sole upgrade authority and no owner backdoors or bypasses are introduced.
             </p>
           </div>
 

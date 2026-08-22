@@ -1,8 +1,8 @@
-# DracoGuard Intelligent Contract Specification
+# ByteWard Intelligent Contract Specification
 
 ## Methods & Storage Layout
 
-### State Variables in DracoGuard
+### State Variables in ByteWard
 - `dispute_window_seconds: u256`: Minimum lock duration for challenge periods.
 - `targets: TreeMap[str, ProtectedTarget]`: Registry of warded target dApps.
 - `target_id_by_address: TreeMap[str, str]`: Reverse lookup mapping contract address to target ID.
