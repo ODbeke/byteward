@@ -1,0 +1,510 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { DracoMark } from "@/components/draco-mark";
+import { TargetEnrollDialog } from "@/components/target-enroll-dialog";
+import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
+import { ProposalActions } from "@/components/proposal-actions";
+import { fetchGovernanceState, GovernanceState, DRACOGUARD_CONTRACT_ADDRESS } from "@/lib/dracoguard";
+import {
+  Shield,
+  Flame,
+  FileCode2,
+  Lock,
+  Layers,
+  ArrowRight,
+  RefreshCw,
+  PlusCircle,
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+  Database,
+  Key,
+  DollarSign,
+  Scroll,
+} from "lucide-react";
+
+const SLIDES = [
+  {
+    number: "01",
+    tag: "EXECUTIVE SUMMARY",
+    title: "DracoGuard: Consensus Upgrade Governance on GenLayer",
+    subtitle: "Eliminating the multi-billion dollar smart contract admin key attack vector",
+    points: [
+      "Traditional smart contracts rely on centralized admin keys, single developer wallets, or vulnerable multisigs for proxy upgrades.",
+      "A compromised key or malicious multisig vote results in instant, irreversible protocol drain.",
+      "DracoGuard replaces human admin keys with an autonomous, validator-enforced upgrade safety pipeline.",
+      "Bytecode slot mutations are dispatched only after passing commit-pinned diff audits and timed dispute windows on GenLayer.",
+    ],
+  },
+  {
+    number: "02",
+    tag: "THE PROBLEM",
+    title: "The Upgradability Trilemma in Web3",
+    subtitle: "Why immutable contracts freeze and upgradeable contracts get hacked",
+    points: [
+      "1. Static Immutability: Zero bug fixes or protocol feature evolution; fatal bugs become permanent.",
+      "2. Centralized Admin Keys: High risk of private key leaks, social engineering, SIM swaps, and rogue insiders.",
+      "3. Multisig Centralization: Low quorum requirements and off-chain collusion allow stealth malicious upgrades.",
+    ],
+  },
+  {
+    number: "03",
+    tag: "THE DRACOGUARD SOLUTION",
+    title: "The Dragon Engine Autonomous Firewall",
+    subtitle: "AI validator consensus directly governs on-chain bytecode replacement",
+    points: [
+      "Target contracts delegate their root upgraders slot exclusively to the DracoGuard controller.",
+      "When maintainers propose an upgrade, validators fetch commit-pinned GitHub raw sources via strict non-deterministic HTTP get.",
+      "Validators execute 5-tier safety firewalls: Storage Layout Ordering, Authority Preservation, Treasury Movement Safety, Bounded External Calls, and Charter Compliance.",
+    ],
+  },
+  {
+    number: "04",
+    tag: "EQUIVALENCE PRINCIPLE",
+    title: "Structured Boolean Normalization",
+    subtitle: "Stable consensus without spurious LLM validator splits",
+    points: [
+      "Subjective natural language audit prose is saved on-chain for human review but excluded from equivalence matching.",
+      "Validators must agree exactly on structured boolean safety indicators: storage_layout_safe, controller_authority_intact, treasury_movement_safe, etc.",
+      "Deterministic safety gates automatically override APPROVE verdicts to ABSTAIN if any individual safety check fails.",
+    ],
+  },
+  {
+    number: "05",
+    tag: "DISPUTE TIMELOCKS",
+    title: "Snapshotting On-Chain HTTPS Evidence",
+    subtitle: "Preventing dynamic evidence tampering during challenge windows",
+    points: [
+      "Approved proposals enter a timed dispute window (configurable from 300s to 7 days).",
+      "Any security researcher or community member can file a dispute with an HTTPS evidence link.",
+      "DracoGuard downloads and snapshots the dispute evidence bytes directly on-chain before triggering consensus re-audit.",
+    ],
+  },
+  {
+    number: "06",
+    tag: "CROSS-CONTRACT EXECUTION",
+    title: "Bytecode Slot Mutation & Version Verification",
+    subtitle: "Asynchronous finalized execution and truthful state confirmation",
+    points: [
+      "Upon dispute window expiry, DracoGuard re-checks candidate SHA-256 digests and emits finalized cross-contract calls.",
+      "The target contract overwrites its bytecode slot via gl.storage.Root.get().code.truncate() and .extend().",
+      "DracoGuard reads the target's get_version() view method to verify installation before marking the proposal as EXECUTED.",
+    ],
+  },
+];
+
+export default function HomePage() {
+  const [viewMode, setViewMode] = useState<"landing" | "console" | "deck">("landing");
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [state, setState] = useState<GovernanceState | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [isEnrollOpen, setIsEnrollOpen] = useState(false);
+  const [isProposalOpen, setIsProposalOpen] = useState(false);
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchGovernanceState();
+      setState(data);
+    } catch {
+      // Mock / fallback if contract not configured yet
+      setState({
+        overview: {
+          total_targets_registered: "1",
+          total_proposals_submitted: "1",
+          total_proposals_approved: "1",
+          total_proposals_rejected: "0",
+          total_upgrades_executed: "1",
+          dispute_window_seconds: "300",
+        },
+        targets: [
+          {
+            target_id: "warded-vault-core",
+            name: "Treasury Vault Core",
+            target_address: "0x892aF01b2298c8D8494b291c6e61C4C2485E938f",
+            admin_address: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
+            security_charter: "Only approve upgrades that preserve the declared storage layout, keep DracoGuard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
+            baseline_code_url: "https://raw.githubusercontent.com/ODbeke/dracoguard/main/contracts/WardedTargetV1.py",
+            baseline_digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            active_release: "v1",
+            registered_at: new Date().toISOString(),
+            status_active: true,
+            upgrade_proposals_count: "1",
+            active_proposal_id: "",
+            is_sole_guard_authorized: true,
+          },
+        ],
+        proposals: [],
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const slide = SLIDES[slideIdx];
+
+  return (
+    <main style={{ marginTop: "24px" }}>
+      {/* View Mode Switcher Sub-Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px" }}>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <button
+            onClick={() => setViewMode("landing")}
+            className={`btn-terminal ${viewMode === "landing" ? "active" : ""}`}
+          >
+            Cover View
+          </button>
+          <button
+            onClick={() => setViewMode("console")}
+            className={`btn-terminal ${viewMode === "console" ? "active" : ""}`}
+          >
+            Governance Console
+          </button>
+          <button
+            onClick={() => setViewMode("deck")}
+            className={`btn-terminal ${viewMode === "deck" ? "active" : ""}`}
+          >
+            Architecture Deck
+          </button>
+        </div>
+
+        <button
+          onClick={loadData}
+          disabled={loading}
+          className="btn-terminal"
+          style={{ display: "flex", alignItems: "center", gap: "6px" }}
+        >
+          <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+          <span>Sync State</span>
+        </button>
+      </div>
+
+      {/* 1. PAYPER-STYLE HERO COVER LANDING VIEW */}
+      {viewMode === "landing" && (
+        <section className="hero-video-container animate-fade-in">
+          <div className="hero-left-content">
+            <span className="synthora-badge">
+              ✦ AUTONOMOUS DRAGON UPGRADE FIREWALL
+            </span>
+            <h1 className="hero-display-title">
+              Consensus-Enforced <br />
+              Smart Contract <br />
+              <span>Upgrade Governance</span>
+            </h1>
+            <p className="hero-lede">
+              DracoGuard eliminates centralized admin keys and rogue multisigs on GenLayer. 
+              Smart contract bytecode upgrades are verified across storage layouts, authority 
+              preservation, and governing charters via decentralized multi-validator AI consensus.
+            </p>
+
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <button className="btn-cta-primary" onClick={() => setViewMode("console")}>
+                LAUNCH GOVERNANCE CONSOLE →
+              </button>
+              <button className="btn-cta-secondary" onClick={() => setViewMode("deck")}>
+                EXPLORE ARCHITECTURE DECK →
+              </button>
+            </div>
+
+            <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)" }}>
+              <div>NETWORK: <span style={{ color: "var(--draco-gold)" }}>GENLAYER STUDIONET</span></div>
+              <div>•</div>
+              <div>TARGET AUTHORITY: <span style={{ color: "var(--draco-emerald)" }}>EXCLUSIVE ROOTGUARD</span></div>
+              <div>•</div>
+              <div>CONSENSUS: <span style={{ color: "var(--draco-amber)" }}>OPTIMISTIC DEMOCRACY</span></div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 2. INTERACTIVE SLIDE DECK VIEW */}
+      {viewMode === "deck" && (
+        <section className="animate-fade-in" style={{ padding: "10px 0 40px" }}>
+          <div className="panel-glass" style={{ padding: "40px", minHeight: "68vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+                <span className="synthora-badge" style={{ margin: 0 }}>
+                  SLIDE {slide.number} / {SLIDES.length.toString().padStart(2, "0")} • {slide.tag}
+                </span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--ink-tertiary)" }}>
+                  Use controls below to navigate
+                </span>
+              </div>
+
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", lineHeight: "1.1", marginBottom: "12px", color: "#ffffff" }}>
+                {slide.title}
+              </h2>
+              <h4 style={{ fontSize: "18px", color: "var(--draco-amber)", fontWeight: "600", marginBottom: "32px" }}>
+                {slide.subtitle}
+              </h4>
+
+              <div style={{ display: "grid", gap: "16px" }}>
+                {slide.points.map((pt, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: "16px 20px",
+                      background: "rgba(0, 0, 0, 0.45)",
+                      borderRadius: "10px",
+                      border: "1px solid var(--void-05)",
+                      fontSize: "15px",
+                      lineHeight: "1.6",
+                      color: "var(--ink-primary)",
+                    }}
+                  >
+                    {pt}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", paddingTop: "20px", borderTop: "1px solid var(--void-05)" }}>
+              <button
+                onClick={() => setSlideIdx((prev) => Math.max(prev - 1, 0))}
+                disabled={slideIdx === 0}
+                className="btn-terminal"
+                style={{ opacity: slideIdx === 0 ? 0.4 : 1 }}
+              >
+                <ChevronLeft className="w-4 h-4 mr-1" />
+                Previous Slide
+              </button>
+
+              <div style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "var(--ink-tertiary)" }}>
+                SLIDE <span style={{ color: "var(--draco-gold)", fontWeight: "700" }}>{slideIdx + 1}</span> OF {SLIDES.length}
+              </div>
+
+              <button
+                onClick={() => setSlideIdx((prev) => Math.min(prev + 1, SLIDES.length - 1))}
+                disabled={slideIdx === SLIDES.length - 1}
+                className="btn-terminal active"
+                style={{ opacity: slideIdx === SLIDES.length - 1 ? 0.4 : 1 }}
+              >
+                Next Slide
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 3. GOVERNANCE CONSOLE WORKBENCH */}
+      {viewMode === "console" && (
+        <section className="animate-fade-in">
+          {/* Top Stat Gauges */}
+          <div className="stats-strip">
+            <div className="stat-box">
+              <div className="stat-label">Protected Targets</div>
+              <div className="stat-value">{state?.overview.total_targets_registered ?? "0"}</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-label">Proposals Submitted</div>
+              <div className="stat-value">{state?.overview.total_proposals_submitted ?? "0"}</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-label">Consensus Approvals</div>
+              <div className="stat-value" style={{ color: "var(--draco-emerald)" }}>
+                {state?.overview.total_proposals_approved ?? "0"}
+              </div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-label">Executed Bytecode Updates</div>
+              <div className="stat-value" style={{ color: "var(--draco-gold)" }}>
+                {state?.overview.total_upgrades_executed ?? "0"}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Action Bar */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0" }}>
+            <div>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800" }}>
+                DracoGuard Control Plane
+              </h2>
+              <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
+                Manage enrolled targets, inspect consensus audit firewalls, and govern upgrade lifecycles.
+              </p>
+            </div>
+
+            <div style={{ display: "flex", gap: "12px" }}>
+              <button
+                onClick={() => setIsEnrollOpen(true)}
+                className="btn-terminal"
+                style={{ display: "flex", alignItems: "center", gap: "6px" }}
+              >
+                <PlusCircle className="w-4 h-4" />
+                <span>Enroll Target</span>
+              </button>
+              <button
+                onClick={() => setIsProposalOpen(true)}
+                className="btn-cta-primary"
+                style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px 18px", fontSize: "13px" }}
+              >
+                <FileCode2 className="w-4 h-4" />
+                <span>New Upgrade Proposal</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Dragon Engine 5-Tier Firewall Cards */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "32px" }}>
+            <div className="panel-glass" style={{ padding: "20px" }}>
+              <Database className="w-5 h-5 mb-2" style={{ color: "var(--draco-cyan)" }} />
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                1. Storage Analysis
+              </h4>
+              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                Verifies exact state layout ordering to prevent storage slot collisions.
+              </p>
+            </div>
+
+            <div className="panel-glass" style={{ padding: "20px" }}>
+              <Key className="w-5 h-5 mb-2" style={{ color: "var(--draco-gold)" }} />
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                2. Authority Check
+              </h4>
+              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                Confirms DracoGuard remains sole upgrader with zero backdoor escapes.
+              </p>
+            </div>
+
+            <div className="panel-glass" style={{ padding: "20px" }}>
+              <DollarSign className="w-5 h-5 mb-2" style={{ color: "var(--draco-emerald)" }} />
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                3. Treasury Safety
+              </h4>
+              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                Audits asset transfer flows to prevent unauthorized drain vectors.
+              </p>
+            </div>
+
+            <div className="panel-glass" style={{ padding: "20px" }}>
+              <Layers className="w-5 h-5 mb-2" style={{ color: "var(--draco-purple)" }} />
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                4. External Bounds
+              </h4>
+              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                Verifies that external contract calls are strictly bounded and safe.
+              </p>
+            </div>
+
+            <div className="panel-glass" style={{ padding: "20px" }}>
+              <Scroll className="w-5 h-5 mb-2" style={{ color: "var(--draco-crimson)" }} />
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                5. Charter Alignment
+              </h4>
+              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                Semantic LLM audit confirming candidate changes adhere to dApp charter.
+              </p>
+            </div>
+          </div>
+
+          {/* Workbench Grid: Enrolled Targets & Proposals Overview */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+            {/* Targets Column */}
+            <div className="panel-glass" style={{ padding: "24px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+                  Registered Targets ({state?.targets.length ?? 0})
+                </h3>
+                <Link href="/targets" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
+                  View All Targets →
+                </Link>
+              </div>
+
+              {state?.targets && state.targets.length > 0 ? (
+                <div style={{ display: "grid", gap: "12px" }}>
+                  {state.targets.slice(0, 3).map((target) => (
+                    <div
+                      key={target.target_id}
+                      style={{
+                        padding: "16px",
+                        borderRadius: "12px",
+                        background: "rgba(0, 0, 0, 0.4)",
+                        border: "1px solid var(--void-05)",
+                      }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                        <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{target.name}</span>
+                        <span className="status-pill approved">Active Release: {target.active_release}</span>
+                      </div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
+                        ID: {target.target_id} • ADDR: {target.target_address.slice(0, 8)}...{target.target_address.slice(-6)}
+                      </div>
+                      <p style={{ fontSize: "12px", color: "var(--ink-secondary)", lineClamp: 2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {target.security_charter}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ fontSize: "13px", color: "var(--ink-tertiary)" }}>No targets enrolled yet.</p>
+              )}
+            </div>
+
+            {/* Proposals Column */}
+            <div className="panel-glass" style={{ padding: "24px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+                  Upgrade Proposals ({state?.proposals.length ?? 0})
+                </h3>
+                <Link href="/proposals" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
+                  View All Proposals →
+                </Link>
+              </div>
+
+              {state?.proposals && state.proposals.length > 0 ? (
+                <div style={{ display: "grid", gap: "12px" }}>
+                  {state.proposals.slice(0, 3).map((proposal) => (
+                    <div
+                      key={proposal.proposal_id}
+                      style={{
+                        padding: "16px",
+                        borderRadius: "12px",
+                        background: "rgba(0, 0, 0, 0.4)",
+                        border: "1px solid var(--void-05)",
+                      }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                        <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{proposal.proposal_id}</span>
+                        <span className={`status-pill ${proposal.stage === "APPROVED_DISPUTE_WINDOW" ? "approved" : "review"}`}>
+                          {proposal.stage}
+                        </span>
+                      </div>
+                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
+                        TARGET: {proposal.target_id} • VERSION: {proposal.base_release} → {proposal.proposed_release}
+                      </div>
+                      <ProposalActions proposal={proposal} onActionComplete={loadData} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ textAlign: "center", padding: "32px 0", color: "var(--ink-tertiary)" }}>
+                  <FileCode2 className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <p style={{ fontSize: "13px" }}>No active upgrade proposals. Click "New Upgrade Proposal" to begin.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Dialog Modals */}
+      <TargetEnrollDialog
+        isOpen={isEnrollOpen}
+        onClose={() => setIsEnrollOpen(false)}
+        onSuccess={loadData}
+      />
+      <ProposalSubmitDialog
+        isOpen={isProposalOpen}
+        onClose={() => setIsProposalOpen(false)}
+        onSuccess={loadData}
+      />
+    </main>
+  );
+}
