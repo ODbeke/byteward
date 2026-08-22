@@ -54,7 +54,7 @@ const SLIDES = [
   {
     number: "03",
     tag: "THE BYTEWARD SOLUTION",
-    title: "The Dragon Engine Autonomous Firewall",
+    title: "The ByteWard Sentinel Engine Firewall",
     subtitle: "AI validator consensus directly governs on-chain bytecode replacement",
     points: [
       "Target contracts delegate their root upgraders slot exclusively to the ByteWard controller.",
@@ -142,17 +142,17 @@ export default function HomePage() {
           total_proposals_submitted: "1",
           total_proposals_approved: "1",
           total_proposals_rejected: "0",
-          total_upgrades_executed: "1",
+          total_upgrades_executed: "0",
           dispute_window_seconds: "300",
         },
         targets: [
           {
             target_id: "warded-vault-core",
             name: "Treasury Vault Core",
-            target_address: "0x892aF01b2298c8D8494b291c6e61C4C2485E938f",
+            target_address: "0x7b924FC388EFB82e4BD856395f146dbAF78559B5",
             admin_address: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
             security_charter: "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
-            baseline_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/main/contracts/WardedTargetV1.py",
+            baseline_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/91b9d6614182590bd12f683437487d8b33bb56c3/contracts/WardedTargetV1.py",
             baseline_digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             active_release: "v1",
             registered_at: new Date().toISOString(),
@@ -162,7 +162,42 @@ export default function HomePage() {
             is_sole_guard_authorized: true,
           },
         ],
-        proposals: [],
+        proposals: [
+          {
+            proposal_id: "byteward-v2-upgrade",
+            target_id: "warded-vault-core",
+            proposer: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
+            base_release: "v1",
+            base_code_digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            candidate_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/91b9d6614182590bd12f683437487d8b33bb56c3/contracts/WardedTargetV2.py",
+            proposed_release: "v2",
+            change_narrative: "Add a public addition method while retaining the existing storage layout, ByteWard controller authority, public read methods, and exposing a truthful version response.",
+            stage: "APPROVED_DISPUTE_WINDOW",
+            verdict: "APPROVE",
+            confidence: "HIGH",
+            storage_layout_safe: true,
+            controller_authority_intact: true,
+            treasury_movement_safe: true,
+            external_calls_bounded: true,
+            charter_aligned: true,
+            zero_critical_vulnerabilities: true,
+            audit_notes: "ByteWard Sentinel Engine verified storage variable layout compatibility. ByteWard remains sole authority. Treasury safe. Charter compliant.",
+            flagged_anomalies: "[]",
+            submitted_candidate_digest: "163152a5ec65dc45f94943fcfd43d1a81ee0a719114757cff9327ee9827b5e40",
+            candidate_digest: "163152a5ec65dc45f94943fcfd43d1a81ee0a719114757cff9327ee9827b5e40",
+            submitted_at: new Date().toISOString(),
+            audited_at: new Date().toISOString(),
+            dispute_deadline: new Date(Date.now() + 300000).toISOString(),
+            disputed: false,
+            dispute_evidence_url: "",
+            dispute_summary: "",
+            dispute_evidence_digest: "",
+            disputed_at: "",
+            dispatch_requested_at: "",
+            dispatch_count: "0",
+            retry_backoff_seconds: "120",
+          }
+        ],
       });
     } finally {
       setLoading(false);
@@ -176,376 +211,384 @@ export default function HomePage() {
   const slide = SLIDES[slideIdx];
 
   return (
-    <main style={{ marginTop: "24px" }}>
-      {/* View Mode Switcher Sub-Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px", flexWrap: "wrap", gap: "12px" }}>
-        <div style={{ display: "flex", gap: "8px" }}>
-          <button
-            onClick={() => setViewMode("landing")}
-            className={`btn-terminal ${viewMode === "landing" ? "active" : ""}`}
-          >
-            Cover View
-          </button>
-          <button
-            onClick={() => setViewMode("console")}
-            className={`btn-terminal ${viewMode === "console" ? "active" : ""}`}
-          >
-            Governance Console
-          </button>
-          <button
-            onClick={() => setViewMode("deck")}
-            className={`btn-terminal ${viewMode === "deck" ? "active" : ""}`}
-          >
-            Architecture Deck ({SLIDES.length} Slides)
-          </button>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <NetworkStatusBadge />
-          <button
-            onClick={loadData}
-            disabled={loading}
-            className="btn-terminal"
-            style={{ display: "flex", alignItems: "center", gap: "6px" }}
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-            <span>Sync</span>
-          </button>
-        </div>
+    <>
+      {/* PayPer Global Dynamic Background Image */}
+      <div className={`global-bg-image ${viewMode === "landing" ? "landing-view" : "app-view"}`}>
+        <img src="/usdc_activation_gate.jpg" alt="ByteWard Cyber Gate" />
+        <div className="global-bg-overlay"></div>
       </div>
 
-      {/* 1. PAYPER-STYLE HERO COVER LANDING VIEW */}
-      {viewMode === "landing" && (
-        <section className="hero-video-container animate-fade-in">
-          <div className="hero-left-content">
-            <span className="synthora-badge">
-              ✦ AUTONOMOUS DRAGON UPGRADE FIREWALL
-            </span>
-            <h1 className="hero-display-title">
-              Consensus-Enforced <br />
-              Smart Contract <br />
-              <span>Upgrade Governance</span>
-            </h1>
-            <p className="hero-lede">
-              ByteWard eliminates centralized admin keys and rogue multisigs on GenLayer. 
-              Smart contract bytecode upgrades are verified across storage layouts, authority 
-              preservation, and governing charters via decentralized multi-validator AI consensus.
-            </p>
-
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <button className="btn-cta-primary" onClick={() => setViewMode("console")}>
-                LAUNCH GOVERNANCE CONSOLE →
-              </button>
-              <button className="btn-cta-secondary" onClick={() => setViewMode("deck")}>
-                EXPLORE ARCHITECTURE DECK →
-              </button>
-            </div>
-
-            <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
-              <div>NETWORK: <span style={{ color: "var(--draco-gold)" }}>GENLAYER STUDIONET</span></div>
-              <div>•</div>
-              <div>TARGET AUTHORITY: <span style={{ color: "var(--draco-emerald)" }}>EXCLUSIVE ROOTGUARD</span></div>
-              <div>•</div>
-              <div>CONSENSUS: <span style={{ color: "var(--draco-amber)" }}>OPTIMISTIC DEMOCRACY</span></div>
-            </div>
+      <main style={{ marginTop: "24px" }}>
+        {/* View Mode Switcher Sub-Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px", flexWrap: "wrap", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              onClick={() => setViewMode("landing")}
+              className={`btn-terminal ${viewMode === "landing" ? "active" : ""}`}
+            >
+              Cover View
+            </button>
+            <button
+              onClick={() => setViewMode("console")}
+              className={`btn-terminal ${viewMode === "console" ? "active" : ""}`}
+            >
+              Governance Console
+            </button>
+            <button
+              onClick={() => setViewMode("deck")}
+              className={`btn-terminal ${viewMode === "deck" ? "active" : ""}`}
+            >
+              Architecture Deck ({SLIDES.length} Slides)
+            </button>
           </div>
-        </section>
-      )}
 
-      {/* 2. INTERACTIVE SLIDE DECK VIEW */}
-      {viewMode === "deck" && (
-        <section className="animate-fade-in" style={{ padding: "10px 0 40px" }}>
-          <div className="panel-glass" style={{ padding: "40px", minHeight: "68vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-                <span className="synthora-badge" style={{ margin: 0 }}>
-                  SLIDE {slide.number} / {SLIDES.length.toString().padStart(2, "0")} • {slide.tag}
-                </span>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--ink-tertiary)" }}>
-                  Use controls below to navigate
-                </span>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <NetworkStatusBadge />
+            <button
+              onClick={loadData}
+              disabled={loading}
+              className="btn-terminal"
+              style={{ display: "flex", alignItems: "center", gap: "6px" }}
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+              <span>Sync</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 1. PAYPER-STYLE HERO COVER LANDING VIEW */}
+        {viewMode === "landing" && (
+          <section className="hero-video-container animate-fade-in">
+            <div className="hero-left-content">
+              <span className="synthora-badge">
+                ✦ AUTONOMOUS CONSENSUS UPGRADE FIREWALL
+              </span>
+              <h1 className="hero-display-title">
+                The Autonomous <br />
+                Smart Contract <br />
+                <span>Upgrade Control Plane</span>
+              </h1>
+              <p className="hero-lede">
+                ByteWard eliminates centralized admin keys and rogue multisigs on GenLayer. 
+                Smart contract bytecode upgrades are audited across storage layouts, authority 
+                preservation, and governing charters via decentralized multi-validator AI consensus.
+              </p>
+
+              <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+                <button className="btn-cta-primary" onClick={() => setViewMode("console")}>
+                  LAUNCH GOVERNANCE CONSOLE →
+                </button>
+                <button className="btn-cta-secondary" onClick={() => setViewMode("deck")}>
+                  EXPLORE ARCHITECTURE DECK →
+                </button>
               </div>
 
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", lineHeight: "1.1", marginBottom: "12px", color: "#ffffff" }}>
-                {slide.title}
-              </h2>
-              <h4 style={{ fontSize: "18px", color: "var(--draco-amber)", fontWeight: "600", marginBottom: "32px" }}>
-                {slide.subtitle}
-              </h4>
+              <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
+                <div>NETWORK: <span style={{ color: "var(--accent-cyan)" }}>GENLAYER STUDIONET</span></div>
+                <div>•</div>
+                <div>AUTHORITY: <span style={{ color: "var(--accent-emerald)" }}>EXCLUSIVE ROOTGUARD</span></div>
+                <div>•</div>
+                <div>CONSENSUS: <span style={{ color: "var(--accent-purple)" }}>OPTIMISTIC DEMOCRACY</span></div>
+              </div>
+            </div>
+          </section>
+        )}
 
-              <div style={{ display: "grid", gap: "16px" }}>
-                {slide.points.map((pt, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: "16px 20px",
-                      background: "rgba(0, 0, 0, 0.45)",
-                      borderRadius: "10px",
-                      border: "1px solid var(--void-05)",
-                      fontSize: "15px",
-                      lineHeight: "1.6",
-                      color: "var(--ink-primary)",
-                    }}
-                  >
-                    {pt}
+        {/* 2. INTERACTIVE SLIDE DECK VIEW */}
+        {viewMode === "deck" && (
+          <section className="animate-fade-in" style={{ padding: "10px 0 40px" }}>
+            <div className="panel-glass" style={{ padding: "40px", minHeight: "68vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+                  <span className="synthora-badge" style={{ margin: 0 }}>
+                    SLIDE {slide.number} / {SLIDES.length.toString().padStart(2, "0")} • {slide.tag}
+                  </span>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--ink-tertiary)" }}>
+                    Use controls below to navigate
+                  </span>
+                </div>
+
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", lineHeight: "1.1", marginBottom: "12px", color: "#ffffff" }}>
+                  {slide.title}
+                </h2>
+                <h4 style={{ fontSize: "18px", color: "var(--accent-cyan)", fontWeight: "600", marginBottom: "32px" }}>
+                  {slide.subtitle}
+                </h4>
+
+                <div style={{ display: "grid", gap: "16px" }}>
+                  {slide.points.map((pt, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: "16px 20px",
+                        background: "rgba(0, 0, 0, 0.45)",
+                        borderRadius: "10px",
+                        border: "1px solid var(--void-05)",
+                        fontSize: "15px",
+                        lineHeight: "1.6",
+                        color: "var(--ink-primary)",
+                      }}
+                    >
+                      {pt}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", paddingTop: "20px", borderTop: "1px solid var(--void-05)" }}>
+                <button
+                  onClick={() => setSlideIdx((prev) => Math.max(prev - 1, 0))}
+                  disabled={slideIdx === 0}
+                  className="btn-terminal"
+                  style={{ opacity: slideIdx === 0 ? 0.4 : 1 }}
+                >
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Previous Slide
+                </button>
+
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "var(--ink-tertiary)" }}>
+                  SLIDE <span style={{ color: "var(--accent-cyan)", fontWeight: "700" }}>{slideIdx + 1}</span> OF {SLIDES.length}
+                </div>
+
+                <button
+                  onClick={() => setSlideIdx((prev) => Math.min(prev + 1, SLIDES.length - 1))}
+                  disabled={slideIdx === SLIDES.length - 1}
+                  className="btn-terminal active"
+                  style={{ opacity: slideIdx === SLIDES.length - 1 ? 0.4 : 1 }}
+                >
+                  Next Slide
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* 3. GOVERNANCE CONSOLE WORKBENCH */}
+        {viewMode === "console" && (
+          <section className="animate-fade-in">
+            {/* Top Stat Gauges */}
+            <div className="stats-strip">
+              <div className="stat-box">
+                <div className="stat-label">Protected Targets</div>
+                <div className="stat-value">{state?.overview.total_targets_registered ?? "0"}</div>
+              </div>
+              <div className="stat-box">
+                <div className="stat-label">Proposals Submitted</div>
+                <div className="stat-value">{state?.overview.total_proposals_submitted ?? "0"}</div>
+              </div>
+              <div className="stat-box">
+                <div className="stat-label">Consensus Approvals</div>
+                <div className="stat-value" style={{ color: "var(--accent-emerald)" }}>
+                  {state?.overview.total_proposals_approved ?? "0"}
+                </div>
+              </div>
+              <div className="stat-box">
+                <div className="stat-label">Executed Bytecode Updates</div>
+                <div className="stat-value" style={{ color: "var(--accent-cyan)" }}>
+                  {state?.overview.total_upgrades_executed ?? "0"}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Action Bar */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0", flexWrap: "wrap", gap: "16px" }}>
+              <div>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800" }}>
+                  ByteWard Control Plane
+                </h2>
+                <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
+                  Manage enrolled targets, inspect consensus audit firewalls, and govern upgrade lifecycles.
+                </p>
+              </div>
+
+              <div style={{ display: "flex", gap: "12px" }}>
+                <button
+                  onClick={() => setIsFirewallInspectOpen(true)}
+                  className="btn-terminal"
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
+                  <Flame className="w-4 h-4 text-cyan-400" />
+                  <span>Inspect Firewalls</span>
+                </button>
+                <button
+                  onClick={() => setIsEnrollOpen(true)}
+                  className="btn-terminal"
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  <span>Enroll Target</span>
+                </button>
+                <button
+                  onClick={() => setIsProposalOpen(true)}
+                  className="btn-cta-primary"
+                  style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px 18px", fontSize: "13px" }}
+                >
+                  <FileCode2 className="w-4 h-4" />
+                  <span>New Upgrade Proposal</span>
+                </button>
+              </div>
+            </div>
+
+            {/* ByteWard Sentinel Engine 5-Tier Firewall Cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "32px" }}>
+              <div className="panel-glass" style={{ padding: "20px" }}>
+                <Database className="w-5 h-5 mb-2" style={{ color: "var(--accent-cyan)" }} />
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                  1. Storage Analysis
+                </h4>
+                <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                  Verifies exact state layout ordering to prevent storage slot collisions.
+                </p>
+              </div>
+
+              <div className="panel-glass" style={{ padding: "20px" }}>
+                <Key className="w-5 h-5 mb-2" style={{ color: "var(--accent-amber)" }} />
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                  2. Authority Check
+                </h4>
+                <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                  Confirms ByteWard remains sole upgrader with zero backdoor escapes.
+                </p>
+              </div>
+
+              <div className="panel-glass" style={{ padding: "20px" }}>
+                <DollarSign className="w-5 h-5 mb-2" style={{ color: "var(--accent-emerald)" }} />
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                  3. Treasury Safety
+                </h4>
+                <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                  Audits asset transfer flows to prevent unauthorized drain vectors.
+                </p>
+              </div>
+
+              <div className="panel-glass" style={{ padding: "20px" }}>
+                <Layers className="w-5 h-5 mb-2" style={{ color: "var(--accent-purple)" }} />
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                  4. External Bounds
+                </h4>
+                <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                  Verifies that external contract calls are strictly bounded and safe.
+                </p>
+              </div>
+
+              <div className="panel-glass" style={{ padding: "20px" }}>
+                <Scroll className="w-5 h-5 mb-2" style={{ color: "var(--accent-rose)" }} />
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                  5. Charter Alignment
+                </h4>
+                <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+                  Semantic LLM audit confirming candidate changes adhere to dApp charter.
+                </p>
+              </div>
+            </div>
+
+            {/* Workbench Grid: Enrolled Targets & Proposals Overview */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+              {/* Targets Column */}
+              <div className="panel-glass" style={{ padding: "24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+                    Registered Targets ({state?.targets.length ?? 0})
+                  </h3>
+                  <Link href="/targets" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
+                    View All Targets →
+                  </Link>
+                </div>
+
+                {state?.targets && state.targets.length > 0 ? (
+                  <div style={{ display: "grid", gap: "12px" }}>
+                    {state.targets.slice(0, 3).map((target) => (
+                      <div
+                        key={target.target_id}
+                        style={{
+                          padding: "16px",
+                          borderRadius: "12px",
+                          background: "rgba(0, 0, 0, 0.4)",
+                          border: "1px solid var(--void-05)",
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                          <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{target.name}</span>
+                          <span className="status-pill approved">Active Release: {target.active_release}</span>
+                        </div>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
+                          ID: {target.target_id} • ADDR: {target.target_address.slice(0, 8)}...{target.target_address.slice(-6)}
+                        </div>
+                        <p style={{ fontSize: "12px", color: "var(--ink-secondary)", lineClamp: 2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                          {target.security_charter}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", paddingTop: "20px", borderTop: "1px solid var(--void-05)" }}>
-              <button
-                onClick={() => setSlideIdx((prev) => Math.max(prev - 1, 0))}
-                disabled={slideIdx === 0}
-                className="btn-terminal"
-                style={{ opacity: slideIdx === 0 ? 0.4 : 1 }}
-              >
-                <ChevronLeft className="w-4 h-4 mr-1" />
-                Previous Slide
-              </button>
-
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "var(--ink-tertiary)" }}>
-                SLIDE <span style={{ color: "var(--draco-gold)", fontWeight: "700" }}>{slideIdx + 1}</span> OF {SLIDES.length}
+                ) : (
+                  <p style={{ fontSize: "13px", color: "var(--ink-tertiary)" }}>No targets enrolled yet.</p>
+                )}
               </div>
 
-              <button
-                onClick={() => setSlideIdx((prev) => Math.min(prev + 1, SLIDES.length - 1))}
-                disabled={slideIdx === SLIDES.length - 1}
-                className="btn-terminal active"
-                style={{ opacity: slideIdx === SLIDES.length - 1 ? 0.4 : 1 }}
-              >
-                Next Slide
-                <ChevronRight className="w-4 h-4 ml-1" />
-              </button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 3. GOVERNANCE CONSOLE WORKBENCH */}
-      {viewMode === "console" && (
-        <section className="animate-fade-in">
-          {/* Top Stat Gauges */}
-          <div className="stats-strip">
-            <div className="stat-box">
-              <div className="stat-label">Protected Targets</div>
-              <div className="stat-value">{state?.overview.total_targets_registered ?? "0"}</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-label">Proposals Submitted</div>
-              <div className="stat-value">{state?.overview.total_proposals_submitted ?? "0"}</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-label">Consensus Approvals</div>
-              <div className="stat-value" style={{ color: "var(--draco-emerald)" }}>
-                {state?.overview.total_proposals_approved ?? "0"}
-              </div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-label">Executed Bytecode Updates</div>
-              <div className="stat-value" style={{ color: "var(--draco-gold)" }}>
-                {state?.overview.total_upgrades_executed ?? "0"}
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Action Bar */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0", flexWrap: "wrap", gap: "16px" }}>
-            <div>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800" }}>
-                ByteWard Control Plane
-              </h2>
-              <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
-                Manage enrolled targets, inspect consensus audit firewalls, and govern upgrade lifecycles.
-              </p>
-            </div>
-
-            <div style={{ display: "flex", gap: "12px" }}>
-              <button
-                onClick={() => setIsFirewallInspectOpen(true)}
-                className="btn-terminal"
-                style={{ display: "flex", alignItems: "center", gap: "6px" }}
-              >
-                <Flame className="w-4 h-4 text-amber-400" />
-                <span>Inspect Firewalls</span>
-              </button>
-              <button
-                onClick={() => setIsEnrollOpen(true)}
-                className="btn-terminal"
-                style={{ display: "flex", alignItems: "center", gap: "6px" }}
-              >
-                <PlusCircle className="w-4 h-4" />
-                <span>Enroll Target</span>
-              </button>
-              <button
-                onClick={() => setIsProposalOpen(true)}
-                className="btn-cta-primary"
-                style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px 18px", fontSize: "13px" }}
-              >
-                <FileCode2 className="w-4 h-4" />
-                <span>New Upgrade Proposal</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Dragon Engine 5-Tier Firewall Cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "32px" }}>
-            <div className="panel-glass" style={{ padding: "20px" }}>
-              <Database className="w-5 h-5 mb-2" style={{ color: "var(--draco-cyan)" }} />
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
-                1. Storage Analysis
-              </h4>
-              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-                Verifies exact state layout ordering to prevent storage slot collisions.
-              </p>
-            </div>
-
-            <div className="panel-glass" style={{ padding: "20px" }}>
-              <Key className="w-5 h-5 mb-2" style={{ color: "var(--draco-gold)" }} />
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
-                2. Authority Check
-              </h4>
-              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-                Confirms ByteWard remains sole upgrader with zero backdoor escapes.
-              </p>
-            </div>
-
-            <div className="panel-glass" style={{ padding: "20px" }}>
-              <DollarSign className="w-5 h-5 mb-2" style={{ color: "var(--draco-emerald)" }} />
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
-                3. Treasury Safety
-              </h4>
-              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-                Audits asset transfer flows to prevent unauthorized drain vectors.
-              </p>
-            </div>
-
-            <div className="panel-glass" style={{ padding: "20px" }}>
-              <Layers className="w-5 h-5 mb-2" style={{ color: "var(--draco-purple)" }} />
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
-                4. External Bounds
-              </h4>
-              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-                Verifies that external contract calls are strictly bounded and safe.
-              </p>
-            </div>
-
-            <div className="panel-glass" style={{ padding: "20px" }}>
-              <Scroll className="w-5 h-5 mb-2" style={{ color: "var(--draco-crimson)" }} />
-              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
-                5. Charter Alignment
-              </h4>
-              <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-                Semantic LLM audit confirming candidate changes adhere to dApp charter.
-              </p>
-            </div>
-          </div>
-
-          {/* Workbench Grid: Enrolled Targets & Proposals Overview */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
-            {/* Targets Column */}
-            <div className="panel-glass" style={{ padding: "24px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
-                  Registered Targets ({state?.targets.length ?? 0})
-                </h3>
-                <Link href="/targets" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
-                  View All Targets →
-                </Link>
-              </div>
-
-              {state?.targets && state.targets.length > 0 ? (
-                <div style={{ display: "grid", gap: "12px" }}>
-                  {state.targets.slice(0, 3).map((target) => (
-                    <div
-                      key={target.target_id}
-                      style={{
-                        padding: "16px",
-                        borderRadius: "12px",
-                        background: "rgba(0, 0, 0, 0.4)",
-                        border: "1px solid var(--void-05)",
-                      }}
-                    >
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                        <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{target.name}</span>
-                        <span className="status-pill approved">Active Release: {target.active_release}</span>
-                      </div>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
-                        ID: {target.target_id} • ADDR: {target.target_address.slice(0, 8)}...{target.target_address.slice(-6)}
-                      </div>
-                      <p style={{ fontSize: "12px", color: "var(--ink-secondary)", lineClamp: 2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                        {target.security_charter}
-                      </p>
-                    </div>
-                  ))}
+              {/* Proposals Column */}
+              <div className="panel-glass" style={{ padding: "24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+                    Upgrade Proposals ({state?.proposals.length ?? 0})
+                  </h3>
+                  <Link href="/proposals" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
+                    View All Proposals →
+                  </Link>
                 </div>
-              ) : (
-                <p style={{ fontSize: "13px", color: "var(--ink-tertiary)" }}>No targets enrolled yet.</p>
-              )}
-            </div>
 
-            {/* Proposals Column */}
-            <div className="panel-glass" style={{ padding: "24px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
-                  Upgrade Proposals ({state?.proposals.length ?? 0})
-                </h3>
-                <Link href="/proposals" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
-                  View All Proposals →
-                </Link>
+                {state?.proposals && state.proposals.length > 0 ? (
+                  <div style={{ display: "grid", gap: "12px" }}>
+                    {state.proposals.slice(0, 3).map((proposal) => (
+                      <div
+                        key={proposal.proposal_id}
+                        style={{
+                          padding: "16px",
+                          borderRadius: "12px",
+                          background: "rgba(0, 0, 0, 0.4)",
+                          border: "1px solid var(--void-05)",
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                          <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{proposal.proposal_id}</span>
+                          <span className={`status-pill ${proposal.stage === "APPROVED_DISPUTE_WINDOW" ? "approved" : "review"}`}>
+                            {proposal.stage}
+                          </span>
+                        </div>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
+                          TARGET: {proposal.target_id} • VERSION: {proposal.base_release} → {proposal.proposed_release}
+                        </div>
+                        <ProposalActions proposal={proposal} onActionComplete={loadData} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "32px 0", color: "var(--ink-tertiary)" }}>
+                    <FileCode2 className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                    <p style={{ fontSize: "13px" }}>No active upgrade proposals. Click "New Upgrade Proposal" to begin.</p>
+                  </div>
+                )}
               </div>
-
-              {state?.proposals && state.proposals.length > 0 ? (
-                <div style={{ display: "grid", gap: "12px" }}>
-                  {state.proposals.slice(0, 3).map((proposal) => (
-                    <div
-                      key={proposal.proposal_id}
-                      style={{
-                        padding: "16px",
-                        borderRadius: "12px",
-                        background: "rgba(0, 0, 0, 0.4)",
-                        border: "1px solid var(--void-05)",
-                      }}
-                    >
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                        <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{proposal.proposal_id}</span>
-                        <span className={`status-pill ${proposal.stage === "APPROVED_DISPUTE_WINDOW" ? "approved" : "review"}`}>
-                          {proposal.stage}
-                        </span>
-                      </div>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
-                        TARGET: {proposal.target_id} • VERSION: {proposal.base_release} → {proposal.proposed_release}
-                      </div>
-                      <ProposalActions proposal={proposal} onActionComplete={loadData} />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div style={{ textAlign: "center", padding: "32px 0", color: "var(--ink-tertiary)" }}>
-                  <FileCode2 className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                  <p style={{ fontSize: "13px" }}>No active upgrade proposals. Click "New Upgrade Proposal" to begin.</p>
-                </div>
-              )}
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
 
-      {/* Dialog Modals */}
-      <TargetEnrollDialog
-        isOpen={isEnrollOpen}
-        onClose={() => setIsEnrollOpen(false)}
-        onSuccess={loadData}
-      />
-      <ProposalSubmitDialog
-        isOpen={isProposalOpen}
-        onClose={() => setIsProposalOpen(false)}
-        onSuccess={loadData}
-      />
-      <FirewallInspectModal
-        isOpen={isFirewallInspectOpen}
-        onClose={() => setIsFirewallInspectOpen(false)}
-      />
-    </main>
+        {/* Dialog Modals */}
+        <TargetEnrollDialog
+          isOpen={isEnrollOpen}
+          onClose={() => setIsEnrollOpen(false)}
+          onSuccess={loadData}
+        />
+        <ProposalSubmitDialog
+          isOpen={isProposalOpen}
+          onClose={() => setIsProposalOpen(false)}
+          onSuccess={loadData}
+        />
+        <FirewallInspectModal
+          isOpen={isFirewallInspectOpen}
+          onClose={() => setIsFirewallInspectOpen(false)}
+        />
+      </main>
+    </>
   );
 }
