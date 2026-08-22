@@ -223,11 +223,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* PayPer Global Dynamic Background Image */}
-      <div className={`global-bg-image ${viewMode === "landing" ? "landing-view" : "app-view"}`}>
-        <img src="/usdc_activation_gate.jpg" alt="ByteWard Cyber Gate" />
-        <div className="global-bg-overlay"></div>
-      </div>
+
 
       <main style={{ marginTop: viewMode === "landing" ? "0px" : "24px" }}>
         {/* View Mode Switcher Sub-Header (Only shown in console or deck mode) */}

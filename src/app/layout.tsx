@@ -18,7 +18,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <WalletProvider>
-          <div className="app-shell animate-fade-in">
+          {/* Full-Bleed 100vw Edge-to-Edge Background */}
+          <div className="global-bg-image landing-view">
+            <img src="/usdc_activation_gate_spaced.jpg" alt="ByteWard Cyber Gate Background" />
+            <div className="global-bg-overlay"></div>
+          </div>
+
+          <div className="app-shell">
             <AppHeader />
             {children}
             <AppFooter />
