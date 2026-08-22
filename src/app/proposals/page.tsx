@@ -4,13 +4,21 @@ import React, { useState, useEffect } from "react";
 import { fetchGovernanceState, ProposalRecord } from "@/lib/byteward";
 import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
 import { ProposalActions } from "@/components/proposal-actions";
-import { FileCode2, PlusCircle, RefreshCw, CheckCircle2, XCircle, AlertCircle, Clock, ShieldCheck } from "lucide-react";
+import { FileCode2, PlusCircle, RefreshCw, CheckCircle2, XCircle } from "lucide-react";
 
 export function ProposalsPage() {
   const [proposals, setProposals] = useState<ProposalRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [stageFilter, setStageFilter] = useState("all");
   const [isSubmitOpen, setIsSubmitOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.add("byteward-app-body");
+    document.body.classList.remove("landing-locked");
+    return () => {
+      document.body.classList.remove("byteward-app-body");
+    };
+  }, []);
 
   const loadProposals = async () => {
     setLoading(true);
@@ -20,7 +28,7 @@ export function ProposalsPage() {
     } catch {
       setProposals([
         {
-          proposal_id: "draco-v2-mainnet",
+          proposal_id: "byteward-v2-upgrade",
           target_id: "warded-vault-core",
           proposer: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
           base_release: "v1",
@@ -37,7 +45,7 @@ export function ProposalsPage() {
           external_calls_bounded: true,
           charter_aligned: true,
           zero_critical_vulnerabilities: true,
-          audit_notes: "Dragon Engine verified storage variable layout compatibility. ByteWard remains sole rootguard without backdoors. Treasury safe. Charter compliant.",
+          audit_notes: "ByteWard Sentinel Engine verified storage variable layout compatibility. ByteWard remains sole authority. Treasury safe. Charter compliant.",
           flagged_anomalies: "[]",
           submitted_candidate_digest: "163152a5ec65dc45f94943fcfd43d1a81ee0a719114757cff9327ee9827b5e40",
           candidate_digest: "163152a5ec65dc45f94943fcfd43d1a81ee0a719114757cff9327ee9827b5e40",
@@ -71,10 +79,10 @@ export function ProposalsPage() {
     <main className="animate-fade-in" style={{ marginTop: "24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "32px", fontWeight: "800", color: "#ffffff" }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "32px", fontWeight: "800", color: "#090d16" }}>
             Upgrade Proposals Ledger
           </h1>
-          <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
+          <p style={{ fontSize: "14px", color: "#475569" }}>
             Audit history and on-chain validator consensus decisions for candidate smart contract upgrades.
           </p>
         </div>
@@ -120,13 +128,13 @@ export function ProposalsPage() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "700", color: "#ffffff" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "700", color: "#090d16" }}>
                     {proposal.proposal_id}
                   </h3>
                   <span className="brand-badge">TARGET: {proposal.target_id}</span>
                 </div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--ink-tertiary)" }}>
-                  VERSION TRANSITION: <span style={{ color: "var(--draco-gold)" }}>{proposal.base_release}</span> → <span style={{ color: "var(--draco-emerald)" }}>{proposal.proposed_release}</span> • PROPOSED BY: {proposal.proposer.slice(0, 8)}...
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "#64748b" }}>
+                  VERSION TRANSITION: <span style={{ color: "#0284c7", fontWeight: "700" }}>{proposal.base_release}</span> → <span style={{ color: "#059669", fontWeight: "700" }}>{proposal.proposed_release}</span> • PROPOSED BY: {proposal.proposer.slice(0, 8)}...
                 </div>
               </div>
 
@@ -136,33 +144,33 @@ export function ProposalsPage() {
             </div>
 
             {/* Safety Firewalls Matrix */}
-            <div style={{ background: "rgba(0, 0, 0, 0.35)", padding: "16px", borderRadius: "12px", border: "1px solid var(--void-05)", marginBottom: "16px" }}>
-              <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--draco-gold)", marginBottom: "12px" }}>
-                DRAGON ENGINE VALIDATOR CONSENSUS FIREWALLS:
+            <div style={{ background: "#f8fafc", padding: "16px", borderRadius: "12px", border: "1px solid #e2e8f0", marginBottom: "16px" }}>
+              <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "#0284c7", marginBottom: "12px", fontWeight: "700" }}>
+                BYTEWARD SENTINEL ENGINE VALIDATOR FIREWALLS:
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px", fontSize: "12px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px", fontSize: "12px", color: "#090d16" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  {proposal.storage_layout_safe ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-red-400" />}
+                  {proposal.storage_layout_safe ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                   <span>Storage Layout Safe</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  {proposal.controller_authority_intact ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-red-400" />}
+                  {proposal.controller_authority_intact ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                   <span>Guard Authority Intact</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  {proposal.treasury_movement_safe ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-red-400" />}
+                  {proposal.treasury_movement_safe ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                   <span>Treasury Movement Safe</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  {proposal.external_calls_bounded ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-red-400" />}
+                  {proposal.external_calls_bounded ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                   <span>External Calls Bounded</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  {proposal.charter_aligned ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-red-400" />}
+                  {proposal.charter_aligned ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                   <span>Charter Aligned</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  {proposal.zero_critical_vulnerabilities ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-red-400" />}
+                  {proposal.zero_critical_vulnerabilities ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-500" />}
                   <span>Zero Critical Vulns</span>
                 </div>
               </div>
@@ -170,21 +178,21 @@ export function ProposalsPage() {
 
             {/* Changelog Narrative */}
             <div style={{ marginBottom: "16px" }}>
-              <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px" }}>
+              <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "#64748b", marginBottom: "4px" }}>
                 CHANGELOG SUMMARY:
               </div>
-              <p style={{ fontSize: "13px", color: "var(--ink-secondary)", lineHeight: "1.6" }}>
+              <p style={{ fontSize: "13px", color: "#475569", lineHeight: "1.6" }}>
                 {proposal.change_narrative}
               </p>
             </div>
 
             {/* Audit Notes if available */}
             {proposal.audit_notes && (
-              <div style={{ background: "rgba(14, 18, 29, 0.6)", padding: "12px 16px", borderRadius: "8px", borderLeft: "3px solid var(--draco-gold)", marginBottom: "16px" }}>
-                <div style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "var(--draco-gold)", marginBottom: "4px" }}>
+              <div style={{ background: "#f1f5f9", padding: "12px 16px", borderRadius: "8px", borderLeft: "3px solid #0284c7", border: "1px solid #e2e8f0", marginBottom: "16px" }}>
+                <div style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "#0284c7", marginBottom: "4px", fontWeight: "700" }}>
                   VALIDATOR CONSENSUS RATIONALE:
                 </div>
-                <p style={{ fontSize: "12px", color: "var(--ink-primary)", lineHeight: "1.5" }}>
+                <p style={{ fontSize: "12px", color: "#090d16", lineHeight: "1.5" }}>
                   {proposal.audit_notes}
                 </p>
               </div>

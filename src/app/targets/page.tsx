@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { fetchGovernanceState, TargetRecord } from "@/lib/byteward";
 import { TargetEnrollDialog } from "@/components/target-enroll-dialog";
 import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
-import { Shield, PlusCircle, ExternalLink, RefreshCw, FileCode2, Lock, CheckCircle2 } from "lucide-react";
+import { Shield, PlusCircle, ExternalLink, RefreshCw, FileCode2 } from "lucide-react";
 
 export function TargetsPage() {
   const [targets, setTargets] = useState<TargetRecord[]>([]);
@@ -12,6 +12,14 @@ export function TargetsPage() {
   const [search, setSearch] = useState("");
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
   const [selectedTargetForProposal, setSelectedTargetForProposal] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.body.classList.add("byteward-app-body");
+    document.body.classList.remove("landing-locked");
+    return () => {
+      document.body.classList.remove("byteward-app-body");
+    };
+  }, []);
 
   const loadTargets = async () => {
     setLoading(true);
@@ -23,7 +31,7 @@ export function TargetsPage() {
         {
           target_id: "warded-vault-core",
           name: "Treasury Vault Core",
-          target_address: "0x892aF01b2298c8D8494b291c6e61C4C2485E938f",
+          target_address: "0x7b924FC388EFB82e4BD856395f146dbAF78559B5",
           admin_address: "0x4b785C66270E45E8FfEa4c5a967520e53a33979B",
           security_charter: "Only approve upgrades that preserve the declared storage layout, keep ByteWard as the sole upgrade authority, retain public reads, avoid value movement, and expose the stated version truthfully.",
           baseline_code_url: "https://raw.githubusercontent.com/ODbeke/byteward/main/contracts/WardedTargetV1.py",
@@ -56,10 +64,10 @@ export function TargetsPage() {
     <main className="animate-fade-in" style={{ marginTop: "24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "32px", fontWeight: "800", color: "#ffffff" }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "32px", fontWeight: "800", color: "#090d16" }}>
             Protected Target Registry
           </h1>
-          <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
+          <p style={{ fontSize: "14px", color: "#475569" }}>
             Smart contracts enrolled under ByteWard validator-enforced upgrade authority.
           </p>
         </div>
@@ -96,10 +104,11 @@ export function TargetsPage() {
             maxWidth: "480px",
             padding: "12px 16px",
             borderRadius: "10px",
-            background: "var(--void-02)",
-            border: "1px solid var(--void-05)",
-            color: "#ffffff",
+            background: "#ffffff",
+            border: "1px solid #cbd5e1",
+            color: "#090d16",
             fontSize: "14px",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.02)",
           }}
         />
       </div>
@@ -110,10 +119,10 @@ export function TargetsPage() {
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
                 <div>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700", color: "#ffffff" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700", color: "#090d16" }}>
                     {target.name}
                   </h3>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)" }}>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#64748b" }}>
                     ID: {target.target_id}
                   </div>
                 </div>
@@ -123,31 +132,31 @@ export function TargetsPage() {
               </div>
 
               <div style={{ display: "grid", gap: "10px", margin: "16px 0", fontSize: "12px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--void-05)", paddingBottom: "6px" }}>
-                  <span style={{ color: "var(--ink-tertiary)" }}>Active Release:</span>
-                  <span style={{ fontFamily: "var(--font-mono)", fontWeight: "700", color: "var(--draco-gold)" }}>{target.active_release}</span>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e2e8f0", paddingBottom: "6px" }}>
+                  <span style={{ color: "#64748b" }}>Active Release:</span>
+                  <span style={{ fontFamily: "var(--font-mono)", fontWeight: "700", color: "#0284c7" }}>{target.active_release}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--void-05)", paddingBottom: "6px" }}>
-                  <span style={{ color: "var(--ink-tertiary)" }}>Sole Authority:</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: target.is_sole_guard_authorized ? "var(--draco-emerald)" : "var(--draco-crimson)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e2e8f0", paddingBottom: "6px" }}>
+                  <span style={{ color: "#64748b" }}>Sole Authority:</span>
+                  <span style={{ fontFamily: "var(--font-mono)", color: target.is_sole_guard_authorized ? "#059669" : "#dc2626", fontWeight: "600" }}>
                     {target.is_sole_guard_authorized ? "Verified Sole Rootguard" : "Revoked"}
                   </span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--void-05)", paddingBottom: "6px" }}>
-                  <span style={{ color: "var(--ink-tertiary)" }}>Contract Address:</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: "#ffffff" }}>{target.target_address.slice(0, 8)}...{target.target_address.slice(-6)}</span>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e2e8f0", paddingBottom: "6px" }}>
+                  <span style={{ color: "#64748b" }}>Contract Address:</span>
+                  <span style={{ fontFamily: "var(--font-mono)", color: "#090d16", fontWeight: "600" }}>{target.target_address.slice(0, 8)}...{target.target_address.slice(-6)}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--void-05)", paddingBottom: "6px" }}>
-                  <span style={{ color: "var(--ink-tertiary)" }}>Total Proposals:</span>
-                  <span style={{ fontFamily: "var(--font-mono)", fontWeight: "700" }}>{target.upgrade_proposals_count}</span>
+                <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #e2e8f0", paddingBottom: "6px" }}>
+                  <span style={{ color: "#64748b" }}>Total Proposals:</span>
+                  <span style={{ fontFamily: "var(--font-mono)", fontWeight: "700", color: "#090d16" }}>{target.upgrade_proposals_count}</span>
                 </div>
               </div>
 
-              <div style={{ background: "rgba(0, 0, 0, 0.3)", padding: "12px", borderRadius: "8px", border: "1px solid var(--void-05)", marginBottom: "16px" }}>
-                <div style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "var(--draco-gold)", marginBottom: "4px" }}>
+              <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "8px", border: "1px solid #e2e8f0", marginBottom: "16px" }}>
+                <div style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "#0284c7", marginBottom: "4px", fontWeight: "700" }}>
                   GOVERNING CHARTER:
                 </div>
-                <p style={{ fontSize: "11px", color: "var(--ink-secondary)", lineHeight: "1.5" }}>
+                <p style={{ fontSize: "11px", color: "#475569", lineHeight: "1.5" }}>
                   {target.security_charter}
                 </p>
               </div>
