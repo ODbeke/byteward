@@ -1,6 +1,5 @@
-@import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
+@import "tailwindcss";
 
 :root {
   --void-00: #05070c;
@@ -368,20 +367,6 @@ body {
   0% { transform: scale(0.95); opacity: 0.8; }
   50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 14px var(--draco-emerald); }
   100% { transform: scale(0.95); opacity: 0.8; }
-}
-
-/* Grid Views */
-.workbench-grid {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 24px;
-  margin-top: 24px;
-}
-
-@media (max-width: 960px) {
-  .workbench-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* Animations */
