@@ -95,6 +95,30 @@ const SLIDES = [
       "DracoGuard reads the target's get_version() view method to verify installation before marking the proposal as EXECUTED.",
     ],
   },
+  {
+    number: "07",
+    tag: "ECONOMIC INCENTIVES & GAME THEORY",
+    title: "Cryptoeconomic Guardrails (Phase 2)",
+    subtitle: "Aligning maintainer deposits, challenger bonds, and bug bounties",
+    points: [
+      "1. Proposal Anti-Spam Bond: Maintainers lock a security deposit in GEN to propose upgrades, preventing spam attacks on the AI validator network.",
+      "2. Malicious Upgrade Slashing: If consensus flags backdoor drain vectors, the proposer deposit is slashed into the protocol insurance treasury.",
+      "3. Stake-to-Challenge (Dispute Bonding): Observers stake a challenge bond to file disputes, eliminating frivolous griefing attacks while rewarding legitimate whitehat catches with bounty payouts.",
+      "4. Decentralized Bug Bounty Pool: Target dApps fund an on-chain escrow to reward researchers who successfully challenge compromised proposals.",
+    ],
+  },
+  {
+    number: "08",
+    tag: "DEVELOPMENT ROADMAP",
+    title: "DracoGuard Evolutionary Roadmap",
+    subtitle: "From consensus firewall to institutional upgrade standard",
+    points: [
+      "Phase 1 (Current Live Build): Pure validator-enforced AI diff audit, 5-tier dragon firewalls, HTTPS dispute snapshotting, and cross-contract bytecode slot mutation on StudioNet.",
+      "Phase 2 (Economic Guardrails): GEN deposit escrows, stake-to-challenge bonding, slashing mechanics, and automated whitehat bug bounty disbursements.",
+      "Phase 3 (Multi-Chain Rollup Standard): L2/L1 cross-chain messaging bridges enabling DracoGuard to ward Arbitrum, Optimism, Base, and EVM mainnet contracts.",
+      "Phase 4 (Zero-Knowledge AST Proofs): Combining GenLayer natural language semantic audits with formal ZK verification for mathematically proven bytecode upgrades.",
+    ],
+  },
 ];
 
 export default function HomePage() {
@@ -172,7 +196,7 @@ export default function HomePage() {
             onClick={() => setViewMode("deck")}
             className={`btn-terminal ${viewMode === "deck" ? "active" : ""}`}
           >
-            Architecture Deck
+            Architecture Deck ({SLIDES.length} Slides)
           </button>
         </div>
 
@@ -217,7 +241,7 @@ export default function HomePage() {
               </button>
             </div>
 
-            <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)" }}>
+            <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
               <div>NETWORK: <span style={{ color: "var(--draco-gold)" }}>GENLAYER STUDIONET</span></div>
               <div>•</div>
               <div>TARGET AUTHORITY: <span style={{ color: "var(--draco-emerald)" }}>EXCLUSIVE ROOTGUARD</span></div>
@@ -326,7 +350,7 @@ export default function HomePage() {
           </div>
 
           {/* Quick Action Bar */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0", flexWrap: "wrap", gap: "16px" }}>
             <div>
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800" }}>
                 DracoGuard Control Plane
