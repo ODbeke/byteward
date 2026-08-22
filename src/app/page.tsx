@@ -6,7 +6,9 @@ import { DracoMark } from "@/components/draco-mark";
 import { TargetEnrollDialog } from "@/components/target-enroll-dialog";
 import { ProposalSubmitDialog } from "@/components/proposal-submit-dialog";
 import { ProposalActions } from "@/components/proposal-actions";
-import { fetchGovernanceState, GovernanceState, DRACOGUARD_CONTRACT_ADDRESS } from "@/lib/dracoguard";
+import { NetworkStatusBadge } from "@/components/network-status-badge";
+import { FirewallInspectModal } from "@/components/firewall-inspect-modal";
+import { fetchGovernanceState, GovernanceState } from "@/lib/dracoguard";
 import {
   Shield,
   Flame,
@@ -102,6 +104,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
   const [isProposalOpen, setIsProposalOpen] = useState(false);
+  const [isFirewallInspectOpen, setIsFirewallInspectOpen] = useState(false);
 
   const loadData = async () => {
     setLoading(true);
@@ -109,7 +112,6 @@ export default function HomePage() {
       const data = await fetchGovernanceState();
       setState(data);
     } catch {
-      // Mock / fallback if contract not configured yet
       setState({
         overview: {
           total_targets_registered: "1",
@@ -152,7 +154,7 @@ export default function HomePage() {
   return (
     <main style={{ marginTop: "24px" }}>
       {/* View Mode Switcher Sub-Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px", flexWrap: "wrap", gap: "12px" }}>
         <div style={{ display: "flex", gap: "8px" }}>
           <button
             onClick={() => setViewMode("landing")}
@@ -174,15 +176,18 @@ export default function HomePage() {
           </button>
         </div>
 
-        <button
-          onClick={loadData}
-          disabled={loading}
-          className="btn-terminal"
-          style={{ display: "flex", alignItems: "center", gap: "6px" }}
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-          <span>Sync State</span>
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <NetworkStatusBadge />
+          <button
+            onClick={loadData}
+            disabled={loading}
+            className="btn-terminal"
+            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+            <span>Sync</span>
+          </button>
+        </div>
       </div>
 
       {/* 1. PAYPER-STYLE HERO COVER LANDING VIEW */}
@@ -332,6 +337,14 @@ export default function HomePage() {
             </div>
 
             <div style={{ display: "flex", gap: "12px" }}>
+              <button
+                onClick={() => setIsFirewallInspectOpen(true)}
+                className="btn-terminal"
+                style={{ display: "flex", alignItems: "center", gap: "6px" }}
+              >
+                <Flame className="w-4 h-4 text-amber-400" />
+                <span>Inspect Firewalls</span>
+              </button>
               <button
                 onClick={() => setIsEnrollOpen(true)}
                 className="btn-terminal"
@@ -504,6 +517,10 @@ export default function HomePage() {
         isOpen={isProposalOpen}
         onClose={() => setIsProposalOpen(false)}
         onSuccess={loadData}
+      />
+      <FirewallInspectModal
+        isOpen={isFirewallInspectOpen}
+        onClose={() => setIsFirewallInspectOpen(false)}
       />
     </main>
   );
