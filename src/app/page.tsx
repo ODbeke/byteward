@@ -130,6 +130,17 @@ export default function HomePage() {
   const [isProposalOpen, setIsProposalOpen] = useState(false);
   const [isFirewallInspectOpen, setIsFirewallInspectOpen] = useState(false);
 
+  useEffect(() => {
+    if (viewMode === "landing") {
+      document.body.classList.add("landing-locked");
+    } else {
+      document.body.classList.remove("landing-locked");
+    }
+    return () => {
+      document.body.classList.remove("landing-locked");
+    };
+  }, [viewMode]);
+
   const loadData = async () => {
     setLoading(true);
     try {
@@ -218,45 +229,47 @@ export default function HomePage() {
         <div className="global-bg-overlay"></div>
       </div>
 
-      <main style={{ marginTop: "24px" }}>
-        {/* View Mode Switcher Sub-Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px", flexWrap: "wrap", gap: "12px" }}>
-          <div style={{ display: "flex", gap: "8px" }}>
-            <button
-              onClick={() => setViewMode("landing")}
-              className={`btn-terminal ${viewMode === "landing" ? "active" : ""}`}
-            >
-              Cover View
-            </button>
-            <button
-              onClick={() => setViewMode("console")}
-              className={`btn-terminal ${viewMode === "console" ? "active" : ""}`}
-            >
-              Governance Console
-            </button>
-            <button
-              onClick={() => setViewMode("deck")}
-              className={`btn-terminal ${viewMode === "deck" ? "active" : ""}`}
-            >
-              Architecture Deck ({SLIDES.length} Slides)
-            </button>
-          </div>
+      <main style={{ marginTop: viewMode === "landing" ? "0px" : "24px" }}>
+        {/* View Mode Switcher Sub-Header (Only shown in console or deck mode) */}
+        {viewMode !== "landing" && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px", flexWrap: "wrap", gap: "12px" }}>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <button
+                onClick={() => setViewMode("landing")}
+                className={`btn-terminal ${viewMode === "console" ? "" : ""}`}
+              >
+                Cover View
+              </button>
+              <button
+                onClick={() => setViewMode("console")}
+                className={`btn-terminal ${viewMode === "console" ? "active" : ""}`}
+              >
+                Governance Console
+              </button>
+              <button
+                onClick={() => setViewMode("deck")}
+                className={`btn-terminal ${viewMode === "deck" ? "active" : ""}`}
+              >
+                Architecture Deck ({SLIDES.length} Slides)
+              </button>
+            </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <NetworkStatusBadge />
-            <button
-              onClick={loadData}
-              disabled={loading}
-              className="btn-terminal"
-              style={{ display: "flex", alignItems: "center", gap: "6px" }}
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-              <span>Sync</span>
-            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <NetworkStatusBadge />
+              <button
+                onClick={loadData}
+                disabled={loading}
+                className="btn-terminal"
+                style={{ display: "flex", alignItems: "center", gap: "6px" }}
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+                <span>Sync</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* 1. PAYPER-STYLE HERO COVER LANDING VIEW */}
+        {/* 1. PAYPER-STYLE HERO COVER LANDING VIEW (Perfect 100vh Locked Cover) */}
         {viewMode === "landing" && (
           <section className="hero-video-container animate-fade-in">
             <div className="hero-left-content">
@@ -283,7 +296,7 @@ export default function HomePage() {
                 </button>
               </div>
 
-              <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
+              <div style={{ marginTop: "36px", display: "flex", alignItems: "center", gap: "20px", color: "var(--ink-tertiary)", fontSize: "12px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
                 <div>NETWORK: <span style={{ color: "var(--accent-cyan)" }}>GENLAYER STUDIONET</span></div>
                 <div>•</div>
                 <div>AUTHORITY: <span style={{ color: "var(--accent-emerald)" }}>EXCLUSIVE ROOTGUARD</span></div>
