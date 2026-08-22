@@ -3,9 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ByteWardMark } from "./byteward-mark";
 import { useWallet } from "./wallet-provider";
-import { Shield, FileCode2, Terminal, BookOpen, Layers } from "lucide-react";
+import { Shield, FileCode2, Terminal } from "lucide-react";
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -14,8 +13,9 @@ export function AppHeader() {
   return (
     <header className="nav-terminal">
       <Link href="/" className="nav-brand">
-        <ByteWardMark className="w-9 h-9" />
-        <span className="brand-text">BYTEWARD</span>
+        <span className="brand-text">
+          BYTEWARD <span>v1</span>
+        </span>
         <span className="brand-badge">STUDIONET</span>
       </Link>
 

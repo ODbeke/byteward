@@ -1,14 +1,12 @@
 import React from "react";
-import { ByteWardMark } from "./byteward-mark";
 import { ExternalLink } from "lucide-react";
 
 export function AppFooter() {
   return (
     <footer className="app-footer-auto" style={{ marginTop: "80px", paddingTop: "40px", borderTop: "1px solid var(--void-05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "20px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <ByteWardMark className="w-6 h-6" />
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <span style={{ fontFamily: "var(--font-display)", fontWeight: "800", fontSize: "16px", color: "#ffffff" }}>
-          BYTEWARD
+          BYTEWARD <span style={{ color: "var(--accent-cyan)" }}>v1</span>
         </span>
         <span style={{ fontSize: "12px", color: "var(--ink-tertiary)" }}>
           • Consensus Upgrade Governance Control Plane
