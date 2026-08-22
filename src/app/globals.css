@@ -2,25 +2,28 @@
 @import "tailwindcss";
 
 :root {
-  --void-00: #f6f8fb;
-  --void-01: #ffffff;
-  --void-02: #ffffff;
-  --void-03: #f1f5f9;
-  --void-05: rgba(15, 23, 42, 0.08);
-  --void-10: rgba(15, 23, 42, 0.14);
+  --void-00: #030407;
+  --void-01: #06080e;
+  --void-02: #0b0e17;
+  --void-03: #111522;
+  --void-05: rgba(255, 255, 255, 0.08);
+  --void-10: rgba(255, 255, 255, 0.14);
+
+  --canvas-offwhite: #f6f8fb;
+  --panel-offwhite: rgba(255, 255, 255, 0.92);
 
   --ink-primary: #090d16;
   --ink-secondary: #475569;
   --ink-tertiary: #64748b;
   --ink-dim: #94a3b8;
 
-  --accent-cyan: #0284c7;
-  --accent-blue: #2563eb;
-  --accent-purple: #7c3aed;
-  --accent-emerald: #059669;
-  --accent-amber: #d97706;
-  --accent-rose: #e11d48;
-  --accent-border: rgba(2, 132, 199, 0.3);
+  --accent-cyan: #38bdf8;
+  --accent-blue: #0284c7;
+  --accent-purple: #c084fc;
+  --accent-emerald: #10b981;
+  --accent-amber: #fbbf24;
+  --accent-rose: #f43f5e;
+  --accent-border: rgba(56, 189, 248, 0.35);
 
   --ward-crimson: #dc2626;
   --ward-amber: #d97706;
@@ -46,7 +49,7 @@
 }
 
 body {
-  background-color: var(--void-00);
+  background-color: var(--canvas-offwhite);
   color: var(--ink-primary);
   font-family: var(--font-body);
   min-height: 100vh;
@@ -61,7 +64,7 @@ body {
   background-attachment: fixed;
 }
 
-/* PayPer Dynamic Background Cover (Light / Off-White Mode) */
+/* PayPer Dynamic Background Cover */
 .global-bg-image {
   position: fixed;
   top: 0;
@@ -90,28 +93,30 @@ body {
   transition: background 0.8s var(--ease-out);
 }
 
-/* Landing view: off-white ambient light cover */
+/* 1. Landing View Cover: Sharp, Deep Dark Cyber-Terminal Atmosphere */
 .global-bg-image.landing-view img {
-  filter: blur(0px) brightness(1.2) contrast(0.9) opacity(0.22);
+  filter: blur(0px) brightness(1.0);
+  opacity: 1;
 }
 .global-bg-image.landing-view .global-bg-overlay {
-  background: linear-gradient(to bottom, rgba(246, 248, 251, 0.3) 20%, rgba(246, 248, 251, 0.98) 100%);
+  background: linear-gradient(to bottom, rgba(3, 4, 7, 0.25) 20%, rgba(3, 4, 7, 0.95) 100%);
 }
 
-/* App view: heavily blurred, light ambient paper texture */
+/* 2. Main App / Governance Console: Warm Off-White Ambient Lighting */
 .global-bg-image.app-view img {
-  filter: blur(80px) brightness(1.3) contrast(0.85) opacity(0.18);
+  filter: blur(80px) brightness(1.3) contrast(0.85);
+  opacity: 0.22;
 }
 .global-bg-image.app-view .global-bg-overlay {
-  background: rgba(246, 248, 251, 0.85);
+  background: rgba(246, 248, 251, 0.88);
 }
 
-/* Off-White Luxury Glass Card */
+/* Off-White Luxury Glass Cards for Main App */
 .panel-glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
@@ -170,7 +175,7 @@ body {
   padding: 3px 8px;
   border-radius: 6px;
   background: rgba(2, 132, 199, 0.08);
-  color: var(--accent-cyan);
+  color: var(--accent-blue);
   border: 1px solid rgba(2, 132, 199, 0.2);
   letter-spacing: 0.08em;
 }
@@ -179,7 +184,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   padding: 4px;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
@@ -211,7 +216,7 @@ body {
   box-shadow: 0 2px 8px rgba(9, 13, 22, 0.15);
 }
 
-/* Hero Section */
+/* Landing Page Hero (Restored to Dark Cyber Cover) */
 .hero-video-container {
   position: relative;
   width: 100vw;
@@ -233,6 +238,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65));
 }
 
 .synthora-badge {
@@ -241,8 +247,8 @@ body {
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(2, 132, 199, 0.08);
-  border: 1px solid rgba(2, 132, 199, 0.25);
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   color: var(--accent-cyan);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -258,7 +264,7 @@ body {
   letter-spacing: -0.04em;
   line-height: 0.96;
   margin-bottom: 24px;
-  color: #090d16;
+  color: #ffffff;
   text-align: left;
 }
 
@@ -270,7 +276,7 @@ body {
 
 .hero-lede {
   font-size: 20px;
-  color: var(--ink-secondary);
+  color: #94a3b8;
   line-height: 1.6;
   margin-bottom: 40px;
   max-width: 620px;
@@ -285,22 +291,22 @@ body {
   gap: 10px;
   padding: 16px 36px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%);
+  color: #030407;
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.02em;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25);
+  box-shadow: 0 4px 24px rgba(56, 189, 248, 0.4);
   transition: all 0.25s var(--ease-out);
   text-decoration: none;
 }
 
 .btn-cta-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(2, 132, 199, 0.38);
+  box-shadow: 0 6px 32px rgba(56, 189, 248, 0.6);
 }
 
 .btn-cta-secondary {
@@ -310,22 +316,22 @@ body {
   gap: 10px;
   padding: 16px 36px;
   border-radius: 12px;
-  background: #ffffff;
-  color: #090d16;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--void-10);
   cursor: pointer;
   transition: all 0.25s var(--ease-out);
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(12px);
 }
 
 .btn-cta-secondary:hover {
-  background: #f8fafc;
-  border-color: #94a3b8;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
 }
 
 .btn-terminal {
@@ -348,7 +354,7 @@ body {
 
 .btn-terminal:hover {
   background: #f8fafc;
-  color: var(--accent-cyan);
+  color: var(--accent-blue);
   border-color: rgba(2, 132, 199, 0.3);
 }
 
