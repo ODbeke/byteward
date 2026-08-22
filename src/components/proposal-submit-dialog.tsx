@@ -65,7 +65,7 @@ export function ProposalSubmitDialog({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(15, 23, 42, 0.5)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
@@ -75,13 +75,15 @@ export function ProposalSubmitDialog({
       }}
     >
       <div
-        className="panel-glass animate-fade-in"
+        className="animate-fade-in"
         style={{
           width: "100%",
           maxWidth: "600px",
           padding: "32px",
           borderRadius: "20px",
-          border: "1px solid rgba(245, 158, 11, 0.3)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
           position: "relative",
           maxHeight: "90vh",
           overflowY: "auto",
@@ -103,14 +105,14 @@ export function ProposalSubmitDialog({
         </button>
 
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-          <FileCode2 className="w-6 h-6" style={{ color: "var(--draco-gold)" }} />
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "700" }}>
+          <FileCode2 className="w-6 h-6" style={{ color: "var(--accent-cyan)" }} />
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "800", color: "var(--ink-primary)" }}>
             Submit Upgrade Proposal
           </h2>
         </div>
 
         <p style={{ fontSize: "14px", color: "var(--ink-secondary)", marginBottom: "24px" }}>
-          Submit a commit-pinned bytecode candidate for Dragon Engine validator consensus audit.
+          Submit a commit-pinned bytecode candidate for ByteWard Sentinel Engine validator consensus audit.
         </p>
 
         {error && (
@@ -118,9 +120,9 @@ export function ProposalSubmitDialog({
             style={{
               padding: "12px 16px",
               borderRadius: "10px",
-              background: "rgba(239, 68, 68, 0.15)",
-              border: "1px solid rgba(239, 68, 68, 0.3)",
-              color: "#fca5a5",
+              background: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.25)",
+              color: "#b91c1c",
               fontSize: "13px",
               marginBottom: "20px",
               display: "flex",
@@ -138,9 +140,9 @@ export function ProposalSubmitDialog({
             style={{
               padding: "12px 16px",
               borderRadius: "10px",
-              background: "rgba(16, 185, 129, 0.15)",
-              border: "1px solid rgba(16, 185, 129, 0.3)",
-              color: "#6ee7b7",
+              background: "rgba(16, 185, 129, 0.1)",
+              border: "1px solid rgba(16, 185, 129, 0.25)",
+              color: "#047857",
               fontSize: "13px",
               marginBottom: "20px",
               display: "flex",
@@ -155,7 +157,7 @@ export function ProposalSubmitDialog({
 
         <form onSubmit={handleSubmit} style={{ display: "grid", gap: "16px" }}>
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               PROPOSAL IDENTIFIER
             </label>
             <input
@@ -168,9 +170,9 @@ export function ProposalSubmitDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "14px",
                 fontFamily: "var(--font-mono)",
               }}
@@ -178,7 +180,7 @@ export function ProposalSubmitDialog({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               TARGET IDENTIFIER
             </label>
             <input
@@ -191,9 +193,9 @@ export function ProposalSubmitDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "14px",
                 fontFamily: "var(--font-mono)",
               }}
@@ -201,7 +203,7 @@ export function ProposalSubmitDialog({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               CANDIDATE SOURCE URL (COMMIT-PINNED GITHUB RAW)
             </label>
             <input
@@ -214,9 +216,9 @@ export function ProposalSubmitDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "13px",
                 fontFamily: "var(--font-mono)",
               }}
@@ -224,7 +226,7 @@ export function ProposalSubmitDialog({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               PROPOSED RELEASE VERSION
             </label>
             <input
@@ -237,16 +239,16 @@ export function ProposalSubmitDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "14px",
               }}
             />
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               CHANGELOG & ARCHITECTURAL SUMMARY
             </label>
             <textarea
@@ -258,9 +260,9 @@ export function ProposalSubmitDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "13px",
                 resize: "vertical",
               }}

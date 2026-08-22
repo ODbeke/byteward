@@ -212,7 +212,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* PayPer Global Dynamic Background Image */}
+      {/* PayPer Global Dynamic Background Image in Off-White Mode */}
       <div className={`global-bg-image ${viewMode === "landing" ? "landing-view" : "app-view"}`}>
         <img src="/usdc_activation_gate.jpg" alt="ByteWard Cyber Gate" />
         <div className="global-bg-overlay"></div>
@@ -284,11 +284,11 @@ export default function HomePage() {
               </div>
 
               <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "24px", color: "var(--ink-tertiary)", fontSize: "13px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
-                <div>NETWORK: <span style={{ color: "var(--accent-cyan)" }}>GENLAYER STUDIONET</span></div>
+                <div>NETWORK: <span style={{ color: "var(--accent-cyan)", fontWeight: "600" }}>GENLAYER STUDIONET</span></div>
                 <div>•</div>
-                <div>AUTHORITY: <span style={{ color: "var(--accent-emerald)" }}>EXCLUSIVE ROOTGUARD</span></div>
+                <div>AUTHORITY: <span style={{ color: "var(--accent-emerald)", fontWeight: "600" }}>EXCLUSIVE ROOTGUARD</span></div>
                 <div>•</div>
-                <div>CONSENSUS: <span style={{ color: "var(--accent-purple)" }}>OPTIMISTIC DEMOCRACY</span></div>
+                <div>CONSENSUS: <span style={{ color: "var(--accent-purple)", fontWeight: "600" }}>OPTIMISTIC DEMOCRACY</span></div>
               </div>
             </div>
           </section>
@@ -308,10 +308,10 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", lineHeight: "1.1", marginBottom: "12px", color: "#ffffff" }}>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", lineHeight: "1.1", marginBottom: "12px", color: "var(--ink-primary)" }}>
                   {slide.title}
                 </h2>
-                <h4 style={{ fontSize: "18px", color: "var(--accent-cyan)", fontWeight: "600", marginBottom: "32px" }}>
+                <h4 style={{ fontSize: "18px", color: "var(--accent-cyan)", fontWeight: "700", marginBottom: "32px" }}>
                   {slide.subtitle}
                 </h4>
 
@@ -321,9 +321,9 @@ export default function HomePage() {
                       key={i}
                       style={{
                         padding: "16px 20px",
-                        background: "rgba(0, 0, 0, 0.45)",
+                        background: "rgba(248, 250, 252, 0.9)",
                         borderRadius: "10px",
-                        border: "1px solid var(--void-05)",
+                        border: "1px solid #e2e8f0",
                         fontSize: "15px",
                         lineHeight: "1.6",
                         color: "var(--ink-primary)",
@@ -335,7 +335,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", paddingTop: "20px", borderTop: "1px solid var(--void-05)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", paddingTop: "20px", borderTop: "1px solid #e2e8f0" }}>
                 <button
                   onClick={() => setSlideIdx((prev) => Math.max(prev - 1, 0))}
                   disabled={slideIdx === 0}
@@ -394,7 +394,7 @@ export default function HomePage() {
             {/* Quick Action Bar */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "24px 0", flexWrap: "wrap", gap: "16px" }}>
               <div>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800" }}>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", fontWeight: "800", color: "var(--ink-primary)" }}>
                   ByteWard Control Plane
                 </h2>
                 <p style={{ fontSize: "14px", color: "var(--ink-secondary)" }}>
@@ -408,7 +408,7 @@ export default function HomePage() {
                   className="btn-terminal"
                   style={{ display: "flex", alignItems: "center", gap: "6px" }}
                 >
-                  <Flame className="w-4 h-4 text-cyan-400" />
+                  <Flame className="w-4 h-4 text-cyan-600" />
                   <span>Inspect Firewalls</span>
                 </button>
                 <button
@@ -434,7 +434,7 @@ export default function HomePage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "32px" }}>
               <div className="panel-glass" style={{ padding: "20px" }}>
                 <Database className="w-5 h-5 mb-2" style={{ color: "var(--accent-cyan)" }} />
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px", color: "var(--ink-primary)" }}>
                   1. Storage Analysis
                 </h4>
                 <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
@@ -444,7 +444,7 @@ export default function HomePage() {
 
               <div className="panel-glass" style={{ padding: "20px" }}>
                 <Key className="w-5 h-5 mb-2" style={{ color: "var(--accent-amber)" }} />
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px", color: "var(--ink-primary)" }}>
                   2. Authority Check
                 </h4>
                 <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
@@ -454,7 +454,7 @@ export default function HomePage() {
 
               <div className="panel-glass" style={{ padding: "20px" }}>
                 <DollarSign className="w-5 h-5 mb-2" style={{ color: "var(--accent-emerald)" }} />
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px", color: "var(--ink-primary)" }}>
                   3. Treasury Safety
                 </h4>
                 <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
@@ -464,7 +464,7 @@ export default function HomePage() {
 
               <div className="panel-glass" style={{ padding: "20px" }}>
                 <Layers className="w-5 h-5 mb-2" style={{ color: "var(--accent-purple)" }} />
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px", color: "var(--ink-primary)" }}>
                   4. External Bounds
                 </h4>
                 <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
@@ -474,7 +474,7 @@ export default function HomePage() {
 
               <div className="panel-glass" style={{ padding: "20px" }}>
                 <Scroll className="w-5 h-5 mb-2" style={{ color: "var(--accent-rose)" }} />
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "15px", fontWeight: "700", marginBottom: "4px", color: "var(--ink-primary)" }}>
                   5. Charter Alignment
                 </h4>
                 <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
@@ -488,7 +488,7 @@ export default function HomePage() {
               {/* Targets Column */}
               <div className="panel-glass" style={{ padding: "24px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700", color: "var(--ink-primary)" }}>
                     Registered Targets ({state?.targets.length ?? 0})
                   </h3>
                   <Link href="/targets" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
@@ -504,12 +504,12 @@ export default function HomePage() {
                         style={{
                           padding: "16px",
                           borderRadius: "12px",
-                          background: "rgba(0, 0, 0, 0.4)",
-                          border: "1px solid var(--void-05)",
+                          background: "rgba(248, 250, 252, 0.9)",
+                          border: "1px solid #e2e8f0",
                         }}
                       >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                          <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{target.name}</span>
+                          <span style={{ fontWeight: "700", fontSize: "15px", color: "var(--ink-primary)" }}>{target.name}</span>
                           <span className="status-pill approved">Active Release: {target.active_release}</span>
                         </div>
                         <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--ink-tertiary)", marginBottom: "8px" }}>
@@ -529,7 +529,7 @@ export default function HomePage() {
               {/* Proposals Column */}
               <div className="panel-glass" style={{ padding: "24px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: "700", color: "var(--ink-primary)" }}>
                     Upgrade Proposals ({state?.proposals.length ?? 0})
                   </h3>
                   <Link href="/proposals" className="btn-terminal" style={{ fontSize: "11px", padding: "6px 12px" }}>
@@ -545,12 +545,12 @@ export default function HomePage() {
                         style={{
                           padding: "16px",
                           borderRadius: "12px",
-                          background: "rgba(0, 0, 0, 0.4)",
-                          border: "1px solid var(--void-05)",
+                          background: "rgba(248, 250, 252, 0.9)",
+                          border: "1px solid #e2e8f0",
                         }}
                       >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                          <span style={{ fontWeight: "700", fontSize: "15px", color: "#ffffff" }}>{proposal.proposal_id}</span>
+                          <span style={{ fontWeight: "700", fontSize: "15px", color: "var(--ink-primary)" }}>{proposal.proposal_id}</span>
                           <span className={`status-pill ${proposal.stage === "APPROVED_DISPUTE_WINDOW" ? "approved" : "review"}`}>
                             {proposal.stage}
                           </span>

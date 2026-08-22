@@ -39,7 +39,6 @@ export function TargetEnrollDialog({
     setTxHash(null);
 
     try {
-      // NOTE: enroll_target is called internally by target contracts. Direct caller submits if interacting as target owner.
       const hash = await executeByteWardWrite(account, "enroll_target", [
         targetId,
         name,
@@ -62,7 +61,7 @@ export function TargetEnrollDialog({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(15, 23, 42, 0.5)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
@@ -72,13 +71,15 @@ export function TargetEnrollDialog({
       }}
     >
       <div
-        className="panel-glass animate-fade-in"
+        className="animate-fade-in"
         style={{
           width: "100%",
           maxWidth: "600px",
           padding: "32px",
           borderRadius: "20px",
-          border: "1px solid rgba(245, 158, 11, 0.3)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
           position: "relative",
           maxHeight: "90vh",
           overflowY: "auto",
@@ -100,8 +101,8 @@ export function TargetEnrollDialog({
         </button>
 
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-          <Shield className="w-6 h-6" style={{ color: "var(--draco-gold)" }} />
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "700" }}>
+          <Shield className="w-6 h-6" style={{ color: "var(--accent-cyan)" }} />
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "800", color: "var(--ink-primary)" }}>
             Enroll Target dApp
           </h2>
         </div>
@@ -115,9 +116,9 @@ export function TargetEnrollDialog({
             style={{
               padding: "12px 16px",
               borderRadius: "10px",
-              background: "rgba(239, 68, 68, 0.15)",
-              border: "1px solid rgba(239, 68, 68, 0.3)",
-              color: "#fca5a5",
+              background: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.25)",
+              color: "#b91c1c",
               fontSize: "13px",
               marginBottom: "20px",
               display: "flex",
@@ -135,9 +136,9 @@ export function TargetEnrollDialog({
             style={{
               padding: "12px 16px",
               borderRadius: "10px",
-              background: "rgba(16, 185, 129, 0.15)",
-              border: "1px solid rgba(16, 185, 129, 0.3)",
-              color: "#6ee7b7",
+              background: "rgba(16, 185, 129, 0.1)",
+              border: "1px solid rgba(16, 185, 129, 0.25)",
+              color: "#047857",
               fontSize: "13px",
               marginBottom: "20px",
               display: "flex",
@@ -152,7 +153,7 @@ export function TargetEnrollDialog({
 
         <form onSubmit={handleSubmit} style={{ display: "grid", gap: "16px" }}>
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               TARGET IDENTIFIER (SLUG)
             </label>
             <input
@@ -165,9 +166,9 @@ export function TargetEnrollDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "14px",
                 fontFamily: "var(--font-mono)",
               }}
@@ -175,7 +176,7 @@ export function TargetEnrollDialog({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               TARGET NAME
             </label>
             <input
@@ -188,16 +189,16 @@ export function TargetEnrollDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "14px",
               }}
             />
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               COMMIT-PINNED GITHUB SOURCE URL
             </label>
             <input
@@ -210,9 +211,9 @@ export function TargetEnrollDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "13px",
                 fontFamily: "var(--font-mono)",
               }}
@@ -220,7 +221,7 @@ export function TargetEnrollDialog({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px", fontWeight: "600" }}>
               IMMUTABLE GOVERNING CHARTER
             </label>
             <textarea
@@ -232,9 +233,9 @@ export function TargetEnrollDialog({
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "var(--ink-primary)",
                 fontSize: "13px",
                 resize: "vertical",
               }}

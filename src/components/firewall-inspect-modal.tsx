@@ -17,7 +17,7 @@ export function FirewallInspectModal({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(15, 23, 42, 0.5)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
@@ -27,13 +27,15 @@ export function FirewallInspectModal({
       }}
     >
       <div
-        className="panel-glass animate-fade-in"
+        className="animate-fade-in"
         style={{
           width: "100%",
           maxWidth: "680px",
           padding: "32px",
           borderRadius: "20px",
-          border: "1px solid rgba(245, 158, 11, 0.3)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
           position: "relative",
           maxHeight: "90vh",
           overflowY: "auto",
@@ -55,15 +57,15 @@ export function FirewallInspectModal({
         </button>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-          <Flame className="w-6 h-6" style={{ color: "var(--draco-gold)" }} />
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "700" }}>
-            The 5-Tier ByteWard Dragon Firewalls
+          <Flame className="w-6 h-6" style={{ color: "var(--accent-cyan)" }} />
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "800", color: "var(--ink-primary)" }}>
+            The 5-Tier ByteWard Sentinel Firewalls
           </h3>
         </div>
 
         <div style={{ display: "grid", gap: "14px", margin: "20px 0" }}>
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-cyan)", marginBottom: "4px" }}>
+          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--accent-cyan)", marginBottom: "4px" }}>
               <Database className="w-4 h-4" />
               <span>1. Wyrm Storage Layout Audit</span>
             </div>
@@ -72,8 +74,8 @@ export function FirewallInspectModal({
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-gold)", marginBottom: "4px" }}>
+          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--accent-amber)", marginBottom: "4px" }}>
               <Key className="w-4 h-4" />
               <span>2. Drake Upgrade Authority Check</span>
             </div>
@@ -82,8 +84,8 @@ export function FirewallInspectModal({
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-emerald)", marginBottom: "4px" }}>
+          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--accent-emerald)", marginBottom: "4px" }}>
               <DollarSign className="w-4 h-4" />
               <span>3. Leviathan Treasury & Value Guard</span>
             </div>
@@ -92,8 +94,8 @@ export function FirewallInspectModal({
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-purple)", marginBottom: "4px" }}>
+          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--accent-purple)", marginBottom: "4px" }}>
               <Layers className="w-4 h-4" />
               <span>4. Wyvern External Call Bounds</span>
             </div>
@@ -102,10 +104,10 @@ export function FirewallInspectModal({
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-crimson)", marginBottom: "4px" }}>
+          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--accent-rose)", marginBottom: "4px" }}>
               <Scroll className="w-4 h-4" />
-              <span>5. Dragon Charter Compliance</span>
+              <span>5. Charter Alignment</span>
             </div>
             <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
               Natural language semantic audit under AI consensus verifying that proposed feature modifications strictly align with the immutable governing charter submitted at target enrollment.

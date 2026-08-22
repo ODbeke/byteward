@@ -25,7 +25,7 @@ export function DisputeEvidenceViewer({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(15, 23, 42, 0.5)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
@@ -35,13 +35,15 @@ export function DisputeEvidenceViewer({
       }}
     >
       <div
-        className="panel-glass animate-fade-in"
+        className="animate-fade-in"
         style={{
           width: "100%",
           maxWidth: "600px",
           padding: "32px",
           borderRadius: "20px",
-          border: "1px solid rgba(239, 68, 68, 0.3)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
           position: "relative",
         }}
       >
@@ -61,8 +63,8 @@ export function DisputeEvidenceViewer({
         </button>
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-          <ShieldAlert className="w-6 h-6" style={{ color: "var(--draco-crimson)" }} />
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "700" }}>
+          <ShieldAlert className="w-6 h-6" style={{ color: "var(--accent-rose)" }} />
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "800", color: "var(--ink-primary)" }}>
             Dispute Evidence Record
           </h3>
         </div>
@@ -73,32 +75,32 @@ export function DisputeEvidenceViewer({
 
         <div style={{ display: "grid", gap: "12px", marginBottom: "20px" }}>
           <div>
-            <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px" }}>
+            <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px", fontWeight: "600" }}>
               DISPUTE RATIONALE:
             </div>
-            <div style={{ padding: "12px", borderRadius: "8px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)", fontSize: "13px", color: "var(--ink-primary)" }}>
+            <div style={{ padding: "12px", borderRadius: "8px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0", fontSize: "13px", color: "var(--ink-primary)" }}>
               {summary}
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px" }}>
+            <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px", fontWeight: "600" }}>
               ON-CHAIN EVIDENCE DIGEST (SHA-256):
             </div>
-            <div style={{ padding: "10px", borderRadius: "8px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)", fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--draco-gold)" }}>
+            <div style={{ padding: "10px", borderRadius: "8px", background: "rgba(241, 245, 249, 0.85)", border: "1px solid #e2e8f0", fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--accent-cyan)", fontWeight: "600" }}>
               {evidenceDigest || "Digest calculation verified on-chain"}
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px" }}>
+            <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "4px", fontWeight: "600" }}>
               EVIDENCE SOURCE:
             </div>
             <a
               href={evidenceUrl}
               target="_blank"
               rel="noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "var(--draco-cyan)", textDecoration: "none" }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "var(--accent-blue)", textDecoration: "none", fontWeight: "600" }}
             >
               <span>{evidenceUrl}</span>
               <ExternalLink className="w-3.5 h-3.5" />
