@@ -12,11 +12,25 @@ export function AppHeader() {
 
   return (
     <header className="nav-terminal">
-      <Link href="/" className="nav-brand">
+      <Link href="/" className="nav-brand" style={{ alignItems: "baseline", gap: "8px" }}>
         <span className="brand-text">
-          BYTEWARD <span>v1</span>
+          BYTEWARD
         </span>
-        <span className="brand-badge">STUDIONET</span>
+        <span style={{ 
+          fontSize: "11px", 
+          fontFamily: "var(--font-mono)", 
+          fontWeight: "700", 
+          color: "var(--accent-cyan)", 
+          background: "rgba(56, 189, 248, 0.1)",
+          border: "1px solid rgba(56, 189, 248, 0.25)",
+          padding: "2px 6px",
+          borderRadius: "4px",
+          letterSpacing: "0.05em",
+          lineHeight: "1.2"
+        }}>
+          v1
+        </span>
+        <span className="brand-badge" style={{ marginLeft: "4px" }}>STUDIONET</span>
       </Link>
 
       <nav className="nav-links">

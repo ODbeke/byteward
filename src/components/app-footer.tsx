@@ -4,11 +4,23 @@ import { ExternalLink } from "lucide-react";
 export function AppFooter() {
   return (
     <footer className="app-footer-auto" style={{ marginTop: "80px", paddingTop: "40px", borderTop: "1px solid var(--void-05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "20px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <span style={{ fontFamily: "var(--font-display)", fontWeight: "800", fontSize: "16px", color: "#ffffff" }}>
-          BYTEWARD <span style={{ color: "var(--accent-cyan)" }}>v1</span>
+          BYTEWARD
         </span>
-        <span style={{ fontSize: "12px", color: "var(--ink-tertiary)" }}>
+        <span style={{ 
+          fontSize: "10px", 
+          fontFamily: "var(--font-mono)", 
+          fontWeight: "700", 
+          color: "var(--accent-cyan)", 
+          background: "rgba(56, 189, 248, 0.1)",
+          border: "1px solid rgba(56, 189, 248, 0.25)",
+          padding: "1px 5px",
+          borderRadius: "4px"
+        }}>
+          v1
+        </span>
+        <span style={{ fontSize: "12px", color: "var(--ink-tertiary)", marginLeft: "4px" }}>
           • Consensus Upgrade Governance Control Plane
         </span>
       </div>
