@@ -27,10 +27,10 @@
 
 ## Development Roadmap
 
-- **Phase 1 (Current Live Build):** Pure validator-enforced AI diff audit, 5-tier Sentinel firewalls, HTTPS dispute evidence snapshotting, and cross-contract bytecode slot mutation on StudioNet.
-- **Phase 2 (Cryptoeconomic Guardrails):** Native `GEN` escrow deposits for proposals, stake-to-challenge bonding to eliminate griefing, malicious upgrade slashing, and automated whitehat bug bounty disbursements.
-- **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling ByteWard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
-- **Phase 4 (Zero-Knowledge AST Proofs):** Pairing GenLayer natural language semantic audits with formal ZK bytecode verification for mathematically proven upgrades.
+- [x] **Phase 1 (Current Live Build):** Pure validator-enforced AI diff audit, 5-tier Sentinel firewalls, HTTPS dispute evidence snapshotting, and cross-contract bytecode slot mutation on StudioNet.
+- [ ] **Phase 2 (Cryptoeconomic Guardrails):** Native `GEN` escrow deposits for proposals, stake-to-challenge bonding to eliminate griefing, malicious upgrade slashing, and automated whitehat bug bounty disbursements.
+- [ ] **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling ByteWard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
+- [ ] **Phase 4 (Zero-Knowledge AST Proofs):** Pairing GenLayer natural language semantic audits with formal ZK bytecode verification for mathematically proven upgrades.
 
 ---
 
