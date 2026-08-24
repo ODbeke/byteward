@@ -39,6 +39,9 @@ export function AppHeader() {
   const handleBrandClick = (e: React.MouseEvent) => {
     if (typeof window !== "undefined") {
       sessionStorage.removeItem("byteward_launched");
+      if (window.location.search) {
+        window.history.replaceState({}, "", "/");
+      }
     }
     window.dispatchEvent(new CustomEvent("byteward:go-home"));
   };
@@ -53,7 +56,7 @@ export function AppHeader() {
   return (
     <header className="nav-terminal">
       <Link 
-        href="/?view=landing" 
+        href="/" 
         onClick={handleBrandClick}
         className="nav-brand" 
         style={{ alignItems: "baseline", gap: "8px" }}

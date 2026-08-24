@@ -53,6 +53,9 @@ export default function HomePage() {
     const handleGoHome = () => {
       if (typeof window !== "undefined") {
         sessionStorage.removeItem("byteward_launched");
+        if (window.location.search) {
+          window.history.replaceState({}, "", "/");
+        }
       }
       setViewMode("landing");
     };
