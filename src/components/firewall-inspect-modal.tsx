@@ -17,7 +17,7 @@ export function FirewallInspectModal({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(15, 23, 42, 0.65)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
@@ -27,16 +27,19 @@ export function FirewallInspectModal({
       }}
     >
       <div
-        className="panel-glass animate-fade-in"
+        className="animate-fade-in"
         style={{
           width: "100%",
           maxWidth: "680px",
           padding: "32px",
           borderRadius: "20px",
-          border: "1px solid rgba(245, 158, 11, 0.3)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 20px 50px rgba(15, 23, 42, 0.18)",
           position: "relative",
           maxHeight: "90vh",
           overflowY: "auto",
+          color: "#090d16",
         }}
       >
         <button
@@ -45,75 +48,88 @@ export function FirewallInspectModal({
             position: "absolute",
             top: "20px",
             right: "20px",
-            background: "none",
+            background: "#f1f5f9",
             border: "none",
-            color: "var(--ink-secondary)",
+            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#64748b",
             cursor: "pointer",
           }}
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-          <Flame className="w-6 h-6" style={{ color: "var(--draco-gold)" }} />
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "700" }}>
-            The 5-Tier ByteWard Dragon Firewalls
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+          <Flame className="w-6 h-6 text-cyan-600" />
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "800", color: "#090d16" }}>
+            The 5-Tier ByteWard Sentinel Firewalls
           </h3>
         </div>
+        <p style={{ fontSize: "13px", color: "#64748b", marginBottom: "20px" }}>
+          Every proposed upgrade must pass multi-validator equivalence consensus across 5 strict deterministic safety audits before deployment.
+        </p>
 
-        <div style={{ display: "grid", gap: "14px", margin: "20px 0" }}>
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-cyan)", marginBottom: "4px" }}>
-              <Database className="w-4 h-4" />
-              <span>1. Wyrm Storage Layout Audit</span>
+        <div style={{ display: "grid", gap: "12px", margin: "16px 0 24px" }}>
+          <div style={{ padding: "16px", borderRadius: "12px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "#0284c7", marginBottom: "4px", fontSize: "14px" }}>
+              <Database className="w-4 h-4 text-sky-600" />
+              <span>1. State Storage Slot Layout Integrity</span>
             </div>
-            <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+            <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6" }}>
               Extracts declared class-level dataclass variables and state slots. Verifies that candidate release does not prepend, delete, or swap variable ordering, eliminating storage collision attacks.
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-gold)", marginBottom: "4px" }}>
-              <Key className="w-4 h-4" />
-              <span>2. Drake Upgrade Authority Check</span>
+          <div style={{ padding: "16px", borderRadius: "12px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "#d97706", marginBottom: "4px", fontSize: "14px" }}>
+              <Key className="w-4 h-4 text-amber-600" />
+              <span>2. Sole Guard Upgrade Authority Check</span>
             </div>
-            <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+            <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6" }}>
               Inspects root upgrader permissions and constructor logic to ensure ByteWard remains the sole upgrade authority and no owner backdoors or bypasses are introduced.
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-emerald)", marginBottom: "4px" }}>
-              <DollarSign className="w-4 h-4" />
-              <span>3. Leviathan Treasury & Value Guard</span>
+          <div style={{ padding: "16px", borderRadius: "12px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "#059669", marginBottom: "4px", fontSize: "14px" }}>
+              <DollarSign className="w-4 h-4 text-emerald-600" />
+              <span>3. Treasury & Drain Movement Protection</span>
             </div>
-            <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-              Scans for arbitrary token/ether transfers, uncontrolled emit_transfer calls, or emergency withdrawal functions that could allow attackers to drain funds.
+            <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6" }}>
+              Scans for arbitrary token/ether transfers, uncontrolled emit_transfer calls, or emergency withdrawal functions that could allow attackers to drain protocol funds.
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-purple)", marginBottom: "4px" }}>
-              <Layers className="w-4 h-4" />
-              <span>4. Wyvern External Call Bounds</span>
+          <div style={{ padding: "16px", borderRadius: "12px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "#7c3aed", marginBottom: "4px", fontSize: "14px" }}>
+              <Layers className="w-4 h-4 text-purple-600" />
+              <span>4. Bounded External Call Invocations</span>
             </div>
-            <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
-              Ensures that all external cross-contract invocations are bounded to known addresses and safe interfaces, preventing reentrancy and arbitrary delegatecalls.
+            <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6" }}>
+              Ensures that all external cross-contract invocations are strictly bounded to known addresses and safe interfaces, preventing reentrancy and arbitrary delegatecalls.
             </p>
           </div>
 
-          <div style={{ padding: "16px", borderRadius: "10px", background: "rgba(0, 0, 0, 0.4)", border: "1px solid var(--void-05)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "var(--draco-crimson)", marginBottom: "4px" }}>
-              <Scroll className="w-4 h-4" />
-              <span>5. Dragon Charter Compliance</span>
+          <div style={{ padding: "16px", borderRadius: "12px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", color: "#e11d48", marginBottom: "4px", fontSize: "14px" }}>
+              <Scroll className="w-4 h-4 text-rose-600" />
+              <span>5. Governing Charter Semantic Compliance</span>
             </div>
-            <p style={{ fontSize: "12px", color: "var(--ink-secondary)" }}>
+            <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6" }}>
               Natural language semantic audit under AI consensus verifying that proposed feature modifications strictly align with the immutable governing charter submitted at target enrollment.
             </p>
           </div>
         </div>
 
-        <button onClick={onClose} className="btn-terminal active" style={{ width: "100%" }}>
+        <button 
+          onClick={onClose} 
+          className="btn-terminal" 
+          style={{ width: "100%", background: "#090d16", color: "#ffffff", padding: "12px", fontSize: "13px", fontWeight: "700" }}
+        >
           Dismiss Inspection
         </button>
       </div>

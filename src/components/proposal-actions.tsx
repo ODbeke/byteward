@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useWallet } from "./wallet-provider";
 import { executeByteWardWrite, waitForByteWardFinalization, ProposalRecord } from "@/lib/byteward";
-import { Play, Flame, ShieldAlert, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { Shield, AlertCircle, CheckCircle2, Loader2, RefreshCw, Flame, ExternalLink } from "lucide-react";
 
 export function ProposalActions({
   proposal,
@@ -14,29 +14,31 @@ export function ProposalActions({
 }) {
   const { account } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
-  const [activeAction, setActiveAction] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
-
-  // Dispute form state
   const [showDisputeInput, setShowDisputeInput] = useState(false);
   const [disputeUrl, setDisputeUrl] = useState("");
   const [disputeRationale, setDisputeRationale] = useState("");
+  const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const handleAudit = async () => {
-    if (!account) return setError("Connect wallet first.");
+    if (!account) {
+      setError("Please connect your wallet first.");
+      return;
+    }
     setIsLoading(true);
-    setActiveAction("audit");
     setError(null);
     setSuccessMsg(null);
+    setActiveAction("audit");
+
     try {
       const hash = await executeByteWardWrite(account, "audit_proposal", [proposal.proposal_id]);
-      setSuccessMsg("Consensus audit triggered. Validators are analyzing code diff...");
+      setSuccessMsg(`Audit requested! Tx: ${hash.slice(0, 14)}... Waiting for multi-validator equivalence consensus...`);
       await waitForByteWardFinalization(account, hash);
-      setSuccessMsg("Consensus audit finalized on StudioNet!");
+      setSuccessMsg("Consensus audit complete and recorded on-chain!");
       onActionComplete();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Audit transaction failed");
+      setError(err instanceof Error ? err.message : "Audit consensus transaction failed");
     } finally {
       setIsLoading(false);
       setActiveAction(null);
@@ -45,23 +47,28 @@ export function ProposalActions({
 
   const handleFileDispute = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!account) return setError("Connect wallet first.");
+    if (!account) {
+      setError("Please connect your wallet first.");
+      return;
+    }
     setIsLoading(true);
-    setActiveAction("dispute");
     setError(null);
     setSuccessMsg(null);
+    setActiveAction("dispute");
+
     try {
       const hash = await executeByteWardWrite(account, "file_dispute", [
         proposal.proposal_id,
         disputeUrl,
         disputeRationale,
       ]);
-      setSuccessMsg("Dispute filed! Evidence snapshotted on-chain.");
+      setSuccessMsg(`Dispute registered! Snapshotting evidence on-chain: ${hash.slice(0, 14)}...`);
       await waitForByteWardFinalization(account, hash);
+      setSuccessMsg("Dispute evidence snapshot finalized. Proposal locked for re-audit.");
       setShowDisputeInput(false);
       onActionComplete();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Dispute transaction failed");
+      setError(err instanceof Error ? err.message : "Dispute submission failed");
     } finally {
       setIsLoading(false);
       setActiveAction(null);
@@ -69,19 +76,23 @@ export function ProposalActions({
   };
 
   const handleDispatch = async () => {
-    if (!account) return setError("Connect wallet first.");
+    if (!account) {
+      setError("Please connect your wallet first.");
+      return;
+    }
     setIsLoading(true);
-    setActiveAction("dispatch");
     setError(null);
     setSuccessMsg(null);
+    setActiveAction("dispatch");
+
     try {
       const hash = await executeByteWardWrite(account, "dispatch_upgrade", [proposal.proposal_id]);
-      setSuccessMsg("Bytecode update dispatched to target contract slot...");
+      setSuccessMsg(`Upgrade dispatched! Emitting bytecode slot mutation to target contract: ${hash.slice(0, 14)}...`);
       await waitForByteWardFinalization(account, hash);
-      setSuccessMsg("Bytecode update confirmed in target slot!");
+      setSuccessMsg("Cross-contract upgrade dispatched! Proposal moved to execution queue.");
       onActionComplete();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Dispatch transaction failed");
+      setError(err instanceof Error ? err.message : "Dispatch execution failed");
     } finally {
       setIsLoading(false);
       setActiveAction(null);
@@ -89,14 +100,18 @@ export function ProposalActions({
   };
 
   const handleFinalize = async () => {
-    if (!account) return setError("Connect wallet first.");
+    if (!account) {
+      setError("Please connect your wallet first.");
+      return;
+    }
     setIsLoading(true);
-    setActiveAction("finalize");
     setError(null);
     setSuccessMsg(null);
+    setActiveAction("finalize");
+
     try {
       const hash = await executeByteWardWrite(account, "verify_and_finalize", [proposal.proposal_id]);
-      setSuccessMsg("Verifying target release version on-chain...");
+      setSuccessMsg(`Verifying target installation: ${hash.slice(0, 14)}...`);
       await waitForByteWardFinalization(account, hash);
       setSuccessMsg("Upgrade confirmed and marked as EXECUTED!");
       onActionComplete();
@@ -109,14 +124,15 @@ export function ProposalActions({
   };
 
   return (
-    <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid var(--void-05)" }}>
+    <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #e2e8f0" }}>
       {error && (
         <div
           style={{
             padding: "8px 12px",
             borderRadius: "8px",
-            background: "rgba(239, 68, 68, 0.15)",
-            color: "#fca5a5",
+            background: "#fef2f2",
+            border: "1px solid #fecaca",
+            color: "#b91c1c",
             fontSize: "12px",
             marginBottom: "12px",
             display: "flex",
@@ -134,8 +150,9 @@ export function ProposalActions({
           style={{
             padding: "8px 12px",
             borderRadius: "8px",
-            background: "rgba(16, 185, 129, 0.15)",
-            color: "#6ee7b7",
+            background: "#ecfdf5",
+            border: "1px solid #a7f3d0",
+            color: "#047857",
             fontSize: "12px",
             marginBottom: "12px",
             display: "flex",
@@ -158,12 +175,12 @@ export function ProposalActions({
           {isLoading && activeAction === "audit" ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              <span>Running Dragon Consensus Audit...</span>
+              <span>Running Sentinel Engine Consensus Audit...</span>
             </>
           ) : (
             <>
               <Flame className="w-4 h-4" />
-              <span>Trigger Dragon Consensus Audit</span>
+              <span>Trigger Multi-Validator AI Audit Consensus</span>
             </>
           )}
         </button>
@@ -171,32 +188,30 @@ export function ProposalActions({
 
       {proposal.stage === "APPROVED_DISPUTE_WINDOW" && (
         <div style={{ display: "grid", gap: "10px" }}>
-          <button
-            onClick={handleDispatch}
-            disabled={isLoading}
-            className="btn-cta-primary"
-            style={{ width: "100%", padding: "10px 16px", fontSize: "13px" }}
-          >
-            {isLoading && activeAction === "dispatch" ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Dispatching Bytecode Slot Update...</span>
-              </>
-            ) : (
-              <>
-                <Send className="w-4 h-4" />
-                <span>Dispatch Bytecode Upgrade</span>
-              </>
-            )}
-          </button>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              onClick={handleDispatch}
+              disabled={isLoading}
+              className="btn-cta-primary"
+              style={{ flex: 2, padding: "10px 16px", fontSize: "13px" }}
+            >
+              {isLoading && activeAction === "dispatch" ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Dispatching Cross-Contract Call...</span>
+                </>
+              ) : (
+                <span>Dispatch Bytecode Slot Mutation →</span>
+              )}
+            </button>
+          </div>
 
           {!showDisputeInput ? (
             <button
               onClick={() => setShowDisputeInput(true)}
               className="btn-terminal"
-              style={{ width: "100%", color: "var(--draco-crimson)", borderColor: "rgba(239, 68, 68, 0.3)" }}
+              style={{ width: "100%", fontSize: "11px", padding: "6px" }}
             >
-              <ShieldAlert className="w-3.5 h-3.5" />
               <span>File Dispute / Challenge Evidence</span>
             </button>
           ) : (
@@ -210,9 +225,9 @@ export function ProposalActions({
                 style={{
                   padding: "8px 12px",
                   borderRadius: "6px",
-                  background: "var(--void-03)",
-                  border: "1px solid var(--void-05)",
-                  color: "#ffffff",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
                   fontSize: "12px",
                   fontFamily: "var(--font-mono)",
                 }}
@@ -226,9 +241,9 @@ export function ProposalActions({
                 style={{
                   padding: "8px 12px",
                   borderRadius: "6px",
-                  background: "var(--void-03)",
-                  border: "1px solid var(--void-05)",
-                  color: "#ffffff",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
                   fontSize: "12px",
                 }}
               />
@@ -277,8 +292,8 @@ export function ProposalActions({
       )}
 
       {proposal.stage === "EXECUTED" && (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", color: "var(--draco-emerald)", fontSize: "13px", fontFamily: "var(--font-mono)" }}>
-          <CheckCircle2 className="w-4 h-4" />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", color: "#059669", fontSize: "13px", fontFamily: "var(--font-mono)", fontWeight: "700" }}>
+          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
           <span>UPGRADE FINALIZED & EXECUTED ON TARGET</span>
         </div>
       )}

@@ -7,23 +7,24 @@ import { FileCode2, AlertCircle, CheckCircle2, Loader2, X } from "lucide-react";
 
 export function ProposalSubmitDialog({
   isOpen,
-  targetIdDefault = "",
   onClose,
   onSuccess,
+  targetIdDefault = "",
 }: {
   isOpen: boolean;
-  targetIdDefault?: string;
   onClose: () => void;
   onSuccess: () => void;
+  targetIdDefault?: string;
 }) {
   const { account } = useWallet();
   const [proposalId, setProposalId] = useState("");
-  const [targetId, setTargetId] = useState(targetIdDefault);
-  const [candidateUrl, setCandidateUrl] = useState("");
-  const [proposedVersion, setProposedVersion] = useState("v2");
-  const [changelog, setChangelog] = useState(
-    "Add a public addition method while retaining the existing storage layout, ByteWard controller authority, public read methods, and exposing a truthful version response."
+  const [targetId, setTargetId] = useState(targetIdDefault || "warded-vault-core");
+  const [baseDigest, setBaseDigest] = useState(
+    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   );
+  const [candidateUrl, setCandidateUrl] = useState("");
+  const [proposedRelease, setProposedRelease] = useState("v2");
+  const [narrative, setNarrative] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -45,9 +46,10 @@ export function ProposalSubmitDialog({
       const hash = await executeByteWardWrite(account, "propose_upgrade", [
         proposalId,
         targetId,
+        baseDigest,
         candidateUrl,
-        proposedVersion,
-        changelog,
+        proposedRelease,
+        narrative,
       ]);
       setTxHash(hash);
       await waitForByteWardFinalization(account, hash);
@@ -65,7 +67,7 @@ export function ProposalSubmitDialog({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(15, 23, 42, 0.65)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
@@ -75,16 +77,19 @@ export function ProposalSubmitDialog({
       }}
     >
       <div
-        className="panel-glass animate-fade-in"
+        className="animate-fade-in"
         style={{
           width: "100%",
           maxWidth: "600px",
           padding: "32px",
           borderRadius: "20px",
-          border: "1px solid rgba(245, 158, 11, 0.3)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 20px 50px rgba(15, 23, 42, 0.18)",
           position: "relative",
           maxHeight: "90vh",
           overflowY: "auto",
+          color: "#090d16",
         }}
       >
         <button
@@ -93,24 +98,30 @@ export function ProposalSubmitDialog({
             position: "absolute",
             top: "20px",
             right: "20px",
-            background: "none",
+            background: "#f1f5f9",
             border: "none",
-            color: "var(--ink-secondary)",
+            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#64748b",
             cursor: "pointer",
           }}
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-          <FileCode2 className="w-6 h-6" style={{ color: "var(--draco-gold)" }} />
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "700" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+          <FileCode2 className="w-6 h-6 text-sky-600" />
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: "800", color: "#090d16" }}>
             Submit Upgrade Proposal
           </h2>
         </div>
 
-        <p style={{ fontSize: "14px", color: "var(--ink-secondary)", marginBottom: "24px" }}>
-          Submit a commit-pinned bytecode candidate for Dragon Engine validator consensus audit.
+        <p style={{ fontSize: "13px", color: "#64748b", marginBottom: "20px" }}>
+          Submit a commit-pinned bytecode candidate for Sentinel Engine validator consensus audit.
         </p>
 
         {error && (
@@ -118,9 +129,9 @@ export function ProposalSubmitDialog({
             style={{
               padding: "12px 16px",
               borderRadius: "10px",
-              background: "rgba(239, 68, 68, 0.15)",
-              border: "1px solid rgba(239, 68, 68, 0.3)",
-              color: "#fca5a5",
+              background: "#fef2f2",
+              border: "1px solid #fecaca",
+              color: "#b91c1c",
               fontSize: "13px",
               marginBottom: "20px",
               display: "flex",
@@ -138,9 +149,9 @@ export function ProposalSubmitDialog({
             style={{
               padding: "12px 16px",
               borderRadius: "10px",
-              background: "rgba(16, 185, 129, 0.15)",
-              border: "1px solid rgba(16, 185, 129, 0.3)",
-              color: "#6ee7b7",
+              background: "#ecfdf5",
+              border: "1px solid #a7f3d0",
+              color: "#047857",
               fontSize: "13px",
               marginBottom: "20px",
               display: "flex",
@@ -149,74 +160,123 @@ export function ProposalSubmitDialog({
             }}
           >
             <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-            <span>Submitted tx: {txHash.slice(0, 14)}... Awaiting consensus...</span>
+            <span>Transaction submitted: {txHash.slice(0, 14)}... Auditing via GenLayer validators...</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} style={{ display: "grid", gap: "16px" }}>
-          <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
-              PROPOSAL IDENTIFIER
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. proposal-v2-upgrade"
-              value={proposalId}
-              onChange={(e) => setProposalId(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
-                fontSize: "14px",
-                fontFamily: "var(--font-mono)",
-              }}
-            />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+                PROPOSAL ID
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. byteward-v2-upgrade"
+                value={proposalId}
+                onChange={(e) => setProposalId(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
+                  fontSize: "13px",
+                  fontFamily: "var(--font-mono)",
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+                TARGET IDENTIFIER
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. warded-vault-core"
+                value={targetId}
+                onChange={(e) => setTargetId(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
+                  fontSize: "13px",
+                  fontFamily: "var(--font-mono)",
+                }}
+              />
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+                BASE RELEASE DIGEST (SHA-256)
+              </label>
+              <input
+                type="text"
+                required
+                value={baseDigest}
+                onChange={(e) => setBaseDigest(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
+                  fontSize: "12px",
+                  fontFamily: "var(--font-mono)",
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+                PROPOSED VERSION
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="v2"
+                value={proposedRelease}
+                onChange={(e) => setProposedRelease(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
+                  fontSize: "13px",
+                  fontFamily: "var(--font-mono)",
+                }}
+              />
+            </div>
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
-              TARGET IDENTIFIER
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. warded-core"
-              value={targetId}
-              onChange={(e) => setTargetId(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
-                fontSize: "14px",
-                fontFamily: "var(--font-mono)",
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
-              CANDIDATE SOURCE URL (COMMIT-PINNED GITHUB RAW)
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+              CANDIDATE SOURCE GITHUB RAW URL (COMMIT-PINNED)
             </label>
             <input
               type="url"
               required
-              placeholder="https://raw.githubusercontent.com/org/repo/<40-char-sha>/contracts/CandidateV2.py"
+              placeholder="https://raw.githubusercontent.com/org/repo/<sha>/contracts/TargetV2.py"
               value={candidateUrl}
               onChange={(e) => setCandidateUrl(e.target.value)}
               style={{
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#ffffff",
+                border: "1px solid #cbd5e1",
+                color: "#090d16",
                 fontSize: "13px",
                 fontFamily: "var(--font-mono)",
               }}
@@ -224,45 +284,25 @@ export function ProposalSubmitDialog({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
-              PROPOSED RELEASE VERSION
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. v2"
-              value={proposedVersion}
-              onChange={(e) => setProposedVersion(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
-                fontSize: "14px",
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "var(--ink-tertiary)", marginBottom: "6px" }}>
-              CHANGELOG & ARCHITECTURAL SUMMARY
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+              UPGRADE CHANGELOG NARRATIVE
             </label>
             <textarea
               required
               rows={3}
-              value={changelog}
-              onChange={(e) => setChangelog(e.target.value)}
+              placeholder="Describe candidate changes, additions, and why this upgrade preserves the charter..."
+              value={narrative}
+              onChange={(e) => setNarrative(e.target.value)}
               style={{
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                background: "var(--void-03)",
-                border: "1px solid var(--void-05)",
-                color: "#ffffff",
+                background: "#ffffff",
+                border: "1px solid #cbd5e1",
+                color: "#090d16",
                 fontSize: "13px",
                 resize: "vertical",
+                lineHeight: "1.5",
               }}
             />
           </div>
@@ -285,10 +325,10 @@ export function ProposalSubmitDialog({
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Submitting Proposal...</span>
+                  <span>Auditing with AI Validators...</span>
                 </>
               ) : (
-                <span>Submit Upgrade Proposal</span>
+                <span>Submit for Consensus Audit</span>
               )}
             </button>
           </div>
