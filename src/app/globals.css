@@ -73,6 +73,12 @@ body.landing-locked .nav-terminal .nav-links {
   display: none !important;
 }
 
+body.landing-locked .nav-terminal {
+  background: transparent !important;
+  border-bottom: none !important;
+  position: relative !important;
+}
+
 /* PayPer Full-Bleed Background for Landing Cover */
 .global-bg-image {
   position: fixed;
@@ -118,11 +124,12 @@ body.landing-locked .nav-terminal .nav-links {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 16px 0;
   background: transparent;
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: all 0.3s ease;
 }
 
 .nav-brand {
@@ -370,6 +377,16 @@ body.byteward-app-body {
 /* Completely hide the dark coin gate background on the main app page */
 body.byteward-app-body .global-bg-image {
   display: none !important;
+}
+
+/* Off-White Frosted Sticky Header Shield to Prevent Text Bleed */
+body.byteward-app-body .nav-terminal {
+  background: rgba(246, 248, 251, 0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
+  padding: 14px 0 !important;
+  margin-bottom: 8px !important;
 }
 
 /* Off-White Header Styling */
