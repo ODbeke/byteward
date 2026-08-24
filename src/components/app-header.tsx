@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useWallet } from "./wallet-provider";
-import { Shield, FileCode2, Terminal } from "lucide-react";
+import { Shield, FileCode2, LayoutDashboard } from "lucide-react";
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -78,7 +78,7 @@ export function AppHeader() {
         <span className="brand-badge" style={{ marginLeft: "4px" }}>STUDIONET</span>
       </Link>
 
-      {/* Navigation Links: Hidden on Landing Page Cover */}
+      {/* Professional Segmented Navigation Pill (Hidden on Landing Page Cover) */}
       {!isLanding && (
         <nav className="nav-links">
           <Link
@@ -86,22 +86,22 @@ export function AppHeader() {
             onClick={handleDashboardClick}
             className={`nav-link ${pathname === "/" ? "active" : ""}`}
           >
-            <Terminal className="inline-block w-4 h-4 mr-1.5" />
-            Dashboard
+            <LayoutDashboard className="nav-link-icon" />
+            <span>Dashboard</span>
           </Link>
           <Link
             href="/targets"
             className={`nav-link ${pathname === "/targets" ? "active" : ""}`}
           >
-            <Shield className="inline-block w-4 h-4 mr-1.5" />
-            Protected Targets
+            <Shield className="nav-link-icon" />
+            <span>Protected Targets</span>
           </Link>
           <Link
             href="/proposals"
             className={`nav-link ${pathname === "/proposals" ? "active" : ""}`}
           >
-            <FileCode2 className="inline-block w-4 h-4 mr-1.5" />
-            Proposals Ledger
+            <FileCode2 className="nav-link-icon" />
+            <span>Proposals Ledger</span>
           </Link>
         </nav>
       )}

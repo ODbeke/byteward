@@ -113,7 +113,7 @@ body.landing-locked .nav-terminal .nav-links {
   padding: 0 32px 80px;
 }
 
-/* Navigation Terminal */
+/* Navigation Terminal Header */
 .nav-terminal {
   display: flex;
   justify-content: space-between;
@@ -155,39 +155,64 @@ body.landing-locked .nav-terminal .nav-links {
   letter-spacing: 0.08em;
 }
 
+/* Luxury Segmented Pill Navigation */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(11, 14, 23, 0.75);
+  gap: 4px;
+  background: rgba(11, 14, 23, 0.85);
   padding: 4px;
-  border-radius: 12px;
+  border-radius: 9999px;
   border: 1px solid var(--void-05);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
-  color: var(--ink-secondary);
-  padding: 8px 16px;
-  border-radius: 8px;
+  color: #94a3b8;
+  padding: 7px 18px;
+  border-radius: 9999px;
   border: none;
   background: transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-link-icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.85;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-link:hover {
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link:hover .nav-link-icon {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .nav-link.active {
   background: rgba(56, 189, 248, 0.15);
   color: var(--accent-cyan);
   box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+  font-weight: 700;
+}
+
+.nav-link.active .nav-link-icon {
+  opacity: 1;
+  color: var(--accent-cyan);
 }
 
 /* Landing Page Hero View */
@@ -352,24 +377,37 @@ body.byteward-app-body .brand-text {
   color: #090d16 !important;
 }
 
+/* Off-White Segmented Navigation Pill */
 body.byteward-app-body .nav-links {
-  background: rgba(255, 255, 255, 0.9) !important;
+  background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04) !important;
+  border-radius: 9999px !important;
+  padding: 4px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+  gap: 4px !important;
 }
 
 body.byteward-app-body .nav-link {
-  color: #475569 !important;
+  color: #64748b !important;
+  padding: 7px 18px !important;
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
 }
 
 body.byteward-app-body .nav-link:hover {
   color: #090d16 !important;
+  background: #f1f5f9 !important;
 }
 
 body.byteward-app-body .nav-link.active {
   background: #090d16 !important;
   color: #ffffff !important;
-  box-shadow: 0 2px 8px rgba(9, 13, 22, 0.15) !important;
+  box-shadow: 0 2px 6px rgba(9, 13, 22, 0.18) !important;
+  font-weight: 700 !important;
+}
+
+body.byteward-app-body .nav-link.active .nav-link-icon {
+  color: #38bdf8 !important;
 }
 
 /* Off-White Panels & Cards */
