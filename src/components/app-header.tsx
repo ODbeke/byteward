@@ -88,7 +88,7 @@ export function AppHeader() {
           <button
             onClick={handleLaunchClick}
             className="btn-cta-primary"
-            style={{ padding: "10px 24px", fontSize: "13px" }}
+            style={{ padding: "8px 20px", fontSize: "12px" }}
           >
             LAUNCH →
           </button>
