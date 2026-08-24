@@ -255,67 +255,46 @@ body.landing-locked .nav-terminal .nav-links {
   text-align: left;
 }
 
-/* Sleek, Slim Glossy Rounded Pill CTA Launch Buttons with Pulsating Aura */
+/* Translucent Glass Pill CTA Launch Buttons with Hover Zoom */
 .btn-cta-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 24px;
+  gap: 10px;
+  padding: 14px 34px;
   border-radius: 9999px;
   background: 
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.1) 48%, rgba(0, 0, 0, 0.04) 52%, rgba(0, 0, 0, 0.14) 100%),
-    linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%);
-  color: #030407;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(56, 189, 248, 0.38) 45%, rgba(2, 132, 199, 0.48) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   cursor: pointer;
   box-shadow: 
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
     0 -1px 0 rgba(0, 0, 0, 0.2) inset,
-    0 4px 16px -2px rgba(56, 189, 248, 0.45);
-  transition: all 0.25s var(--ease-out);
+    0 6px 22px rgba(56, 189, 248, 0.4);
+  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out), background 0.28s ease, border-color 0.28s ease;
   text-decoration: none;
-  animation: launchGlowPulse 2.8s infinite ease-in-out;
-  position: relative;
-  transform-origin: left center;
+  transform-origin: center center;
 }
 
 .btn-cta-primary:hover {
-  transform: translateY(-1px) scale(1.03);
+  transform: scale(1.08) translateY(-2px);
+  background: 
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(56, 189, 248, 0.52) 45%, rgba(2, 132, 199, 0.65) 100%);
+  border-color: rgba(255, 255, 255, 0.8);
   box-shadow: 
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 -1px 0 rgba(0, 0, 0, 0.2) inset,
-    0 8px 24px rgba(56, 189, 248, 0.65);
-}
-
-@keyframes launchGlowPulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 
-      0 1px 0 rgba(255, 255, 255, 0.7) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.2) inset,
-      0 4px 16px -2px rgba(56, 189, 248, 0.4);
-  }
-  50% {
-    transform: scale(1.025);
-    box-shadow: 
-      0 1px 0 rgba(255, 255, 255, 0.85) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.2) inset,
-      0 6px 24px rgba(56, 189, 248, 0.65),
-      0 0 12px rgba(56, 189, 248, 0.35);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 
-      0 1px 0 rgba(255, 255, 255, 0.7) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.2) inset,
-      0 4px 16px -2px rgba(56, 189, 248, 0.4);
-  }
+    0 12px 36px rgba(56, 189, 248, 0.7),
+    0 0 20px rgba(56, 189, 248, 0.45);
 }
 
 .btn-terminal {
@@ -332,10 +311,11 @@ body.landing-locked .nav-terminal .nav-links {
   font-weight: 600;
   border: 1px solid var(--void-05);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.25s var(--ease-out), background 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-terminal:hover {
+  transform: scale(1.05);
   background: rgba(56, 189, 248, 0.12);
   color: var(--accent-cyan);
   border-color: rgba(56, 189, 248, 0.3);
@@ -430,6 +410,7 @@ body.byteward-app-body .btn-terminal {
 }
 
 body.byteward-app-body .btn-terminal:hover {
+  transform: scale(1.04);
   background: #f8fafc !important;
   color: #0284c7 !important;
   border-color: rgba(2, 132, 199, 0.4) !important;
@@ -443,8 +424,7 @@ body.byteward-app-body .btn-terminal.active {
 
 body.byteward-app-body .btn-cta-primary {
   background: 
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 48%, rgba(0, 0, 0, 0.04) 52%, rgba(0, 0, 0, 0.14) 100%),
-    linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(2, 132, 199, 0.8) 50%, rgba(3, 105, 161, 0.95) 100%) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
   box-shadow: 
@@ -454,6 +434,7 @@ body.byteward-app-body .btn-cta-primary {
 }
 
 body.byteward-app-body .btn-cta-primary:hover {
+  transform: scale(1.06) translateY(-2px) !important;
   box-shadow: 
     0 1px 0 rgba(255, 255, 255, 0.8) inset,
     0 -1px 0 rgba(0, 0, 0, 0.2) inset,
