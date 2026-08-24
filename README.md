@@ -1,4 +1,4 @@
-# 🛡️ ByteWard v1 — Autonomous Smart Contract Upgrade Control Plane
+# ByteWard v1 — Autonomous Smart Contract Upgrade Control Plane
 
 [![Network](https://img.shields.io/badge/Network-GenLayer%20StudioNet-0284c7?style=flat-square)](https://studio.genlayer.com)
 [![Chain ID](https://img.shields.io/badge/Chain%20ID-0xF22F%20(61999)-38bdf8?style=flat-square)](https://explorer-studio.genlayer.com)
@@ -6,11 +6,35 @@
 [![Tests](https://img.shields.io/badge/Unit%20Tests-54%20Passed-emerald?style=flat-square)]()
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)]()
 
-**ByteWard** is an autonomous, validator-enforced smart contract upgrade control plane native to [GenLayer](https://genlayer.com). It permanently eliminates the multi-billion dollar single point of failure in decentralized applications: **centralized admin keys, vulnerable multisigs, and rogue upgrade proposals**.
+**ByteWard** is an autonomous, validator-enforced smart contract upgrade control plane native to [GenLayer](https://genlayer.com). It permanently eliminates the single point of failure in decentralized applications: **centralized admin keys, vulnerable multisigs, and rogue upgrade proposals**.
 
 ---
 
-## 📌 The Problem: The Web3 Upgradability Trilemma
+## Network & Live Deployment Information
+
+| Parameter | Value |
+| :--- | :--- |
+| **Network** | GenLayer StudioNet |
+| **Chain ID** | `0xF22F` (61999) |
+| **RPC Endpoint** | `https://studio.genlayer.com/api` |
+| **Explorer** | `https://explorer-studio.genlayer.com` |
+| **Deployed Controller Contract** | [`0x7b924FC388EFB82e4BD856395f146dbAF78559B5`](https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5) |
+| **Verified Public Methods** | 17 Active Methods |
+| **Dispute Timelock Window** | 300 seconds (5 minutes) |
+| **Native Token** | `GEN` (18 Decimals) |
+
+---
+
+## Development Roadmap
+
+- **Phase 1 (Current Live Build):** Pure validator-enforced AI diff audit, 5-tier Sentinel firewalls, HTTPS dispute evidence snapshotting, and cross-contract bytecode slot mutation on StudioNet.
+- **Phase 2 (Cryptoeconomic Guardrails):** Native `GEN` escrow deposits for proposals, stake-to-challenge bonding to eliminate griefing, malicious upgrade slashing, and automated whitehat bug bounty disbursements.
+- **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling ByteWard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
+- **Phase 4 (Zero-Knowledge AST Proofs):** Pairing GenLayer natural language semantic audits with formal ZK bytecode verification for mathematically proven upgrades.
+
+---
+
+## The Problem: The Web3 Upgradability Trilemma
 
 In traditional smart contract architectures, developers face an irreconcilable trade-off:
 
@@ -30,25 +54,25 @@ In traditional smart contract architectures, developers face an irreconcilable t
  • Rogue developer drains          • Social engineering attacks
 ```
 
-* Over **$2.8 Billion** has been lost in DeFi to compromised developer private keys, phished multisig signers, and stealth malicious proxy upgrades.
-* When human keys hold upgrade authority, any key compromise results in an **instant, irreversible protocol drain**.
+- Over **$2.8 Billion** has been lost in DeFi to compromised developer private keys, phished multisig signers, and stealth malicious proxy upgrades.
+- When human keys hold upgrade authority, any key compromise results in an **instant, irreversible protocol drain**.
 
 ---
 
-## ⚡ The Solution: The ByteWard Sentinel Engine
+## The Solution: The ByteWard Sentinel Engine
 
 ByteWard eliminates human admin keys from the upgrade pipeline by transferring exclusive upgrade authority to an **on-chain, multi-validator AI consensus firewall**.
 
 1. **Exclusive Authority Delegation:** Target smart contracts delegate their root upgrader slot strictly to the ByteWard controller contract (`is_sole_guard_authorized() == True`).
 2. **Commit-Pinned Ingestion:** Upgrades must be submitted via immutable 40-character commit SHA GitHub raw URLs. Mutable branch references (such as `main` or `dev`) are deterministically rejected.
-3. **5-Tier Sentinel Firewalls:** GenLayer AI validators non-deterministically fetch the baseline and candidate bytecode diffs, executing five rigorous safety audits under consensus.
+3. **5-Tier Sentinel Firewalls:** GenLayer AI validators non-deterministically fetch baseline and candidate bytecode diffs, executing five rigorous safety audits under consensus.
 4. **Structured Equivalence Normalization:** Qualitative natural language review prose is preserved on-chain for human inspection, while consensus matching operates on a normalized tuple of strict boolean safety invariants.
 5. **On-Chain Dispute Snapshots:** Proposals enter a timelocked challenge window where community whitehats can submit HTTPS evidence links. ByteWard snapshots the raw evidence bytes permanently into contract storage to prevent dynamic URL tampering.
 6. **Automated Cross-Contract Bytecode Slot Mutation:** Bytecode replacement is dispatched only when consensus verifies safety invariants and confirms truthful post-upgrade version installation.
 
 ---
 
-## 🏗️ Architecture & Lifecycle Pipeline
+## Architecture & Lifecycle Pipeline
 
 ```mermaid
 flowchart TD
@@ -98,7 +122,7 @@ flowchart TD
 
 ---
 
-## 🔍 The 5-Tier Sentinel Firewalls
+## The 5-Tier Sentinel Firewalls
 
 | # | Firewall Name | Purpose & Verification Invariant |
 | :-: | :--- | :--- |
@@ -110,7 +134,7 @@ flowchart TD
 
 ---
 
-## 📜 Contract Methods Reference
+## Contract Methods Reference
 
 ### `ByteWard` Core Controller Contract (17 Public Methods)
 
@@ -152,13 +176,13 @@ flowchart TD
 
 ---
 
-## 🎨 Dual-Mode Frontend Architecture
+## Dual-Mode Frontend Architecture
 
 The user interface delivers a modern dual-mode web experience:
 
 1. **Cinematic Landing Cover (100vh Single Viewport):**
    - Full-bleed edge-to-edge cyber-terminal gateway background.
-   - Translucent frosted glass **`LAUNCH →`** action button with interactive hover zoom.
+   - Translucent frosted glass `LAUNCH →` action button with interactive hover zoom.
    - Zero vertical scroll overflow on initial load.
 2. **Executive Control Plane Dashboard (Off-White Canvas):**
    - Clean, luxury off-white theme (`#f6f8fb`) with obsidian text and frosted white cards.
@@ -168,11 +192,11 @@ The user interface delivers a modern dual-mode web experience:
      - *Left Column (60%):* Active Upgrade Proposals Ledger with compact 5-tier firewall check chips, changelog narratives, and execution triggers.
      - *Right Column (40%):* Registered Targets Registry and Sentinel Engine Specification panel.
    - **Frosted Sticky Header Shield:** Top navigation stays fixed with a frosted glass backdrop, preventing content from bleeding underneath during scrolling.
-   - **Brand Logo Navigation:** Clicking **`BYTEWARD v1`** at the top left returns you to the landing cover screen anytime.
+   - **Brand Logo Navigation:** Clicking `BYTEWARD v1` at the top left returns you to the landing cover screen anytime.
 
 ---
 
-## 🛠️ Testing & Verification Guide
+## Testing & Verification Guide
 
 ### 1. Run Unit Tests (Off-Chain VM Mock)
 Execute all 54 unit test cases verifying constructor bounds, storage layout invariants, and authority checks:
@@ -202,27 +226,6 @@ npm run start
 
 ---
 
-## 🗺️ Roadmap
-
-- [x] **Phase 1 (Current Live Build):** Pure validator-enforced AI diff audit, 5-tier Sentinel firewalls, HTTPS dispute evidence snapshotting, and cross-contract bytecode slot mutation on StudioNet.
-- [ ] **Phase 2 (Cryptoeconomic Guardrails):** Native `GEN` escrow deposits for proposals, stake-to-challenge bonding to prevent griefing, malicious upgrade slashing, and automated whitehat bug bounty disbursements.
-- [ ] **Phase 3 (Cross-Chain L2 Control Plane):** Cross-chain messaging bridges enabling ByteWard on GenLayer to govern proxy bytecode updates on Arbitrum, Optimism, Base, and Ethereum mainnet.
-- [ ] **Phase 4 (Zero-Knowledge AST Proofs):** Pairing GenLayer natural language semantic audits with formal ZK bytecode verification for mathematically proven upgrades.
-
----
-
-## 🌐 Network & Deployment Information
-
-* **Network:** GenLayer StudioNet
-* **Chain ID:** `0xF22F` (61999)
-* **RPC Endpoint:** `https://studio.genlayer.com/api`
-* **Explorer:** `https://explorer-studio.genlayer.com`
-* **Deployed Controller Contract:** [`0x7b924FC388EFB82e4BD856395f146dbAF78559B5`](https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5)
-* **Verified Public Methods:** 17/17 Active
-* **Native Token:** `GEN` (18 Decimals)
-
----
-
-## 📄 License
+## License
 
 This project is open-source and released under the [MIT License](LICENSE).
