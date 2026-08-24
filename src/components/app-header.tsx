@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useWallet } from "./wallet-provider";
 import { Shield, FileCode2, Terminal } from "lucide-react";
 
 export function AppHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const { account, isConnecting, connectWallet, disconnectWallet } = useWallet();
   const [isLanding, setIsLanding] = useState(false);
 
@@ -29,17 +30,30 @@ export function AppHeader() {
   }, [pathname]);
 
   const handleLaunchClick = () => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("byteward_launched", "true");
+    }
     window.dispatchEvent(new CustomEvent("byteward:launch"));
   };
 
-  const handleBrandClick = () => {
+  const handleBrandClick = (e: React.MouseEvent) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("byteward_launched");
+    }
     window.dispatchEvent(new CustomEvent("byteward:go-home"));
+  };
+
+  const handleDashboardClick = (e: React.MouseEvent) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("byteward_launched", "true");
+    }
+    window.dispatchEvent(new CustomEvent("byteward:launch"));
   };
 
   return (
     <header className="nav-terminal">
       <Link 
-        href="/" 
+        href="/?view=landing" 
         onClick={handleBrandClick}
         className="nav-brand" 
         style={{ alignItems: "baseline", gap: "8px" }}
@@ -68,7 +82,8 @@ export function AppHeader() {
       {!isLanding && (
         <nav className="nav-links">
           <Link
-            href="/"
+            href="/?view=dashboard"
+            onClick={handleDashboardClick}
             className={`nav-link ${pathname === "/" ? "active" : ""}`}
           >
             <Terminal className="inline-block w-4 h-4 mr-1.5" />

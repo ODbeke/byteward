@@ -27,7 +27,16 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
-  const [viewMode, setViewMode] = useState<"landing" | "console">("landing");
+  const [viewMode, setViewMode] = useState<"landing" | "console">(() => {
+    if (typeof window !== "undefined") {
+      const isLaunched = sessionStorage.getItem("byteward_launched") === "true";
+      const isDashboardParam = window.location.search.includes("view=dashboard");
+      const isLandingParam = window.location.search.includes("view=landing");
+      if (isLandingParam) return "landing";
+      if (isLaunched || isDashboardParam) return "console";
+    }
+    return "landing";
+  });
   const [state, setState] = useState<GovernanceState | null>(null);
   const [loading, setLoading] = useState(false);
   const [isEnrollOpen, setIsEnrollOpen] = useState(false);
@@ -35,8 +44,30 @@ export default function HomePage() {
   const [isFirewallInspectOpen, setIsFirewallInspectOpen] = useState(false);
 
   useEffect(() => {
-    const handleLaunch = () => setViewMode("console");
-    const handleGoHome = () => setViewMode("landing");
+    const handleLaunch = () => {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("byteward_launched", "true");
+      }
+      setViewMode("console");
+    };
+    const handleGoHome = () => {
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("byteward_launched");
+      }
+      setViewMode("landing");
+    };
+
+    if (typeof window !== "undefined") {
+      const isLaunched = sessionStorage.getItem("byteward_launched") === "true";
+      const isDashboardParam = window.location.search.includes("view=dashboard");
+      const isLandingParam = window.location.search.includes("view=landing");
+      if (isLandingParam) {
+        setViewMode("landing");
+      } else if (isLaunched || isDashboardParam) {
+        setViewMode("console");
+      }
+    }
+
     window.addEventListener("byteward:launch", handleLaunch);
     window.addEventListener("byteward:go-home", handleGoHome);
     return () => {
