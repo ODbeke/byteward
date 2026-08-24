@@ -131,6 +131,14 @@ export default function HomePage() {
   const [isFirewallInspectOpen, setIsFirewallInspectOpen] = useState(false);
 
   useEffect(() => {
+    const handleLaunch = () => setViewMode("console");
+    window.addEventListener("byteward:launch", handleLaunch);
+    return () => {
+      window.removeEventListener("byteward:launch", handleLaunch);
+    };
+  }, []);
+
+  useEffect(() => {
     if (viewMode === "landing") {
       document.body.classList.add("landing-locked");
       document.body.classList.remove("byteward-app-body");
@@ -138,9 +146,11 @@ export default function HomePage() {
       document.body.classList.remove("landing-locked");
       document.body.classList.add("byteward-app-body");
     }
+    window.dispatchEvent(new CustomEvent("byteward:mode-change"));
     return () => {
       document.body.classList.remove("landing-locked");
       document.body.classList.remove("byteward-app-body");
+      window.dispatchEvent(new CustomEvent("byteward:mode-change"));
     };
   }, [viewMode]);
 

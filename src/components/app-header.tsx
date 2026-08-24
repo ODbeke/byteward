@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useWallet } from "./wallet-provider";
@@ -9,6 +9,28 @@ import { Shield, FileCode2, Terminal } from "lucide-react";
 export function AppHeader() {
   const pathname = usePathname();
   const { account, isConnecting, connectWallet, disconnectWallet } = useWallet();
+  const [isLanding, setIsLanding] = useState(false);
+
+  useEffect(() => {
+    const checkLanding = () => {
+      const isRoot = pathname === "/";
+      const isLocked = document.body.classList.contains("landing-locked");
+      const isApp = document.body.classList.contains("byteward-app-body");
+      setIsLanding(isRoot && (isLocked || !isApp));
+    };
+
+    checkLanding();
+    const interval = setInterval(checkLanding, 100);
+    window.addEventListener("byteward:mode-change", checkLanding);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("byteward:mode-change", checkLanding);
+    };
+  }, [pathname]);
+
+  const handleLaunchClick = () => {
+    window.dispatchEvent(new CustomEvent("byteward:launch"));
+  };
 
   return (
     <header className="nav-terminal">
@@ -33,32 +55,44 @@ export function AppHeader() {
         <span className="brand-badge" style={{ marginLeft: "4px" }}>STUDIONET</span>
       </Link>
 
-      <nav className="nav-links">
-        <Link
-          href="/"
-          className={`nav-link ${pathname === "/" ? "active" : ""}`}
-        >
-          <Terminal className="inline-block w-4 h-4 mr-1.5" />
-          Dashboard
-        </Link>
-        <Link
-          href="/targets"
-          className={`nav-link ${pathname === "/targets" ? "active" : ""}`}
-        >
-          <Shield className="inline-block w-4 h-4 mr-1.5" />
-          Protected Targets
-        </Link>
-        <Link
-          href="/proposals"
-          className={`nav-link ${pathname === "/proposals" ? "active" : ""}`}
-        >
-          <FileCode2 className="inline-block w-4 h-4 mr-1.5" />
-          Proposals Ledger
-        </Link>
-      </nav>
+      {/* Navigation Links: Hidden on Landing Page Cover */}
+      {!isLanding && (
+        <nav className="nav-links">
+          <Link
+            href="/"
+            className={`nav-link ${pathname === "/" ? "active" : ""}`}
+          >
+            <Terminal className="inline-block w-4 h-4 mr-1.5" />
+            Dashboard
+          </Link>
+          <Link
+            href="/targets"
+            className={`nav-link ${pathname === "/targets" ? "active" : ""}`}
+          >
+            <Shield className="inline-block w-4 h-4 mr-1.5" />
+            Protected Targets
+          </Link>
+          <Link
+            href="/proposals"
+            className={`nav-link ${pathname === "/proposals" ? "active" : ""}`}
+          >
+            <FileCode2 className="inline-block w-4 h-4 mr-1.5" />
+            Proposals Ledger
+          </Link>
+        </nav>
+      )}
 
+      {/* Right Action Button */}
       <div>
-        {account ? (
+        {isLanding ? (
+          <button
+            onClick={handleLaunchClick}
+            className="btn-cta-primary"
+            style={{ padding: "10px 24px", fontSize: "13px" }}
+          >
+            Launch →
+          </button>
+        ) : account ? (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span className="status-pill approved" style={{ fontFamily: "var(--font-mono)" }}>
               <span className="pulse-dot"></span>
