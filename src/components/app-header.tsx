@@ -32,9 +32,18 @@ export function AppHeader() {
     window.dispatchEvent(new CustomEvent("byteward:launch"));
   };
 
+  const handleBrandClick = () => {
+    window.dispatchEvent(new CustomEvent("byteward:go-home"));
+  };
+
   return (
     <header className="nav-terminal">
-      <Link href="/" className="nav-brand" style={{ alignItems: "baseline", gap: "8px" }}>
+      <Link 
+        href="/" 
+        onClick={handleBrandClick}
+        className="nav-brand" 
+        style={{ alignItems: "baseline", gap: "8px" }}
+      >
         <span className="brand-text">
           BYTEWARD
         </span>
