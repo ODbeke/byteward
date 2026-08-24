@@ -90,7 +90,7 @@ export function AppHeader() {
             className="btn-cta-primary"
             style={{ padding: "10px 24px", fontSize: "13px" }}
           >
-            Launch →
+            LAUNCH →
           </button>
         ) : account ? (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>

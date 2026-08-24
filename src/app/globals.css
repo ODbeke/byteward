@@ -254,55 +254,67 @@ body.landing-locked .nav-terminal .nav-links {
   text-align: left;
 }
 
-/* CTA Buttons */
+/* Glossy, Rounded Pill CTA Launch Buttons with Pulsating Aura */
 .btn-cta-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 32px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  padding: 15px 36px;
+  border-radius: 9999px;
+  background: 
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.12) 48%, rgba(0, 0, 0, 0.05) 52%, rgba(0, 0, 0, 0.18) 100%),
+    linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%);
   color: #030407;
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 800;
-  letter-spacing: 0.02em;
-  border: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   cursor: pointer;
-  box-shadow: 0 4px 24px rgba(56, 189, 248, 0.38);
-  transition: all 0.25s var(--ease-out);
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+    0 8px 24px -2px rgba(56, 189, 248, 0.5);
+  transition: all 0.3s var(--ease-out);
   text-decoration: none;
+  animation: launchGlowPulse 2.8s infinite ease-in-out;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-cta-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 32px rgba(56, 189, 248, 0.55);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+    0 12px 36px rgba(56, 189, 248, 0.75);
 }
 
-.btn-cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 32px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  border: 1px solid var(--void-10);
-  cursor: pointer;
-  transition: all 0.25s var(--ease-out);
-  text-decoration: none;
-  backdrop-filter: blur(12px);
-}
-
-.btn-cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(56, 189, 248, 0.4);
+@keyframes launchGlowPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+      0 6px 20px -2px rgba(56, 189, 248, 0.45);
+  }
+  50% {
+    transform: scale(1.035);
+    box-shadow: 
+      0 1px 0 rgba(255, 255, 255, 0.85) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+      0 10px 32px rgba(56, 189, 248, 0.75),
+      0 0 16px rgba(56, 189, 248, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+      0 6px 20px -2px rgba(56, 189, 248, 0.45);
+  }
 }
 
 .btn-terminal {
@@ -311,7 +323,7 @@ body.landing-locked .nav-terminal .nav-links {
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 9999px;
   background: rgba(255, 255, 255, 0.04);
   color: var(--ink-secondary);
   font-family: var(--font-mono);
@@ -429,13 +441,22 @@ body.byteward-app-body .btn-terminal.active {
 }
 
 body.byteward-app-body .btn-cta-primary {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  background: 
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 48%, rgba(0, 0, 0, 0.05) 52%, rgba(0, 0, 0, 0.15) 100%),
+    linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+    0 6px 24px rgba(2, 132, 199, 0.35) !important;
 }
 
 body.byteward-app-body .btn-cta-primary:hover {
-  box-shadow: 0 6px 28px rgba(2, 132, 199, 0.38) !important;
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+    0 10px 32px rgba(2, 132, 199, 0.5) !important;
 }
 
 /* Off-White Inner Card Styles */
