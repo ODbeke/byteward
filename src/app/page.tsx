@@ -222,15 +222,7 @@ export default function HomePage() {
 
             {/* Header Action Buttons */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-              <button
-                onClick={loadData}
-                disabled={loading}
-                className="btn-terminal"
-                style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px" }}
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-                <span>Sync</span>
-              </button>
+
               <button
                 onClick={() => setIsFirewallInspectOpen(true)}
                 className="btn-terminal"
