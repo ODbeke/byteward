@@ -287,17 +287,10 @@ export default function HomePage() {
               <button className="btn-cta-primary" onClick={() => setViewMode("console")}>
                 LAUNCH GOVERNANCE CONSOLE →
               </button>
-              <button className="btn-cta-secondary" onClick={() => setViewMode("deck")}>
-                EXPLORE ARCHITECTURE DECK →
-              </button>
             </div>
 
             <div style={{ marginTop: "36px", display: "flex", alignItems: "center", gap: "20px", color: "var(--ink-tertiary)", fontSize: "12px", fontFamily: "var(--font-mono)", flexWrap: "wrap" }}>
               <div>NETWORK: <span style={{ color: "var(--accent-cyan)", fontWeight: "600" }}>GENLAYER STUDIONET</span></div>
-              <div>•</div>
-              <div>AUTHORITY: <span style={{ color: "var(--accent-emerald)", fontWeight: "600" }}>EXCLUSIVE ROOTGUARD</span></div>
-              <div>•</div>
-              <div>CONSENSUS: <span style={{ color: "var(--accent-purple)", fontWeight: "600" }}>OPTIMISTIC DEMOCRACY</span></div>
             </div>
           </div>
         </section>

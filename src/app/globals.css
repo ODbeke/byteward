@@ -68,6 +68,11 @@ body.landing-locked .app-footer-auto {
   display: none !important;
 }
 
+/* Hide navigation links on the landing page cover */
+body.landing-locked .nav-terminal .nav-links {
+  display: none !important;
+}
+
 /* PayPer Full-Bleed Background for Landing Cover */
 .global-bg-image {
   position: fixed;
