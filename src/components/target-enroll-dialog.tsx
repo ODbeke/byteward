@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useWallet } from "./wallet-provider";
-import { executeByteWardWrite, waitForByteWardFinalization } from "@/lib/byteward";
+import { executeContractWrite, waitForByteWardFinalization } from "@/lib/byteward";
 import { Shield, AlertCircle, CheckCircle2, Loader2, X } from "lucide-react";
 
 export function TargetEnrollDialog({
@@ -15,6 +15,7 @@ export function TargetEnrollDialog({
   onSuccess: () => void;
 }) {
   const { account } = useWallet();
+  const [targetAddress, setTargetAddress] = useState("");
   const [targetId, setTargetId] = useState("");
   const [name, setName] = useState("");
   const [charter, setCharter] = useState(
@@ -33,18 +34,23 @@ export function TargetEnrollDialog({
       setError("Please connect your wallet first.");
       return;
     }
+    if (!targetAddress || !targetAddress.startsWith("0x")) {
+      setError("Please provide a valid target contract address (0x...)");
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
     setTxHash(null);
 
     try {
-      const hash = await executeByteWardWrite(account, "enroll_target", [
-        targetId,
-        name,
-        charter,
-        sourceUrl,
-      ]);
+      // Calls enroll_with_byteward on the target contract
+      const hash = await executeContractWrite(
+        account,
+        targetAddress as `0x${string}`,
+        "enroll_with_byteward",
+        [targetId, name, charter, sourceUrl]
+      );
       setTxHash(hash);
       await waitForByteWardFinalization(account, hash);
       onSuccess();
@@ -74,7 +80,7 @@ export function TargetEnrollDialog({
         className="animate-fade-in"
         style={{
           width: "100%",
-          maxWidth: "600px",
+          maxWidth: "620px",
           padding: "32px",
           borderRadius: "20px",
           background: "#ffffff",
@@ -115,7 +121,7 @@ export function TargetEnrollDialog({
         </div>
 
         <p style={{ fontSize: "13px", color: "#64748b", marginBottom: "20px" }}>
-          Register a smart contract under ByteWard governance. The target contract must delegate its upgrade authority exclusively to ByteWard.
+          Enrolls your smart contract by invoking <code style={{ fontFamily: "var(--font-mono)", background: "#f1f5f9", padding: "2px 6px", borderRadius: "4px" }}>enroll_with_byteward</code> directly on the target contract address.
         </p>
 
         {error && (
@@ -161,14 +167,14 @@ export function TargetEnrollDialog({
         <form onSubmit={handleSubmit} style={{ display: "grid", gap: "16px" }}>
           <div>
             <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
-              TARGET IDENTIFIER (SLUG)
+              TARGET CONTRACT ADDRESS (0x...)
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. warded-vault-core"
-              value={targetId}
-              onChange={(e) => setTargetId(e.target.value)}
+              placeholder="e.g. 0x72BD7D...182eCd"
+              value={targetAddress}
+              onChange={(e) => setTargetAddress(e.target.value)}
               style={{
                 width: "100%",
                 padding: "10px 14px",
@@ -176,32 +182,57 @@ export function TargetEnrollDialog({
                 background: "#ffffff",
                 border: "1px solid #cbd5e1",
                 color: "#090d16",
-                fontSize: "14px",
+                fontSize: "13px",
                 fontFamily: "var(--font-mono)",
               }}
             />
           </div>
 
-          <div>
-            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
-              TARGET NAME
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. Treasury Vault Core"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px 14px",
-                borderRadius: "8px",
-                background: "#ffffff",
-                border: "1px solid #cbd5e1",
-                color: "#090d16",
-                fontSize: "14px",
-              }}
-            />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+                TARGET IDENTIFIER (SLUG)
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. warded-vault-core"
+                value={targetId}
+                onChange={(e) => setTargetId(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
+                  fontSize: "13px",
+                  fontFamily: "var(--font-mono)",
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+                TARGET NAME
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Treasury Vault Core"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "#ffffff",
+                  border: "1px solid #cbd5e1",
+                  color: "#090d16",
+                  fontSize: "13px",
+                }}
+              />
+            </div>
           </div>
 
           <div>
@@ -268,7 +299,7 @@ export function TargetEnrollDialog({
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Enrolling on StudioNet...</span>
+                  <span>Enrolling via Target Contract...</span>
                 </>
               ) : (
                 <span>Submit Target Enrollment</span>

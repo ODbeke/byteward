@@ -19,9 +19,6 @@ export function ProposalSubmitDialog({
   const { account } = useWallet();
   const [proposalId, setProposalId] = useState("");
   const [targetId, setTargetId] = useState(targetIdDefault || "warded-vault-core");
-  const [baseDigest, setBaseDigest] = useState(
-    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  );
   const [candidateUrl, setCandidateUrl] = useState("");
   const [proposedRelease, setProposedRelease] = useState("v2");
   const [narrative, setNarrative] = useState("");
@@ -43,10 +40,10 @@ export function ProposalSubmitDialog({
     setTxHash(null);
 
     try {
+      // Calls propose_upgrade with exact 5 arguments: (proposal_id, target_id, candidate_url, proposed_version, changelog)
       const hash = await executeByteWardWrite(account, "propose_upgrade", [
         proposalId,
         targetId,
-        baseDigest,
         candidateUrl,
         proposedRelease,
         narrative,
@@ -213,51 +210,27 @@ export function ProposalSubmitDialog({
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "12px" }}>
-            <div>
-              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
-                BASE RELEASE DIGEST (SHA-256)
-              </label>
-              <input
-                type="text"
-                required
-                value={baseDigest}
-                onChange={(e) => setBaseDigest(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "10px 14px",
-                  borderRadius: "8px",
-                  background: "#ffffff",
-                  border: "1px solid #cbd5e1",
-                  color: "#090d16",
-                  fontSize: "12px",
-                  fontFamily: "var(--font-mono)",
-                }}
-              />
-            </div>
-
-            <div>
-              <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
-                PROPOSED VERSION
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="v2"
-                value={proposedRelease}
-                onChange={(e) => setProposedRelease(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "10px 14px",
-                  borderRadius: "8px",
-                  background: "#ffffff",
-                  border: "1px solid #cbd5e1",
-                  color: "#090d16",
-                  fontSize: "13px",
-                  fontFamily: "var(--font-mono)",
-                }}
-              />
-            </div>
+          <div>
+            <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
+              PROPOSED VERSION STRING
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="v2"
+              value={proposedRelease}
+              onChange={(e) => setProposedRelease(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                borderRadius: "8px",
+                background: "#ffffff",
+                border: "1px solid #cbd5e1",
+                color: "#090d16",
+                fontSize: "13px",
+                fontFamily: "var(--font-mono)",
+              }}
+            />
           </div>
 
           <div>
@@ -267,7 +240,7 @@ export function ProposalSubmitDialog({
             <input
               type="url"
               required
-              placeholder="https://raw.githubusercontent.com/org/repo/<sha>/contracts/TargetV2.py"
+              placeholder="https://raw.githubusercontent.com/org/repo/<40-char-sha>/contracts/TargetV2.py"
               value={candidateUrl}
               onChange={(e) => setCandidateUrl(e.target.value)}
               style={{
@@ -285,12 +258,12 @@ export function ProposalSubmitDialog({
 
           <div>
             <label style={{ display: "block", fontSize: "12px", fontFamily: "var(--font-mono)", color: "#475569", fontWeight: "700", marginBottom: "6px" }}>
-              UPGRADE CHANGELOG NARRATIVE
+              UPGRADE CHANGELOG NARRATIVE (MIN 80 CHARS)
             </label>
             <textarea
               required
               rows={3}
-              placeholder="Describe candidate changes, additions, and why this upgrade preserves the charter..."
+              placeholder="Describe candidate changes, additions, and why this upgrade preserves the charter (minimum 80 characters)..."
               value={narrative}
               onChange={(e) => setNarrative(e.target.value)}
               style={{

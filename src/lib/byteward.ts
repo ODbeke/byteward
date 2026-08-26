@@ -113,20 +113,29 @@ export async function fetchGovernanceState(): Promise<GovernanceState> {
   return { overview, targets, proposals };
 }
 
-export async function executeByteWardWrite(
+export async function executeContractWrite(
   accountAddress: `0x${string}`,
+  contractAddress: `0x${string}`,
   functionName: string,
   args: CalldataEncodable[]
 ): Promise<TransactionHash> {
   const client = getByteWardClient(accountAddress);
   await client.connect("studionet");
   return (await client.writeContract({
-    address: resolveConfiguredController(),
+    address: contractAddress,
     functionName,
     args,
     value: 0n,
     consensusMaxRotations: 3,
   })) as TransactionHash;
+}
+
+export async function executeByteWardWrite(
+  accountAddress: `0x${string}`,
+  functionName: string,
+  args: CalldataEncodable[]
+): Promise<TransactionHash> {
+  return executeContractWrite(accountAddress, resolveConfiguredController(), functionName, args);
 }
 
 export async function waitForByteWardFinalization(accountAddress: `0x${string}`, hash: TransactionHash) {

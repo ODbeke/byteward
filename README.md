@@ -3,7 +3,7 @@
 [![Network](https://img.shields.io/badge/Network-GenLayer%20StudioNet-0284c7?style=flat-square)](https://studio.genlayer.com)
 [![Chain ID](https://img.shields.io/badge/Chain%20ID-61999-38bdf8?style=flat-square)](https://explorer-studio.genlayer.com)
 [![Contract](https://img.shields.io/badge/Contract-0x7b924F...59B5-10b981?style=flat-square)](https://explorer-studio.genlayer.com/address/0x7b924FC388EFB82e4BD856395f146dbAF78559B5)
-[![Tests](https://img.shields.io/badge/Unit%20Tests-54%20Passed-emerald?style=flat-square)]()
+[![Tests](https://img.shields.io/badge/Unit%20Tests-57%20Passed-emerald?style=flat-square)]()
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)]()
 
 **ByteWard** is an autonomous, validator-enforced smart contract upgrade control plane native to [GenLayer](https://genlayer.com). It permanently eliminates the single point of failure in decentralized applications: **centralized admin keys, vulnerable multisigs, and rogue upgrade proposals**.
@@ -199,11 +199,11 @@ The user interface delivers a modern dual-mode web experience:
 ## Testing & Verification Guide
 
 ### 1. Run Unit Tests (Off-Chain VM Mock)
-Execute all 54 unit test cases verifying constructor bounds, storage layout invariants, and authority checks:
+Execute all 57 unit test cases verifying constructor bounds, storage layout invariants, and authority checks:
 ```bash
 python3 -m pytest tests/direct -v
 ```
-**Result:** 54 passed in ~0.5s.
+**Result:** 57 passed in ~0.7s.
 
 ### 2. Run End-to-End Integration Tests (StudioNet Flow)
 To execute the complete deployment, enrollment, preflight digest validation, multi-validator AI consensus audit, dispute timelock, and bytecode slot dispatch cycle:
